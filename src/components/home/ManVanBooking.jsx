@@ -24,6 +24,7 @@ import {
   Plus,
   Check,
 } from 'lucide-react'
+import Image from 'next/image'
 
 export const CATEGORIES = [
   { id: 'sofas', label: 'Sofas', icon: Armchair },
@@ -44,70 +45,70 @@ export const CATEGORIES = [
 // swap in your real item list / pricing per category.
 const ITEMS_BY_CATEGORY = {
   sofas: [
-    { id: 'sofa-2seater', name: '2 Seater Sofa / Chaise Lounge', description: 'Standard 2 seater. Love seat. Chaise lounge. Wicker sofa.', price: 70 },
-    { id: 'sofa-3piece', name: '3 Piece Suite', description: '1 x armchair. 1 x 2 seater sofa. 1 x 3 seater sofa. 1 x footstool.', price: 185 },
-    { id: 'sofa-3seater', name: '3 Seat Sofa', description: 'Standard 3 seater. Large chaise longue & wicker sofa.', price: 95 },
-    { id: 'armchair', name: 'Armchair', description: 'Wooden, fabric, wicker & leather chairs.', price: 54 },
+    { id: 'sofa-2seater', name: '2 Seater Sofa / Chaise Lounge', img: '/images/sofa1.jpg', description: 'Standard 2 seater. Love seat. Chaise lounge. Wicker sofa.', price: 70 },
+    { id: 'sofa-3piece', name: '3 Piece Suite', img: '/images/sofa2.jpg', description: '1 x armchair. 1 x 2 seater sofa. 1 x 3 seater sofa. 1 x footstool.', price: 185 },
+    { id: 'sofa-3seater', name: '3 Seat Sofa', img: '/images/sofa3.jpg', description: 'Standard 3 seater. Large chaise longue & wicker sofa.', price: 95 },
+    { id: 'armchair', name: 'Armchair', img: '/images/sofa4.jpg', description: 'Wooden, fabric, wicker & leather chairs.', price: 54 },
   ],
   'mattress-bed': [
-    { id: 'mattress-single', name: 'Single Mattress', description: 'Standard single size, any material.', price: 25 },
-    { id: 'mattress-double', name: 'Double / King Mattress', description: 'Double, king or super king size.', price: 35 },
-    { id: 'bed-frame', name: 'Bed Frame', description: 'Wooden or metal frame, single to king.', price: 40 },
-    { id: 'divan-base', name: 'Divan Base', description: 'Includes storage divan bases.', price: 45 },
+    { id: 'mattress-single', name: 'Single Mattress', img: '/images/bed1.jpg', description: 'Standard single size, any material.', price: 25 },
+    { id: 'mattress-double', name: 'Double / King Mattress', img: '/images/bed2.jpg', description: 'Double, king or super king size.', price: 35 },
+    { id: 'bed-frame', name: 'Bed Frame', img: '/images/bed3.jpg', description: 'Wooden or metal frame, single to king.', price: 40 },
+    { id: 'divan-base', name: 'Divan Base', img: '/images/bed4.jfif', description: 'Includes storage divan bases.', price: 45 },
   ],
   furniture: [
-    { id: 'wardrobe', name: 'Wardrobe', description: 'Single, double or triple door.', price: 55 },
-    { id: 'chest-drawers', name: 'Chest of Drawers', description: 'Any size, wood, veneer or flatpack.', price: 30 },
-    { id: 'dining-table', name: 'Dining Table', description: 'Seats 4-8, with or without chairs.', price: 45 },
-    { id: 'bookcase', name: 'Bookcase / Shelving Unit', description: 'Freestanding units of any size.', price: 25 },
+    { id: 'wardrobe', name: 'Wardrobe', img: '/images/furniture1.jpg',  description: 'Single, double or triple door.', price: 55 },
+    { id: 'chest-drawers', name: 'Chest of Drawers', img: '/images/furniture2.jpg',  description: 'Any size, wood, veneer or flatpack.', price: 30 },
+    { id: 'dining-table', name: 'Dining Table', img: '/images/furniture3.jpg',  description: 'Seats 4-8, with or without chairs.', price: 45 },
+    { id: 'bookcase', name: 'Bookcase / Shelving Unit', img: '/images/furniture4.jpg',  description: 'Freestanding units of any size.', price: 25 },
   ],
   'kitchen-appliances': [
-    { id: 'washing-machine', name: 'Washing Machine', description: 'Freestanding or integrated.', price: 35 },
-    { id: 'dishwasher', name: 'Dishwasher', description: 'Freestanding or integrated.', price: 35 },
-    { id: 'cooker', name: 'Cooker / Oven', description: 'Electric or gas, freestanding.', price: 40 },
-    { id: 'microwave', name: 'Microwave', description: 'Any size microwave oven.', price: 15 },
+    { id: 'washing-machine', name: 'Washing Machine', img: '/images/kitchen1.jpg',   description: 'Freestanding or integrated.', price: 35 },
+    { id: 'dishwasher', name: 'Dishwasher', img: '/images/kitchen2.jpg',   description: 'Freestanding or integrated.', price: 35 },
+    { id: 'cooker', name: 'Cooker / Oven', img: '/images/kitchen3.jpg',   description: 'Electric or gas, freestanding.', price: 40 },
+    { id: 'microwave', name: 'Microwave', img: '/images/kitchen4.jpg',   description: 'Any size microwave oven.', price: 15 },
   ],
   'fridge-freezer': [
-    { id: 'fridge-freezer', name: 'Fridge Freezer', description: 'Standard combined fridge freezer.', price: 45 },
-    { id: 'fridge-only', name: 'Fridge Only', description: 'Under-counter or full size.', price: 35 },
-    { id: 'chest-freezer', name: 'Chest Freezer', description: 'Any size chest freezer.', price: 40 },
-    { id: 'wine-cooler', name: 'Wine Cooler', description: 'Freestanding wine fridge.', price: 30 },
+    { id: 'fridge-freezer', name: 'Fridge Freezer', img: '/images/freeze1.jpg',    description: 'Standard combined fridge freezer.', price: 45 },
+    { id: 'fridge-only', name: 'Fridge Only', img: '/images/freeze2.jpg',    description: 'Under-counter or full size.', price: 35 },
+    { id: 'chest-freezer', name: 'Chest Freezer', img: '/images/freeze3.jpg',    description: 'Any size chest freezer.', price: 40 },
+    { id: 'wine-cooler', name: 'Wine Cooler', img: '/images/freeze4.jpg',    description: 'Freestanding wine fridge.', price: 30 },
   ],
   'electrical-it': [
-    { id: 'tv', name: 'Television', description: 'Any size, CRT or flat screen.', price: 20 },
-    { id: 'computer', name: 'Computer / Monitor', description: 'Desktops, monitors & peripherals.', price: 15 },
-    { id: 'printer', name: 'Printer / Scanner', description: 'Home or office printers.', price: 15 },
-    { id: 'small-electricals', name: 'Small Electricals (box)', description: 'Kettles, toasters, cables etc.', price: 20 },
+    { id: 'tv', name: 'Television', img: '/images/it1.jpg',   description: 'Any size, CRT or flat screen.', price: 20 },
+    { id: 'computer', name: 'Computer / Monitor', img: '/images/it2.jpg',   description: 'Desktops, monitors & peripherals.', price: 15 },
+    { id: 'printer', name: 'Printer / Scanner', img: '/images/it3.jpg',   description: 'Home or office printers.', price: 15 },
+    { id: 'small-electricals', name: 'Small Electricals (box)', img: '/images/it4.jpg',   description: 'Kettles, toasters, cables etc.', price: 20 },
   ],
   'garden-items': [
-    { id: 'lawnmower', name: 'Lawnmower', description: 'Petrol or electric mower.', price: 25 },
-    { id: 'shed', name: 'Garden Shed (dismantled)', description: 'Wooden or metal, flat packed.', price: 60 },
-    { id: 'garden-furniture', name: 'Garden Furniture Set', description: 'Table, chairs or bench sets.', price: 40 },
-    { id: 'green-waste', name: 'Green Waste (per bag)', description: 'Grass, hedge cuttings & leaves.', price: 8 },
+    { id: 'lawnmower', name: 'Lawnmower', img: '/images/gardenset1.jpg',    description: 'Petrol or electric mower.', price: 25 },
+    { id: 'shed', name: 'Garden Shed (dismantled)', img: '/images/gardenset2.jpg',    description: 'Wooden or metal, flat packed.', price: 60 },
+    { id: 'garden-furniture', name: 'Garden Furniture Set', img: '/images/gardenset3.jpg',    description: 'Table, chairs or bench sets.', price: 40 },
+    { id: 'green-waste', name: 'Green Waste (per bag)', img: '/images/gardenset4.jpg',    description: 'Grass, hedge cuttings & leaves.', price: 8 },
   ],
   'hazardous-waste': [
-    { id: 'paint-tins', name: 'Paint Tins (per 5)', description: 'Part-full or empty tins.', price: 20 },
-    { id: 'gas-canister', name: 'Gas Canister', description: 'Camping or BBQ gas bottles.', price: 25 },
-    { id: 'asbestos', name: 'Asbestos (small item)', description: 'Requires licensed handling.', price: 80 },
-    { id: 'chemicals', name: 'Chemicals / Oils (per container)', description: 'Household chemicals & oils.', price: 20 },
+    { id: 'paint-tins', name: 'Paint Tins (per 5)', img: '/images/haz1.jpg', description: 'Part-full or empty tins.', price: 20 },
+    { id: 'gas-canister', name: 'Gas Canister', img: '/images/haz2.jpg', description: 'Camping or BBQ gas bottles.', price: 25 },
+    { id: 'asbestos', name: 'Asbestos (small item)', img: '/images/haz3.jpg', description: 'Requires licensed handling.', price: 80 },
+    { id: 'chemicals', name: 'Chemicals / Oils (per container)', img: '/images/haz4.jpg', description: 'Household chemicals & oils.', price: 20 },
   ],
   'office-items': [
-    { id: 'office-desk', name: 'Office Desk', description: 'Single or double pedestal desk.', price: 35 },
-    { id: 'office-chair', name: 'Office Chair', description: 'Swivel or task chairs.', price: 15 },
-    { id: 'filing-cabinet', name: 'Filing Cabinet', description: '2, 3 or 4 drawer units.', price: 25 },
-    { id: 'partition', name: 'Office Partition', description: 'Freestanding screens & partitions.', price: 30 },
+    { id: 'office-desk', name: 'Office Desk', img: '/images/off1.jpg', description: 'Single or double pedestal desk.', price: 35 },
+    { id: 'office-chair', name: 'Office Chair', img: '/images/off2.jpg', description: 'Swivel or task chairs.', price: 15 },
+    { id: 'filing-cabinet', name: 'Filing Cabinet', img: '/images/off3.jpg', description: '2, 3 or 4 drawer units.', price: 25 },
+    { id: 'partition', name: 'Office Partition', img: '/images/off4.jpg', description: 'Freestanding screens & partitions.', price: 30 },
   ],
   'commercial-items': [
-    { id: 'shop-fittings', name: 'Shop Fittings', description: 'Shelving, racking & display units.', price: 50 },
-    { id: 'catering-equipment', name: 'Catering Equipment', description: 'Commercial kitchen equipment.', price: 60 },
-    { id: 'pallets', name: 'Pallets (per 5)', description: 'Wooden or plastic pallets.', price: 25 },
-    { id: 'signage', name: 'Signage / Displays', description: 'Shop or event signage.', price: 20 },
+    { id: 'shop-fittings', name: 'Shop Fittings', img: '/images/commercial1.jpg', description: 'Shelving, racking & display units.', price: 50 },
+    { id: 'catering-equipment', name: 'Catering Equipment', img: '/images/commercial2.jpg', description: 'Commercial kitchen equipment.', price: 60 },
+    { id: 'pallets', name: 'Pallets (per 5)', img: '/images/commercial3.jpg', description: 'Wooden or plastic pallets.', price: 25 },
+    { id: 'signage', name: 'Signage / Displays', img: '/images/commercial4.jpg', description: 'Shop or event signage.', price: 20 },
   ],
   'bins-wheelie-bins': [
-    { id: 'wheelie-bin', name: 'Wheelie Bin', description: '140L, 240L or 360L bins.', price: 30 },
-    { id: 'builders-bag', name: "Builder's Bag (full)", description: 'Filled rubble / waste bag.', price: 65 },
-    { id: 'black-sacks', name: 'Black Sacks (per 5)', description: 'General household waste bags.', price: 15 },
-    { id: 'skip-bag', name: 'Skip Bag', description: 'Large capacity waste bag.', price: 70 },
+    { id: 'wheelie-bin', name: 'Wheelie Bin', img: '/images/wheele1.jpg', description: '140L, 240L or 360L bins.', price: 30 },
+    { id: 'builders-bag', name: "Builder's Bag (full)", img: '/images/wheele2.jpg', description: 'Filled rubble / waste bag.', price: 65 },
+    { id: 'black-sacks', name: 'Black Sacks (per 5)', img: '/images/wheele3.jpg', description: 'General household waste bags.', price: 15 },
+    { id: 'skip-bag', name: 'Skip Bag', img: '/images/wheele4.jpg', description: 'Large capacity waste bag.', price: 70 },
   ],
 }
 
@@ -364,43 +365,55 @@ export default function ManVanBooking ({ defaultMode = 'lorry', initialCategoryI
                         isSelected ? 'border-[#0497E2] ring-1 ring-[#0497E2]' : 'border-[#0492E8]/10'
                       }`}
                     >
-                      <div className='flex items-start justify-between gap-2'>
-                        <div className='flex size-14 shrink-0 items-center justify-center rounded-lg bg-[#EAF3FB] transition-all duration-300 group-hover:scale-105 group-hover:bg-[#CFE6FA] sm:size-16'>
-                          <Icon className='size-7 text-[#1A68A3] transition-transform duration-300 group-hover:scale-110 sm:size-8' strokeWidth={1.5} />
-                        </div>
+                      <div className='relative flex w-full items-center justify-center overflow-hidden rounded-lg bg-[#F5F8FC]' style={{ height: 'clamp(192px, 20vw, 208px)', flexShrink: 0 }}>
+                        {item.img ? (
+                          <Image
+                            src={item.img}
+                            alt={item.name}
+                            fill
+                            sizes='(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 25vw'
+                            className='object-contain p-3'
+                          />
+                        ) : (
+                          <Icon className='size-16 text-[#1A68A3]' strokeWidth={1.5} aria-hidden='true' />
+                        )}
+                      </div>
+                      <p className='mt-4 text-sm font-bold leading-snug text-[#11224D] transition-colors duration-200 group-hover:text-[#0497E2]'>{item.name}</p>
+                      <p className='mt-2 flex-1 text-xs leading-relaxed text-neutral-500'>{item.description}</p>
+                      <div className='mt-4 flex flex-wrap items-center justify-between gap-2 border-t border-[#0492E8]/10 pt-4'>
+                        <p className='text-lg font-extrabold text-[#0497E2]'>£{item.price.toFixed(2)}</p>
                         {isSelected ? (
-                          <div className='flex shrink-0 items-center gap-1 rounded-md border border-[#0497E2]/30 bg-[#EAF3FB] p-0.5'>
+                          <div className='flex shrink-0 items-center gap-1 rounded-lg border border-[#0497E2]/30 bg-[#EAF3FB] p-1'>
                             <button
                               type='button'
                               onClick={() => changeQty(item, -1)}
-                              className='flex size-6 items-center justify-center rounded text-[#11224D] transition-all duration-150 hover:scale-110 hover:bg-white hover:text-[#0497E2]'
+                              className='flex size-9 items-center justify-center rounded-md text-[#11224D] transition-colors hover:bg-white hover:text-[#0497E2] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0497E2]'
                               aria-label={`Decrease ${item.name} quantity`}
                             >
-                              <Minus className='size-3.5' />
+                              <Minus className='size-4' />
                             </button>
-                            <span className='w-5 text-center text-sm font-bold text-[#11224D]'>{qty}</span>
+                            <span className='min-w-5 text-center text-sm font-bold text-[#11224D]'>{qty}</span>
                             <button
                               type='button'
                               onClick={() => changeQty(item, 1)}
-                              className='flex size-6 items-center justify-center rounded text-[#11224D] transition-all duration-150 hover:scale-110 hover:bg-white hover:text-[#0497E2]'
+                              className='flex size-9 items-center justify-center rounded-md text-[#11224D] transition-colors hover:bg-white hover:text-[#0497E2] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0497E2]'
                               aria-label={`Increase ${item.name} quantity`}
                             >
-                              <Plus className='size-3.5' />
+                              <Plus className='size-4' />
                             </button>
                           </div>
                         ) : (
                           <button
                             type='button'
                             onClick={() => toggleItem(item)}
-                            className='shrink-0 rounded-md border border-[#0492E8]/15 px-2 py-1 text-xs font-bold text-[#4974AF] transition-all duration-200 hover:-translate-y-0.5 hover:border-[#0497E2] hover:bg-[#EAF3FB] hover:text-[#0497E2] hover:shadow-sm'
+                            aria-label={`Add ${item.name}`}
+                            className='inline-flex min-h-11 shrink-0 items-center justify-center gap-1.5 rounded-lg bg-[#11224D] px-4 text-sm font-bold text-white transition-colors hover:bg-[#1A68A3] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0497E2]'
                           >
-                            + Add
+                            <Plus className='size-4' aria-hidden='true' />
+                            Add
                           </button>
                         )}
                       </div>
-                      <p className='mt-3 text-sm font-bold leading-snug text-[#11224D] transition-colors duration-200 group-hover:text-[#0497E2]'>{item.name}</p>
-                      <p className='mt-1 flex-1 text-xs leading-relaxed text-neutral-500'>{item.description}</p>
-                      <p className='mt-3 text-base font-extrabold text-[#0497E2]'>Â£{item.price.toFixed(2)}</p>
                     </div>
                   )
                 })}

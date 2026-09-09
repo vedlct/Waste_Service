@@ -12,11 +12,11 @@ export default function Hero() {
   return (
     <section className='relative flex min-h-svh w-full items-center overflow-hidden bg-sky-50 text-[#102a4c]'>
       <Image
-        src='/images/HeroImage.jpg'
+        src='/images/Spinnaker_Tower.jpg'
         alt='Colour-coded waste and recycling bins in a green public space'
         fill
         sizes='100vw'
-        className='object-cover object-center sm:object-top'
+        className='object-cover object-center sm:object-center'
         priority
       />
 
