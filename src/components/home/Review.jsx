@@ -101,8 +101,8 @@ export default function Review() {
     <section className="w-full bg-linear-to-r from-white via-[#B3E4F8]/40 to-white py-8 text-[#171717]">
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="max-[400px]:flex-wrap flex items-center justify-between mb-4 gap-3">
-        <h2 className="text-lg font-semibold">Customer reviews</h2>
-        <button onClick={() => setShowForm(true)} className="flex items-center gap-1 text-sm px-3 py-1.5 rounded-md bg-[#2563eb] text-[#ffffff] shrink-0">
+        <h2 className="text-lg text-[#11224D] font-semibold bg-white px-3 py-1 rounded-full border border-[#2563EB]/40 shadow">Customer reviews</h2>
+        <button onClick={() => setShowForm(true)} className="flex items-center gap-1 text-sm px-4 py-2 rounded-full bg-[#2563eb] hover:bg-white text-[#ffffff] font-semibold hover:text-[#2563eb] hover:border border-[#2563eb] shadow-md shrink-0">
           <Plus size={14} />Write a review
         </button>
       </div>
