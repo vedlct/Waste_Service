@@ -9,6 +9,7 @@ import Hero from "@/components/home/Hero";
 import HowItWorks from "@/components/home/HowItWorks";
 import AboutUs from "@/components/home/AboutUs";
 import Impact from "@/components/home/Impact";
+import Review from "@/components/home/Review";
 
 export default function Home() {
   return (
@@ -16,10 +17,11 @@ export default function Home() {
       <main>
         <Hero/>
         <SecondaryNav/>
-        <RubbishRemoval/>
         <Order/>
+        <RubbishRemoval/>
         <RubbishService/>
         <QuoteForm/>
+        <Review/>
       </main>
     </div>
   );

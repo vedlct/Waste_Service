@@ -1,4 +1,4 @@
-﻿import Link from 'next/link'
+import Link from 'next/link'
 import { ArrowRight, Camera, Clock3, MessageCircle, Phone, ShieldCheck } from 'lucide-react'
 
 const steps = [
@@ -18,13 +18,13 @@ export default function QuoteForm() {
 
       <div className='relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
         <div className='mx-auto max-w-5xl text-center'>
-          <span className='inline-flex rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-black uppercase tracking-[0.22em] text-[#102a4c] shadow-sm backdrop-blur'>
+          <span className='inline-flex rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-black uppercase tracking-[0.22em] shadow-sm backdrop-blur' style={{ color: '#102a4c' }}>
             Need a little guidance?
           </span>
 
           <h2 className='mt-7 text-3xl font-black leading-[1.02] tracking-[-0.05em] sm:text-4xl lg:text-4xl'>
             You don&apos;t need to work out
-            <span className='block text-[#F4C95D]'>every detail on your own.</span>
+            <span className='block text-white/90'>every detail on your own.</span>
           </h2>
 
           <p className='mx-auto mt-6 max-w-3xl text-base leading-7 text-[#102a4c]/75 sm:text-lg'>
