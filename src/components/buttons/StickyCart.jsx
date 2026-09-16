@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useLayoutEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import Link from 'next/link'
 import { Minus, Plus, ShoppingBag, Trash2, X } from 'lucide-react'
@@ -34,10 +34,6 @@ export default function StickyCart() {
       window.removeEventListener('resize', updateCoords)
       window.removeEventListener('scroll', updateCoords, true)
     }
-  }, [isOpen])
-
-  useEffect(() => {
-    if (!isOpen) setCoords(null)
   }, [isOpen])
 
   if (!ready) return null
