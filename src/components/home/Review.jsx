@@ -32,19 +32,19 @@ const initialReviews = [
   },
   {
     name: "Julie Smith",
-    time: "8 months ago",
+    time: "11 months ago",
     rating: 4,
     text: "I'm glad I decided to go with Mr Tee removals. After long hours of drive to my new house.",
   },
   {
     name: "Julie Smith",
-    time: "8 months ago",
+    time: "2 months ago",
     rating: 3,
     text: "I'm glad I decided to go with Mr Tee removals. After long hours of drive to my new house.",
   },
   {
     name: "Julie Smith",
-    time: "8 months ago",
+    time: "1 months ago",
     rating: 4,
     text: "I'm glad I decided to go with Mr Tee removals. After long hours of drive to my new house.",
   },

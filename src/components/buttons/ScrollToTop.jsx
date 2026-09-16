@@ -22,7 +22,7 @@ export default function ScrollToTop () {
     }
   return (
     <div>
-        <button onClick={scrollToTop} className={`p-5 rounded-full bg-sky-500/50 hover:bg-[#11224D] ${showButton? 'opacity-100': 'opacity-0 pointer-events-none'}`}>
+        <button onClick={scrollToTop} className={`p-5 rounded-full bg-sky-500/50 hover:bg-[#11224D] hover:text-white ${showButton? 'opacity-100': 'opacity-0 pointer-events-none'}`}>
             <ArrowUp size={30}/>
         </button>
     </div>
