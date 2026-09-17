@@ -3,6 +3,7 @@
 @section('title', 'Dashboard')
 @section('eyebrow', 'Overview')
 @section('page-title', 'Dashboard')
+@php($breadcrumbs = [['label' => 'Dashboard']])
 
 @section('content')
 <div class="row g-3">
@@ -25,19 +26,32 @@
     @endforeach
 </div>
 
-<div class="page-panel mt-4 p-4">
-    <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-3">
-        <div>
-            <p class="small fw-bold text-uppercase text-primary mb-1">First module</p>
-            <h2 class="h5 fw-black mb-0">Recent users</h2>
-        </div>
-        <a class="btn btn-tee" href="{{ route('admin.users.index') }}">
-            <i class="bi bi-people-fill me-1"></i>
-            Manage Users
-        </a>
-    </div>
+@component('admin.partials.table-card', ['class' => 'mt-4 p-4'])
+    @slot('header')
+        @component('admin.partials.page-header', ['eyebrow' => 'First module', 'title' => 'Recent users', 'class' => 'mb-3'])
+            @slot('actions')
+                <a class="btn btn-tee" href="{{ route('admin.users.index') }}">
+                    <i class="bi bi-people-fill me-1"></i>
+                    Manage Users
+                </a>
+            @endslot
+        @endcomponent
+    @endslot
 
-    <div class="table-responsive">
+    @if ($recentUsers->isEmpty())
+        @component('admin.partials.empty-state', [
+            'icon' => 'people-fill',
+            'title' => 'No users yet',
+            'message' => 'Create the first admin account to start managing the panel.',
+        ])
+            @slot('actions')
+                <a class="btn btn-tee" href="{{ route('admin.users.create') }}">
+                    <i class="bi bi-plus-lg me-1"></i>
+                    Add User
+                </a>
+            @endslot
+        @endcomponent
+    @else
         <table class="table align-middle mb-0">
             <thead>
                 <tr>
@@ -53,13 +67,23 @@
                     <tr>
                         <td class="fw-bold">{{ $user->name }}</td>
                         <td class="text-muted">{{ $user->email }}</td>
-                        <td><span class="status-pill role">{{ str($user->role)->headline() }}</span></td>
-                        <td><span class="status-pill {{ $user->status === 'active' ? 'active' : 'muted' }}">{{ str($user->status)->headline() }}</span></td>
+                        <td>
+                            @include('admin.partials.status-badge', [
+                                'label' => str($user->role)->headline(),
+                                'class' => 'role',
+                            ])
+                        </td>
+                        <td>
+                            @include('admin.partials.status-badge', [
+                                'label' => str($user->status)->headline(),
+                                'class' => $user->status === 'active' ? 'active' : 'muted',
+                            ])
+                        </td>
                         <td>{{ $user->created_at?->format('d M Y') }}</td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
-    </div>
-</div>
+    @endif
+@endcomponent
 @endsection

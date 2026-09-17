@@ -25,10 +25,19 @@
         .sidebar-link.active i { color:var(--tee-amber); }
         .admin-main { min-width:0; }
         .topbar { background:rgba(255,255,255,.82); backdrop-filter:blur(18px); border-bottom:1px solid var(--tee-line); position:sticky; top:0; z-index:20; }
+        .admin-breadcrumbs { padding:1rem 1.5rem 0; }
+        .admin-breadcrumbs .breadcrumb { --bs-breadcrumb-divider-color:#8b96a9; font-size:.875rem; font-weight:700; }
+        .admin-breadcrumbs a { color:var(--tee-blue); text-decoration:none; }
+        .admin-breadcrumbs a:hover { color:var(--tee-navy); }
+        .admin-breadcrumbs .active { color:#6d7483; }
         .content-wrap { padding:1.5rem; }
         .page-panel { background:#fff; border:1px solid rgba(17,34,77,.08); border-radius:1.25rem; box-shadow:0 24px 60px rgba(17,34,77,.08); }
         .metric-card { background:#fff; border:1px solid rgba(17,34,77,.08); border-radius:1.1rem; padding:1.1rem; min-height:9rem; box-shadow:0 16px 36px rgba(17,34,77,.06); }
         .metric-icon { width:2.75rem; height:2.75rem; border-radius:.9rem; display:grid; place-items:center; color:var(--tee-blue); background:rgba(4,151,226,.1); }
+        .image-preview-frame { aspect-ratio:16/10; border:1px dashed #b8c9d8; border-radius:1rem; background:#f8fafc; display:grid; place-items:center; overflow:hidden; }
+        .image-preview-frame img { width:100%; height:100%; object-fit:cover; }
+        .media-thumb { width:4.5rem; aspect-ratio:4/3; border:1px solid #dbe8f2; border-radius:.85rem; background:#f8fafc; display:grid; place-items:center; overflow:hidden; }
+        .media-thumb img { width:100%; height:100%; object-fit:cover; }
         .btn-tee { --bs-btn-bg:var(--tee-navy); --bs-btn-border-color:var(--tee-navy); --bs-btn-color:#fff; --bs-btn-hover-bg:var(--tee-blue); --bs-btn-hover-border-color:var(--tee-blue); --bs-btn-hover-color:#fff; border-radius:.8rem; font-weight:800; }
         .btn-outline-tee { --bs-btn-color:var(--tee-navy); --bs-btn-border-color:rgba(17,34,77,.2); --bs-btn-hover-bg:var(--tee-navy); --bs-btn-hover-border-color:var(--tee-navy); --bs-btn-hover-color:#fff; border-radius:.8rem; font-weight:800; }
         .status-pill { display:inline-flex; align-items:center; gap:.35rem; border-radius:999px; padding:.35rem .65rem; font-size:.75rem; font-weight:800; }
@@ -53,6 +62,7 @@
                 </div>
                 <nav class="mt-4">
                     <a class="sidebar-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}" href="{{ route('admin.dashboard') }}"><i class="bi bi-grid-1x2-fill"></i>Dashboard</a>
+                    <a class="sidebar-link {{ request()->routeIs('admin.media.*') ? 'active' : '' }}" href="{{ route('admin.media.index') }}"><i class="bi bi-images"></i>Media</a>
                     <a class="sidebar-link {{ request()->routeIs('admin.users.*') ? 'active' : '' }}" href="{{ route('admin.users.index') }}"><i class="bi bi-people-fill"></i>Users</a>
                     <a class="sidebar-link {{ request()->routeIs('admin.profile.*') ? 'active' : '' }}" href="{{ route('admin.profile.edit') }}"><i class="bi bi-person-gear"></i>My Profile</a>
                 </nav>
@@ -77,6 +87,9 @@
                         </div>
                     </div>
                 </header>
+                @isset($breadcrumbs)
+                    @include('admin.partials.breadcrumbs', ['items' => $breadcrumbs])
+                @endisset
                 <main class="content-wrap">@yield('content')</main>
             </div>
         </div>

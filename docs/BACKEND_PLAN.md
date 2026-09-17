@@ -91,6 +91,8 @@ Use this direction for future admin modules:
 - Redirected `/` and `/home` into the admin flow.
 - Set auth redirects to `/admin`.
 - Created a custom modern login screen using CDN assets and frontend imagery.
+- Extracted the login screen treatment into a reusable auth shell partial.
+- Redesigned password reset link, password reset, and password confirmation screens to match the custom login/auth treatment.
 - Created an admin layout with:
   - Sidebar.
   - Topbar.
@@ -103,7 +105,26 @@ Use this direction for future admin modules:
 - Added a logged-in admin profile screen.
 - Added profile details update.
 - Added current-password-protected password update.
+- Extracted profile details/password validation into dedicated Form Request classes.
 - Added shared Bootstrap delete confirmation modal behavior for admin screens.
+- Added `admin` route middleware to block inactive users and non-admin roles from admin routes.
+- Added shared admin controller flash helpers for success/error toastr messages.
+- Added shared admin DataTables helpers for table creation, partial rendering, badge rendering, and date formatting.
+- Added reusable admin Blade partials for:
+  - Page section headers with action slots.
+  - Standard page panels.
+  - Table cards.
+  - Empty states.
+  - Breadcrumbs.
+  - Status badges.
+  - Publish toggles.
+  - Sort order fields.
+  - Image preview upload fields.
+  - SEO fields.
+- Refactored Dashboard, Users, and Profile screens to use the shared admin partials.
+- Added breadcrumb trails for Dashboard, Profile, and Users screens.
+- Replaced the Users-only badge partial with the shared admin status badge partial.
+- Refactored the Users server-side DataTables endpoint to use shared admin table helpers.
 
 ### Users Module
 
@@ -118,12 +139,28 @@ Use this direction for future admin modules:
 - Added statuses: `active`, `inactive`.
 - Updated `User` model fillable/casts for admin metadata.
 - Replaced native browser delete confirmation with the shared Bootstrap delete modal.
+- Extracted Users create/update validation into dedicated Form Request classes.
 
 ### Assets
 
 - Copied required frontend assets into backend public assets:
   - `public/images/MainLogo.png`
   - `public/images/HeroImage.jpg`
+- Added media upload configuration at `backend/config/media.php`.
+- Documented the upload storage approach in `docs/media-storage.md`.
+
+### Media Library
+
+- Added `MediaAsset` model for the existing `media_assets` table.
+- Added `/admin/media` Media Library list screen.
+- Added `/admin/media/data` Yajra DataTables endpoint.
+- Added `/admin/media/create` upload screen.
+- Added `/admin/media` upload handler.
+- Added media preview and file detail partials.
+- Added Media sidebar navigation.
+- Reused the shared admin DataTables helpers and status badge partials.
+- Added config-driven media upload validation for images and PDFs.
+- Stored uploads on the configured media disk under dated Media Library folders.
 
 ### Verification Done
 
@@ -134,6 +171,7 @@ Use this direction for future admin modules:
 - `php8.4 /usr/local/bin/composer validate --no-check-publish`
 - `php8.4 artisan view:cache`
 - `php8.4 artisan view:clear`
+- `php8.4 artisan test --filter=AdminPanelTest`
 - Local HTTP checks:
   - `/login` returns 200.
   - `/admin` redirects to `/login` when unauthenticated.
@@ -158,50 +196,51 @@ Tasks:
 
 - Review the approved admin design across desktop/mobile.
 - Add a reusable admin view structure for:
-  - Page headers.
-  - Breadcrumbs.
-  - Form panels.
-  - DataTable wrappers.
+  - Page headers. Initial shared partial added.
+  - Breadcrumbs. Initial shared partial added.
+  - Form panels. Initial shared panel partial added.
+  - DataTable wrappers. Initial shared table-card partial added.
   - Delete confirmations. Initial shared Bootstrap modal added.
-  - Empty states.
-- Add middleware or policies for admin-only access if public frontend user auth is later introduced.
+  - Empty states. Initial shared empty-state partial added.
+- Add middleware or policies for admin-only access if public frontend user auth is later introduced. Initial `admin` route middleware added.
 - Add profile/password update screen for logged-in admin users. Done.
-- Decide whether to keep the generated password reset flow as-is or redesign it to match the login page.
+- Decide whether to keep the generated password reset flow as-is or redesign it to match the login page. Done; reset and confirm views now use the shared auth shell.
 - Add route-level tests for auth, dashboard, profile, and the Users module. In progress; current admin/profile/users coverage exists.
+- Harden repeated admin test runs against shared MySQL data collisions. Done.
 
 ### Phase 2: Shared Admin Infrastructure
 
-Status: Not started.
+Status: In progress.
 
 Tasks:
 
-- Add reusable form request classes for validation.
+- Add reusable form request classes for validation. Initial Profile and Users requests added.
 - Add base admin controller helpers if repeated patterns emerge.
-- Add consistent flash helper behavior for toastr.
-- Add standard server-side DataTables response conventions.
+- Add consistent flash helper behavior for toastr. Initial controller flash helper trait added.
+- Add standard server-side DataTables response conventions. Initial controller helper concern added.
 - Add shared Blade partials/components for:
-  - Status badges.
-  - Publish toggles.
-  - Sort order fields.
-  - Image preview fields.
-  - SEO fields.
+  - Status badges. Initial shared partial added.
+  - Publish toggles. Initial shared partial added.
+  - Sort order fields. Initial shared partial added.
+  - Image preview fields. Initial shared partial added.
+  - SEO fields. Initial shared partial added.
 - Extend the initial confirmation modal pattern as new modules are added.
-- Decide and document upload storage approach: public disk, naming conventions, validation rules, image dimensions.
+- Decide and document upload storage approach: public disk, naming conventions, validation rules, image dimensions. Done; see `docs/media-storage.md` and `backend/config/media.php`.
 
 ### Phase 3: Media Library
 
-Status: Not started.
+Status: In progress.
 
 Tasks:
 
-- Admin list of media assets.
-- Upload image/file.
+- Admin list of media assets. Initial DataTables list added.
+- Upload image/file. Initial upload form and handler added.
 - Edit alt text and metadata.
 - Delete unused media safely.
-- Reuse existing `media_assets` table.
+- Reuse existing `media_assets` table. Done.
 - Add API shape for frontend image URLs.
-- Add validation for mime type and max size.
-- Add thumbnail/preview UI.
+- Add validation for mime type and max size. Initial config-driven image/PDF validation added.
+- Add thumbnail/preview UI. Initial list preview added.
 
 ### Phase 4: Site Settings
 

@@ -3,36 +3,38 @@
 @section('title', 'Users')
 @section('eyebrow', 'User Management')
 @section('page-title', 'Users')
+@php($breadcrumbs = [
+    ['label' => 'Dashboard', 'url' => route('admin.dashboard')],
+    ['label' => 'Users'],
+])
 
 @section('content')
-<div class="page-panel p-4">
-    <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
-        <div>
-            <p class="small fw-bold text-uppercase text-primary mb-1">Admin accounts</p>
-            <h2 class="h5 fw-black mb-0">Manage panel users</h2>
-        </div>
-        <a class="btn btn-tee" href="{{ route('admin.users.create') }}">
-            <i class="bi bi-plus-lg me-1"></i>
-            Add User
-        </a>
-    </div>
+@component('admin.partials.table-card')
+    @slot('header')
+        @component('admin.partials.page-header', ['eyebrow' => 'Admin accounts', 'title' => 'Manage panel users'])
+            @slot('actions')
+                <a class="btn btn-tee" href="{{ route('admin.users.create') }}">
+                    <i class="bi bi-plus-lg me-1"></i>
+                    Add User
+                </a>
+            @endslot
+        @endcomponent
+    @endslot
 
-    <div class="table-responsive">
-        <table id="users-table" class="table table-hover w-100">
-            <thead>
-                <tr>
-                    <th>User</th>
-                    <th>Email</th>
-                    <th>Role</th>
-                    <th>Status</th>
-                    <th>Last Login</th>
-                    <th>Created</th>
-                    <th class="text-end">Actions</th>
-                </tr>
-            </thead>
-        </table>
-    </div>
-</div>
+    <table id="users-table" class="table table-hover w-100">
+        <thead>
+            <tr>
+                <th>User</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Status</th>
+                <th>Last Login</th>
+                <th>Created</th>
+                <th class="text-end">Actions</th>
+            </tr>
+        </thead>
+    </table>
+@endcomponent
 @endsection
 
 @push('scripts')

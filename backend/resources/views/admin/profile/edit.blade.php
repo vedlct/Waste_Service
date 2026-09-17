@@ -3,18 +3,23 @@
 @section('title', 'My Profile')
 @section('eyebrow', 'Account Settings')
 @section('page-title', 'My Profile')
+@php($breadcrumbs = [
+    ['label' => 'Dashboard', 'url' => route('admin.dashboard')],
+    ['label' => 'My Profile'],
+])
 
 @section('content')
 <div class="row g-4">
     <div class="col-xl-7">
-        <div class="page-panel p-4 h-100">
-            <div class="d-flex align-items-start justify-content-between gap-3 mb-4">
-                <div>
-                    <p class="small fw-bold text-uppercase text-primary mb-1">Profile details</p>
-                    <h2 class="h5 fw-black mb-0">Your admin account</h2>
-                </div>
-                <span class="status-pill {{ $user->status === 'active' ? 'active' : 'muted' }}">{{ str($user->status)->headline() }}</span>
-            </div>
+        @component('admin.partials.panel', ['class' => 'p-4 h-100'])
+            @component('admin.partials.page-header', ['eyebrow' => 'Profile details', 'title' => 'Your admin account'])
+                @slot('actions')
+                    @include('admin.partials.status-badge', [
+                        'label' => str($user->status)->headline(),
+                        'class' => $user->status === 'active' ? 'active' : 'muted',
+                    ])
+                @endslot
+            @endcomponent
 
             <form method="POST" action="{{ route('admin.profile.update') }}">
                 @csrf
@@ -51,11 +56,11 @@
                     </button>
                 </div>
             </form>
-        </div>
+        @endcomponent
     </div>
 
     <div class="col-xl-5">
-        <div class="page-panel p-4 h-100">
+        @component('admin.partials.panel', ['class' => 'p-4 h-100'])
             <div class="metric-icon mb-3"><i class="bi bi-shield-lock-fill"></i></div>
             <p class="small fw-bold text-uppercase text-primary mb-1">Password</p>
             <h2 class="h5 fw-black mb-3">Update password</h2>
@@ -86,7 +91,7 @@
                     Update Password
                 </button>
             </form>
-        </div>
+        @endcomponent
     </div>
 </div>
 @endsection
