@@ -25,6 +25,8 @@ This repository root is an orchestration workspace, not a single application.
 ## Backend Notes
 
 - Work from `backend/` for Laravel/admin/API tasks.
+- Before starting backend/admin/API work, read `docs/BACKEND_PLAN.md`.
+- Keep `docs/BACKEND_PLAN.md` updated after every backend/admin/API change so the team can track completed work, active decisions, and next steps through the end of the project.
 - Key files and folders:
   - `backend/composer.json` - PHP dependencies and Laravel scripts.
   - `backend/app/` - application code.
@@ -48,6 +50,7 @@ This repository root is an orchestration workspace, not a single application.
 ## Docs Workflow
 
 - Check `docs/README.md` first when looking for project context.
+- For backend/admin/API work, check and maintain `docs/BACKEND_PLAN.md` in addition to the other long-lived docs.
 - Put requirements and decisions in `docs/` instead of burying them in chat history.
 - Update this root `AGENTS.md` when new top-level directories, services, or important workflows are added.
 
