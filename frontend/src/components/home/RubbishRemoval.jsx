@@ -26,19 +26,19 @@ const services = [
 
 export default function RubbishRemoval() {
   return (
-    <section style={{ backgroundColor: '#81D4FA' }} className='relative overflow-hidden py-12 text-[#102a4c] sm:py-14 lg:py-16'>
-      <div aria-hidden='true' className='absolute -left-32 top-10 size-80 rounded-full border-[70px] border-white/[0.06]' />
-      <div aria-hidden='true' className='absolute -right-24 bottom-0 size-72 rounded-full bg-[#BFE8FF]/20 blur-3xl' />
+    <section className='relative overflow-hidden py-12 bg-linear-to-r from-[#0492E8]/20 via-white to-white text-[#102a4c] sm:py-14 lg:py-16'>
+      <div aria-hidden='true' className='absolute -left-32 top-10 size-80 rounded-full border-[70px] border-white/40' />
+      <div aria-hidden='true' className='absolute -right-24 bottom-0 size-72 rounded-full bg-[white] blur-3xl' />
 
       <div className='relative mx-auto grid max-w-7xl gap-8 px-4 sm:px-6 lg:grid-cols-[0.68fr_1.32fr] lg:gap-10 lg:px-8 xl:gap-12'>
         <div className='lg:sticky lg:top-28 lg:self-start'>
-          <span className='inline-flex rounded-full border border-white/25 bg-[#037CC8]/30 px-3.5 py-1.5 text-[0.68rem] font-black uppercase tracking-[0.18em] text-white/90 backdrop-blur'>
+          <span className='inline-flex rounded-full border border-white/25 bg-[#037CC8]/20 px-3.5 py-1.5 text-[0.68rem] font-black uppercase tracking-[0.18em] text-[#0492E8] backdrop-blur'>
             What we collect
           </span>
 
           <h2 className='mt-5 max-w-xl text-3xl font-black leading-[1.06] tracking-[-0.035em] sm:text-4xl lg:text-4xl'>
             Rubbish removal,
-            <span className='block text-[#C8EEFF]'>made straightforward.</span>
+            <span className='block text-[#0492E8]'>made straightforward.</span>
           </h2>
 
           <p className='mt-5 max-w-lg text-sm leading-6 text-[#102a4c]/80 sm:text-base sm:leading-7'>
@@ -66,7 +66,7 @@ export default function RubbishRemoval() {
               <Link
                 key={service.title}
                 href={service.href}
-                className='group relative flex min-h-40 flex-col justify-between overflow-hidden rounded-[1.4rem] border border-white/20 bg-[#037CC8]/35 p-4 shadow-sm backdrop-blur-sm transition-all duration-500 hover:-translate-y-1.5 hover:border-white hover:bg-white hover:shadow-2xl hover:shadow-black/20 focus-visible:-translate-y-1 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#C8EEFF] sm:min-h-44 sm:p-5'
+                className='group relative flex min-h-40 flex-col justify-between overflow-hidden rounded-[1.4rem] border border-white/20 bg-[#0492E8] p-4 shadow-sm backdrop-blur-sm transition-all duration-500 hover:-translate-y-1.5 hover:border-white hover:bg-white hover:shadow-2xl hover:shadow-black/20 focus-visible:-translate-y-1 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#C8EEFF] sm:min-h-44 sm:p-5'
               >
                 <div aria-hidden='true' className='absolute -right-10 -top-10 size-32 rounded-full bg-white/10 transition-transform duration-700 group-hover:scale-[2.2]' />
 
