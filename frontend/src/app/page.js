@@ -10,8 +10,18 @@ import HowItWorks from "@/components/home/HowItWorks";
 import AboutUs from "@/components/home/AboutUs";
 import Impact from "@/components/home/Impact";
 import Review from "@/components/home/Review";
+import { apiGet, timeAgo } from "@/lib/api";
+import { metadataFor } from "@/lib/seo"
 
-export default function Home() {
+// Title and description come from the SEO fields in the admin, with this fallback
+// when the backend is unreachable.
+export function generateMetadata() {
+  return metadataFor('/', { title: 'MR. TEE Removals | Rubbish Removal and Clearance' })
+}
+
+export default async function Home() {
+  const reviews = await apiGet("reviews?limit=12");
+
   return (
     <div>
       <main>
@@ -21,7 +31,14 @@ export default function Home() {
         <RubbishRemoval/>
         <RubbishService/>
         <QuoteForm/>
-        <Review/>
+        <Review
+          reviews={reviews?.map((review) => ({
+            name: review.reviewer_name,
+            time: timeAgo(review.published_at),
+            rating: review.rating,
+            text: review.body,
+          }))}
+        />
       </main>
     </div>
   );

@@ -8,7 +8,7 @@ const benefits = [
   'Fully insured with Waste Carriers Licence',
   '95% of all waste successfully recycled',
   'Clearance teams working 6 days a week',
-  'Covering the Home Counties',
+  'Covering Portsmouth and the surrounding area',
   'Wait & Load branded vehicles',
   'Friendly & reliable collection team',
   'Best local rubbish removal & skip prices',
@@ -33,7 +33,7 @@ export default function RubbishClearance() {
           </div>
 
           <p className='border-l-2 border-[#F4B942] pl-5 text-base leading-7 text-slate-600 sm:text-lg'>
-            Waste Services Ltd provides trusted domestic and commercial rubbish clearance throughout the Home Counties, with experienced teams who manage every collection safely and efficiently.
+            Waste Services Ltd provides trusted domestic and commercial rubbish clearance throughout Portsmouth and the surrounding area, with experienced teams who manage every collection safely and efficiently.
           </p>
         </div>
 
@@ -48,7 +48,7 @@ export default function RubbishClearance() {
             />
             <div className='absolute inset-0 bg-linear-to-t from-[#0492E8] via-[#0492E8]/20 to-transparent' />
             <div className='absolute inset-x-0 bottom-0 p-6 text-[#102a4c] sm:p-8 lg:p-10'>
-              <span className='text-xs font-black uppercase tracking-[0.2em] text-[#8FD3F4]'>01 Â· Local expertise</span>
+              <span className='text-xs font-black uppercase tracking-[0.2em] text-[#8FD3F4]'>01 · Local expertise</span>
               <h3 className='mt-3 max-w-xl text-3xl font-black leading-tight sm:text-4xl'>Experienced people, careful work.</h3>
               <p className='mt-4 max-w-2xl text-sm leading-6 text-[#102a4c]/75 sm:text-base'>
                 Our staff bring years of practical experience to every job and complete all work in line with Health and Safety guidelines. We do the lifting, loading and final sweep so your space is left ready to use.
@@ -70,7 +70,7 @@ export default function RubbishClearance() {
               />
             </div>
             <div className='flex flex-col justify-center p-6'>
-              <span className='text-xs font-black uppercase tracking-[0.18em] text-[#0497E2]'>02 Â· Responsible</span>
+              <span className='text-xs font-black uppercase tracking-[0.18em] text-[#0497E2]'>02 · Responsible</span>
               <h3 className='mt-3 text-2xl font-black leading-tight text-[#11224D]'>Waste handled the right way.</h3>
               <p className='mt-3 text-sm leading-6 text-slate-600'>
                 As an approved waste carrier, we aim to recycle upwards of 95% of everything collected and reduce unnecessary landfill.
@@ -88,10 +88,10 @@ export default function RubbishClearance() {
             />
             <div className='absolute inset-0 bg-linear-to-r from-[#0492E8]/90 via-[#0492E8]/45 to-transparent' />
             <div className='absolute inset-y-0 left-0 flex max-w-sm flex-col justify-center p-6 text-[#102a4c] sm:p-8'>
-              <span className='text-xs font-black uppercase tracking-[0.18em] text-[#F4B942]'>03 Â· Dependable</span>
+              <span className='text-xs font-black uppercase tracking-[0.18em] text-[#F4B942]'>03 · Dependable</span>
               <h3 className='mt-3 text-2xl font-black leading-tight sm:text-3xl'>Ready when your collection is.</h3>
               <p className='mt-3 text-sm leading-6 text-[#102a4c]/75'>
-                Branded vehicles and friendly teams work six days a week across the Home Counties.
+                Branded vehicles and friendly teams work six days a week across Portsmouth and the surrounding area.
               </p>
             </div>
             <span className='absolute bottom-6 right-6 flex size-11 items-center justify-center rounded-full bg-white text-[#11224D] transition-all duration-500 group-hover:-translate-y-1 group-hover:bg-[#F4B942]'>

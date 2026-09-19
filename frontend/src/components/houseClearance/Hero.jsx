@@ -1,13 +1,26 @@
 ﻿import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, Check, Phone } from 'lucide-react';
+import { heroContent } from '@/lib/services';
+import { FALLBACK_CONTACT, telHref } from '@/lib/site';
 
-export default function Hero() {
+// Shown when the backend is unreachable.
+const FALLBACK_HERO = {
+  title: 'House clearance and rubbish removal in Portsmouth',
+  description: 'Save time, heavy lifting and trips to the local tip. Our experienced team clears single items, rooms and complete properties with care.',
+  image: '/images/Garbage.jpg',
+  imageAlt: 'House clearance and rubbish removal service in Portsmouth',
+};
+
+export default function Hero({ service, phone = FALLBACK_CONTACT.phone }) {
+  const hero = heroContent(service, FALLBACK_HERO);
+
   return (
     <section className="relative isolate min-h-[620px] overflow-hidden bg-sky-50 sm:min-h-[660px] lg:min-h-[700px]">
       <Image
-        src="/images/Garbage.jpg"
-        alt="House clearance and rubbish removal service in Chingford"
+        src={hero.image}
+        alt={hero.imageAlt}
+        unoptimized={!hero.image.startsWith('/')}
         fill
         priority
         sizes="100vw"
@@ -24,11 +37,11 @@ export default function Hero() {
           </div>
 
           <h1 className="mt-5 text-3xl font-bold leading-[1.08] tracking-tight sm:text-4xl lg:text-4xl">
-            House clearance and rubbish removal in Chingford
+            {hero.title}
           </h1>
 
           <p className="mt-5 text-sm leading-7 text-[#102a4c]/78 sm:text-base">
-            Save time, heavy lifting and trips to the local tip. Our experienced team clears single items, rooms and complete properties with care.
+            {hero.description}
           </p>
 
           <div className="mt-6 grid gap-2 sm:grid-cols-2">
@@ -51,8 +64,8 @@ export default function Hero() {
               <ArrowRight className="size-4 transition-transform duration-300 group-hover/cta:translate-x-1" aria-hidden="true" />
             </Link>
             <a
-              href="tel:02082266477"
-              aria-label="Call 020 8226 6477"
+              href={telHref(phone)}
+              aria-label={`Call ${phone}`}
               className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-white/30 px-5 py-3 text-sm font-bold text-[#102a4c] transition duration-300 hover:border-white hover:bg-white hover:text-[#102a4c] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
             >
               <Phone className="size-4" aria-hidden="true" />

@@ -25,7 +25,7 @@ export default function FlyTippingServices() {
           <div>
             <div className="flex items-center gap-3 text-xs font-extrabold uppercase tracking-[0.18em] text-[#ffd126] sm:text-sm">
               <span className="h-0.5 w-9 bg-[#ffd126]" aria-hidden="true" />
-              Chingford fly-tipping response
+              Portsmouth fly-tipping response
             </div>
             <h2 className="mt-5 text-3xl font-bold leading-[1.04] tracking-tight sm:text-4xl lg:text-4xl">
               From dumped waste
@@ -37,7 +37,7 @@ export default function FlyTippingServices() {
               Fly-tipped rubbish can be disruptive, unsafe and difficult to manage alone. We organise the collection around the waste type, site access and urgency of the situation.
             </p>
             <p className="mt-4 text-sm leading-7 text-[#102a4c]/50 sm:text-base">
-              No load is automatically too small or too largeâ€”share the details and we will advise on the most suitable response.
+              No load is automatically too small or too large—share the details and we will advise on the most suitable response.
             </p>
           </div>
         </div>

@@ -41,7 +41,7 @@ export default function FlyTippedRubbishRemoval() {
       eyebrow="Fly-tipping clearance directory"
       heading="Remove dumped waste."
       accent="Restore the area quickly."
-      intro="Our branded teams clear fly-tipped waste across London and the Home Counties, often with same-day availability."
+      intro="Our branded teams clear fly-tipped waste across Portsmouth and the surrounding area, often with same-day availability."
       note="Send the location and waste details so we can assess access and collection needs."
       categories={categories}
       images={images}

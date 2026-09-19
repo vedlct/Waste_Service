@@ -1,6 +1,7 @@
 ﻿import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight, ArrowUpRight, Clock3, Mail, MapPin, MessageCircle, Phone } from 'lucide-react'
+import { FALLBACK_CONTACT, telHref } from '@/lib/site'
 
 const services = [
   { label: 'House Clearance', href: '/houseClearance' },
@@ -16,7 +17,7 @@ const companyLinks = [
   { label: 'Contact Us', href: '/contactUs' },
 ]
 
-export default function Footer() {
+export default function Footer({ contact = FALLBACK_CONTACT }) {
   return (
     <footer className='relative overflow-hidden border-t border-sky-100 bg-linear-to-b from-[#E7F6FD] to-white text-[#0A1B3D]'>
       <div aria-hidden='true' className='pointer-events-none absolute -right-28 -top-28 size-72 rounded-full bg-white/70 blur-3xl sm:size-96' />
@@ -28,7 +29,7 @@ export default function Footer() {
           </Link>
 
           <p className='mt-5 max-w-sm text-sm leading-6 text-[#0A1B3D]/70 sm:text-base'>
-            Reliable rubbish collection for homes and businesses across the Home Counties.
+            Reliable rubbish collection for homes and businesses across Portsmouth and the surrounding area.
           </p>
 
           <div className='mt-6 flex flex-wrap gap-3'>
@@ -49,17 +50,17 @@ export default function Footer() {
         <div>
           <h2 className='text-sm font-bold uppercase tracking-[0.18em] text-[#102A4C]'>Get in touch</h2>
           <div className='mt-5 space-y-2 text-sm text-[#0A1B3D]/75 sm:text-base'>
-            <ContactLink href='tel:02082266477' icon={Phone}>020 8226 6477</ContactLink>
-            <ContactLink href='mailto:info@wasteservices.com' icon={Mail}>info@wasteservices.com</ContactLink>
-            <InfoRow icon={MapPin}>Serving the Home Counties</InfoRow>
-            <InfoRow icon={Clock3}>Monâ€“Sat, 7:00amâ€“7:00pm</InfoRow>
+            <ContactLink href={telHref(contact.phone)} icon={Phone}>{contact.phone}</ContactLink>
+            <ContactLink href={`mailto:${contact.email}`} icon={Mail}>{contact.email}</ContactLink>
+            <InfoRow icon={MapPin}>{contact.location}</InfoRow>
+            <InfoRow icon={Clock3}>{contact.openingHours}</InfoRow>
           </div>
         </div>
       </div>
 
       <div className='border-t border-sky-200 bg-[#DDF2FC]'>
         <div className='container mx-auto flex flex-col gap-4 px-4 py-5 text-xs text-[#0A1B3D]/60 sm:px-6 md:flex-row md:items-center md:justify-between lg:px-8'>
-          <p>Â© {new Date().getFullYear()} Waste Services. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Waste Services. All rights reserved.</p>
           <div className='flex flex-wrap gap-x-5 gap-y-2'>
             <Link href='/contactUs' className='rounded-sm transition-colors duration-300 hover:text-[#0497E2] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#8FC5EB]'>Privacy enquiries</Link>
             <Link href='/contactUs' className='rounded-sm transition-colors duration-300 hover:text-[#0497E2] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#8FC5EB]'>Terms enquiries</Link>

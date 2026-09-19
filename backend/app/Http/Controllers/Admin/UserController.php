@@ -78,6 +78,10 @@ class UserController extends Controller
             return $this->error(back(), 'You cannot delete your own account.');
         }
 
+        if ($user->role === 'super_admin' && $user->status === 'active' && User::activeSuperAdminCount() <= 1) {
+            return $this->error(back(), 'This is the last active super admin and cannot be deleted.');
+        }
+
         $user->delete();
 
         return $this->success(redirect()->route('admin.users.index'), 'User deleted successfully.');

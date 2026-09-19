@@ -3,14 +3,14 @@ import Link from 'next/link';
 import { ArrowRight, Check, Clock3, Phone, Recycle, ShieldCheck } from 'lucide-react';
 
 const benefits = [
-  'Trusted London house clearance service',
+  'Trusted Portsmouth house clearance service',
   '95% of collected waste recycled',
   'Recognisable Wait & Load vehicles',
   'Reliable local Man & Van teams',
   'clearance appointments six days a week',
   'Friendly, experienced collection crews',
   'Fully insured and licensed waste carrier',
-  'London and Home Counties coverage',
+  'Portsmouth and surrounding area coverage',
   'Clear, competitive local pricing',
 ];
 
@@ -57,7 +57,7 @@ export default function WhyChooseUs() {
               Clearing a Home can feel like a large job. We make it manageable with dependable crews, flexible availability and responsible handling from collection to disposal.
             </p>
 
-            <ul className="mt-8 grid gap-x-6 gap-y-3 sm:grid-cols-2" aria-label="Reasons to choose London waste Services">
+            <ul className="mt-8 grid gap-x-6 gap-y-3 sm:grid-cols-2" aria-label="Reasons to choose our Portsmouth waste services">
               {benefits.map((benefit) => (
                 <li
                   key={benefit}
@@ -96,7 +96,7 @@ export default function WhyChooseUs() {
               </div>
 
               <h3 className="mt-5 text-3xl font-bold leading-tight text-white sm:text-4xl lg:text-4xl">
-                24-hour house clearance availability in Chingford
+                24-hour house clearance availability in Portsmouth
               </h3>
 
               <p className="mt-6 text-base leading-8 text-white/78 sm:text-lg">

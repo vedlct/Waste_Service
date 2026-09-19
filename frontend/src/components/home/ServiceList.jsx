@@ -41,8 +41,8 @@ const services = [
   {
     image: '/images/img5.jpg',
     title: 'Local Areas Covered',
-    eyebrow: 'Across the Home Counties',
-    description: 'Reliable rubbish collection delivered by local clearance teams throughout the Home Counties, with flexible availability for homes and businesses.',
+    eyebrow: 'Across Portsmouth',
+    description: 'Reliable rubbish collection delivered by local clearance teams throughout Portsmouth and the surrounding area, with flexible availability for homes and businesses.',
     href: '/area',
   },
 ]

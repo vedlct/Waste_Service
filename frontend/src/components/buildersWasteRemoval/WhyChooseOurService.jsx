@@ -3,14 +3,14 @@ import Link from 'next/link';
 import { ArrowRight, Check, Recycle, ShieldCheck } from 'lucide-react';
 
 const reasons = [
-  'Trusted London builders waste service',
+  'Trusted Portsmouth builders waste service',
   '95% of collected waste recycled',
   'Branded Wait & Load vehicles',
   'Reliable Man & Van teams',
   'Collections six days a week',
   'Friendly experienced crews',
   'Fully insured and licensed',
-  'London and Home Counties coverage',
+  'Portsmouth and surrounding area coverage',
   'Clear competitive pricing',
 ];
 

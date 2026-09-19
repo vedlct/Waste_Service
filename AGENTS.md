@@ -21,6 +21,11 @@ This repository root is an orchestration workspace, not a single application.
   - `npm run dev`
   - `npm run build`
   - `npm run lint`
+  - `npm test` (Node's built-in runner over `frontend/tests/**/*.test.mjs`; no extra dependencies)
+- Files under `frontend/src/lib/` that tests import must use relative imports, not the `@/` alias, because Node's test runner does not resolve it.
+- The frontend reads from and submits to the backend's `/api/v1` API through `frontend/src/lib/api.js`. Copy `frontend/.env.example` to `frontend/.env.local` and set `NEXT_PUBLIC_API_URL` to the backend base URL. It is inlined at build time, so rebuild after changing it.
+- Every page that reads from the API keeps a hardcoded fallback, so the frontend builds and renders with the backend stopped.
+- The API contract is `docs/api.md`.
 
 ## Backend Notes
 
@@ -44,8 +49,14 @@ This repository root is an orchestration workspace, not a single application.
 ## Environment Notes
 
 - The backend was installed with `php8.4 /usr/local/bin/composer create-project laravel/laravel backend`.
-- The backend is Laravel 13 and requires PHP `^8.3`; use `php8.4` for Artisan and Composer commands unless the system default PHP is changed.
-- The initial Laravel post-install migration warned that the SQLite PHP driver is missing for PHP 8.4. Install/enable the SQLite extension or configure another database before relying on migrations.
+- The backend is Laravel 13. `composer.lock` pins Symfony 8.1, which requires PHP >= 8.4.1, so PHP 8.4 is the real minimum.
+- On this Windows/Laragon machine, PHP 8.4.25 lives at `G:/laragon/bin/php/php-8.4.25-Win32-vs17-x64/php.exe`. The default CLI `php` is still 8.3.16 and cannot run the backend, so call the 8.4 binary explicitly:
+  - `G:/laragon/bin/php/php-8.4.25-Win32-vs17-x64/php.exe artisan test`
+  - `G:/laragon/bin/php/php-8.4.25-Win32-vs17-x64/php.exe C:/ProgramData/ComposerSetup/bin/composer.phar install`
+- Local database is MySQL `mr_tee` on Laragon's MySQL (root, no password). The legacy `mrtree` database on the same server is unrelated and must not be touched.
+- Tests run against a separate `mr_tee_testing` database (set in `backend/phpunit.xml`) and are rolled back after each test. They must never be pointed at `mr_tee`; the base `TestCase` refuses to.
+- Production deployment, the `.env` checklist, and backups are in `docs/deployment.md`. Never run `db:seed` against production once it has data.
+- See `docs/BACKEND_PLAN.md` under Known Environment Notes for the full Laragon setup details.
 
 ## Docs Workflow
 

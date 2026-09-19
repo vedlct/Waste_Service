@@ -5,23 +5,15 @@ namespace Tests\Feature;
 use App\Models\MediaAsset;
 use App\Models\User;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class MediaLibraryTest extends TestCase
 {
-    private function useMysqlDatabase(): void
-    {
-        config([
-            'database.default' => 'mysql',
-            'database.connections.mysql.database' => 'mr_tee',
-        ]);
-    }
-
     public function test_admin_can_view_media_library_and_data(): void
     {
-        $this->useMysqlDatabase();
         $token = Str::uuid()->toString();
 
         $admin = User::query()->updateOrCreate(
@@ -58,7 +50,6 @@ class MediaLibraryTest extends TestCase
 
     public function test_admin_can_upload_image_to_media_library(): void
     {
-        $this->useMysqlDatabase();
         Storage::fake('public');
         $token = Str::uuid()->toString();
 
@@ -94,5 +85,130 @@ class MediaLibraryTest extends TestCase
         $this->assertSame(800, $media->height);
 
         Storage::disk('public')->assertExists($media->path);
+    }
+
+    public function test_admin_can_update_media_alt_text_and_metadata(): void
+    {
+        $token = Str::uuid()->toString();
+
+        $admin = User::query()->updateOrCreate(
+            ['email' => "media-edit-admin-{$token}@example.com"],
+            ['name' => 'Media Edit Admin Test', 'password' => 'password', 'role' => 'admin', 'status' => 'active'],
+        );
+
+        $media = MediaAsset::query()->create([
+            'uploaded_by' => $admin->id,
+            'disk' => 'public',
+            'path' => "media/library/edit-target-{$token}.jpg",
+            'original_name' => "edit-target-{$token}.jpg",
+            'mime_type' => 'image/jpeg',
+            'size_bytes' => 4096,
+            'width' => 800,
+            'height' => 600,
+            'alt_text' => 'Before edit',
+            'metadata' => ['legacy_key' => 'kept'],
+        ]);
+
+        $this->actingAs($admin)
+            ->get(route('admin.media.edit', $media))
+            ->assertOk()
+            ->assertSee('Before edit')
+            ->assertSee('Usage')
+            ->assertSee('not referenced by any module', false);
+
+        $this->actingAs($admin)
+            ->put(route('admin.media.update', $media), [
+                'alt_text' => 'After edit',
+                'metadata' => ['title' => 'Edited title', 'caption' => '  ', 'credit' => 'MR. TEE'],
+            ])
+            ->assertRedirect(route('admin.media.index'))
+            ->assertSessionHas('success', 'Media updated successfully.');
+
+        $media->refresh();
+
+        $this->assertSame('After edit', $media->alt_text);
+        $this->assertSame('Edited title', $media->metadataValue('title'));
+        $this->assertSame('MR. TEE', $media->metadataValue('credit'));
+        $this->assertNull($media->metadataValue('caption'));
+        $this->assertSame('kept', $media->metadataValue('legacy_key'));
+
+        $media->delete();
+    }
+
+    public function test_admin_can_delete_unused_media_and_its_stored_file(): void
+    {
+        Storage::fake('public');
+        $token = Str::uuid()->toString();
+
+        $admin = User::query()->updateOrCreate(
+            ['email' => "media-delete-admin-{$token}@example.com"],
+            ['name' => 'Media Delete Admin Test', 'password' => 'password', 'role' => 'admin', 'status' => 'active'],
+        );
+
+        $this->actingAs($admin)
+            ->post(route('admin.media.store'), [
+                'file' => UploadedFile::fake()->image("deletable-{$token}.jpg", 600, 400)->size(200),
+                'alt_text' => 'Deletable asset',
+            ])
+            ->assertRedirect(route('admin.media.index'));
+
+        $media = MediaAsset::query()
+            ->where('uploaded_by', $admin->id)
+            ->where('alt_text', 'Deletable asset')
+            ->latest()
+            ->firstOrFail();
+
+        Storage::disk('public')->assertExists($media->path);
+
+        $this->actingAs($admin)
+            ->delete(route('admin.media.destroy', $media))
+            ->assertRedirect(route('admin.media.index'))
+            ->assertSessionHas('success', 'Media deleted successfully.');
+
+        Storage::disk('public')->assertMissing($media->path);
+        $this->assertDatabaseMissing('media_assets', ['id' => $media->id]);
+    }
+
+    public function test_media_in_use_cannot_be_deleted(): void
+    {
+        $token = Str::uuid()->toString();
+
+        $admin = User::query()->updateOrCreate(
+            ['email' => "media-inuse-admin-{$token}@example.com"],
+            ['name' => 'Media In Use Admin Test', 'password' => 'password', 'role' => 'admin', 'status' => 'active'],
+        );
+
+        $media = MediaAsset::query()->create([
+            'uploaded_by' => $admin->id,
+            'disk' => 'public',
+            'path' => "media/library/in-use-{$token}.jpg",
+            'original_name' => "in-use-{$token}.jpg",
+            'mime_type' => 'image/jpeg',
+            'size_bytes' => 2048,
+            'alt_text' => 'Referenced asset',
+        ]);
+
+        DB::table('media_assignments')->insert([
+            'media_asset_id' => $media->id,
+            'mediable_type' => User::class,
+            'mediable_id' => $admin->id,
+            'role' => 'image',
+            'sort_order' => 0,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        $this->assertTrue($media->isInUse());
+
+        $this->actingAs($admin)
+            ->from(route('admin.media.index'))
+            ->delete(route('admin.media.destroy', $media))
+            ->assertRedirect(route('admin.media.index'))
+            ->assertSessionHas('error');
+
+        $this->assertDatabaseHas('media_assets', ['id' => $media->id]);
+
+        DB::table('media_assignments')->where('media_asset_id', $media->id)->delete();
+        $media->delete();
     }
 }

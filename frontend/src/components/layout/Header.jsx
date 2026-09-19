@@ -3,9 +3,10 @@ import React, { useEffect, useState } from 'react'
 import { ArrowRight } from 'lucide-react';
 import Navbar from './Navbar';
 import Link from 'next/link';
+import { FALLBACK_CONTACT, telHref } from '@/lib/site';
 import CartLink from '../cart/CartLink';
 
-export default function Header () {
+export default function Header ({ contact = FALLBACK_CONTACT }) {
     const [isScrolled, setIsScrolled] = useState(false)
 
     useEffect(()=>{
@@ -44,7 +45,7 @@ export default function Header () {
                 <div className='hidden lg:block'>
                     <CartLink />
                 </div>
-                <a href='tel:02082266477' className='hidden whitespace-nowrap text-lg font-bold leading-none text-[#0398E9] xl:block'>020 8226 6477</a>
+                <a href={telHref(contact.phone)} className='hidden whitespace-nowrap text-lg font-bold leading-none text-[#0398E9] xl:block'>{contact.phone}</a>
                 <Link href="/#prices" className='group flex items-center justify-center gap-1.5 whitespace-nowrap rounded-full border border-[#11224D] bg-[#11224D] px-2 py-1 text-xs font-semibold text-white transition-colors hover:bg-white hover:text-[#11224D] sm:px-2.5 md:gap-2 md:px-5 md:py-1.5 md:text-sm lg:px-4 xl:px-6'>
                     Prices &amp; Book
                     <ArrowRight className='size-4 rounded-full bg-white p-0.5 text-[#11224D] transition duration-200 group-hover:translate-x-1 md:size-5 md:p-1'/>

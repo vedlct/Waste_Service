@@ -1,6 +1,8 @@
 ﻿"use client";
 
 import { useState } from "react";
+import { apiPost } from "@/lib/api";
+import { FALLBACK_CONTACT, telHref } from "@/lib/site";
 import {
   Phone,
   Mail,
@@ -12,7 +14,7 @@ import {
   LoaderCircle,
 } from "lucide-react";
 
-export default function ContactUs() {
+export default function ContactUs({ contact = FALLBACK_CONTACT }) {
   const [submission, setSubmission] = useState({
     state: "idle",
     message: "",
@@ -26,34 +28,22 @@ export default function ContactUs() {
 
     setSubmission({ state: "loading", message: "" });
 
-    try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(Object.fromEntries(formData.entries())),
-      });
-      const result = await response.json();
+    // Sent straight to the Laravel API; the old Next.js contact route handler is retired.
+    const result = await apiPost("enquiries", Object.fromEntries(formData.entries()));
 
-      if (!response.ok) {
-        throw new Error(result.message || "We could not send your enquiry.");
-      }
-
-      form.reset();
-      setSubmission({
-        state: "success",
-        message:
-          result.message ||
-          "Thanks â€” your enquiry has been sent. Weâ€™ll be in touch shortly.",
-      });
-    } catch (error) {
-      setSubmission({
-        state: "error",
-        message:
-          error instanceof Error
-            ? error.message
-            : "We could not send your enquiry. Please try again.",
-      });
+    if (!result.ok) {
+      setSubmission({ state: "error", message: result.message });
+      return;
     }
+
+    // A honeypot hit also comes back ok, but without a message; show the normal thanks.
+    form.reset();
+    setSubmission({
+      state: "success",
+      message:
+        result.message ||
+        "Thanks, your enquiry has been sent. We will be in touch shortly.",
+    });
   }
 
   return (
@@ -106,10 +96,10 @@ export default function ContactUs() {
                     </p>
 
                     <a
-                      href="tel:02082266477"
+                      href={telHref(contact.phone)}
                       className="mt-1 block font-bold text-[#11224D] transition-colors duration-300 group-hover:text-[#087FE8]"
                     >
-                      020 8226 6477
+                      {contact.phone}
                     </a>
                   </div>
 
@@ -132,10 +122,10 @@ export default function ContactUs() {
                     </p>
 
                     <a
-                      href="mailto:info@example.com"
+                      href={`mailto:${contact.email}`}
                       className="mt-1 block font-bold text-[#11224D] transition-colors duration-300 group-hover:text-[#087FE8]"
                     >
-                      info@example.com
+                      {contact.email}
                     </a>
                   </div>
 
@@ -158,7 +148,7 @@ export default function ContactUs() {
                     </p>
 
                     <p className="mt-1 font-bold text-[#11224D]">
-                      London, United Kingdom
+                      {contact.location}
                     </p>
                   </div>
 
@@ -181,7 +171,7 @@ export default function ContactUs() {
                     </p>
 
                     <p className="mt-1 font-bold text-[#11224D]">
-                      Available 24/7
+                      {contact.openingHours}
                     </p>
                   </div>
 

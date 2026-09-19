@@ -28,6 +28,15 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    /*
+     * The Next.js server's shared key for reading the public API above the per-IP limit.
+     * Leave blank to treat it like any other client.
+     */
+    'frontend' => [
+        'api_key' => env('FRONTEND_API_KEY'),
+        'rate_limit_per_minute' => (int) env('FRONTEND_API_RATE_LIMIT', 1200),
+    ],
+
     'slack' => [
         'notifications' => [
             'bot_user_oauth_token' => env('SLACK_BOT_USER_OAUTH_TOKEN'),

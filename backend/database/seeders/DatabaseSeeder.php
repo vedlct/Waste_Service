@@ -6,11 +6,14 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use RuntimeException;
 
 class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
+        $this->guardProduction();
+
         $now = now();
 
         $adminId = $this->admin($now);
@@ -28,22 +31,53 @@ class DatabaseSeeder extends Seeder
         $this->reviews($now, $services);
     }
 
+    /**
+     * The catalogue sections below upsert by slug, so re-seeding a live site would reset
+     * every price, service, FAQ and review an admin has edited. Seeding production is only
+     * allowed on an empty database, or when explicitly forced for a one-off.
+     */
+    private function guardProduction(): void
+    {
+        if (! app()->isProduction() || ! DB::table('users')->exists()) {
+            return;
+        }
+
+        if (! filter_var(env('ALLOW_PRODUCTION_SEED', false), FILTER_VALIDATE_BOOLEAN)) {
+            throw new RuntimeException(
+                'Refusing to seed a production database that already has data: it would overwrite '
+                .'catalogue edits made in the admin. Set ALLOW_PRODUCTION_SEED=true for a deliberate one-off.'
+            );
+        }
+    }
+
+    /**
+     * Creates the first super admin only when the account does not exist yet. An existing
+     * account's password is never touched, so re-seeding cannot reset it.
+     */
     private function admin($now): int
     {
-        DB::table('users')->updateOrInsert(
-            ['email' => 'admin@mrtee.local'],
-            [
+        $email = 'admin@mrtee.local';
+
+        if (! DB::table('users')->where('email', $email)->exists()) {
+            $password = env('SEED_ADMIN_PASSWORD');
+
+            if (blank($password) && app()->isProduction()) {
+                throw new RuntimeException('Set SEED_ADMIN_PASSWORD before seeding production; the default password is for local use only.');
+            }
+
+            DB::table('users')->insert([
                 'name' => 'MR. TEE Admin',
-                'password' => Hash::make('password'),
+                'email' => $email,
+                'password' => Hash::make($password ?: 'password'),
                 'role' => 'super_admin',
                 'status' => 'active',
                 'email_verified_at' => $now,
+                'created_at' => $now,
                 'updated_at' => $now,
-                'created_at' => DB::raw('COALESCE(created_at, NOW())'),
-            ],
-        );
+            ]);
+        }
 
-        return (int) DB::table('users')->where('email', 'admin@mrtee.local')->value('id');
+        return (int) DB::table('users')->where('email', $email)->value('id');
     }
 
     private function media($now, int $adminId): array
@@ -52,7 +86,7 @@ class DatabaseSeeder extends Seeder
             'logo' => '/images/MainLogo.png',
             'footer_logo' => '/images/footerLogo.png',
             'home_hero' => '/images/HeroImage.jpg',
-            'house_clearance' => '/images/h.webp',
+            'house_clearance' => '/images/Garbage.jpg',
             'garden_clearance' => '/images/GardenHero.jpg',
             'flat_clearance' => '/images/FlatWaste.jpg',
             'garage_clearance' => '/images/garage.jpg',
@@ -108,31 +142,86 @@ class DatabaseSeeder extends Seeder
 
     private function settings($now, int $adminId): void
     {
+        // Setting values are admin-managed and never overwritten on re-seed. The exceptions are
+        // defaults the first build got wrong, corrected only while still untouched: the London
+        // location, a placeholder example.com email, and 24/7 hours that contradicted the
+        // "six days a week" copy on the site.
+        foreach ([
+            'location' => ['London, United Kingdom', 'Portsmouth, United Kingdom'],
+            'email' => ['info@example.com', 'info@wasteservices.com'],
+            'opening_hours' => ['Available 24/7', 'Mon–Sat, 7:00am–7:00pm'],
+        ] as $key => [$wrong, $right]) {
+            DB::table('site_settings')
+                ->where('group', 'contact')
+                ->where('key', $key)
+                ->whereRaw('JSON_UNQUOTE(`value`) = ?', [$wrong])
+                ->update(['value' => json_encode($right), 'updated_at' => $now]);
+        }
+
         $settings = [
-            ['general', 'site_name', 'MR. TEE Removals', 'string', 'Site name'],
-            ['contact', 'phone', '020 8226 6477', 'string', 'Primary phone'],
-            ['contact', 'email', 'info@example.com', 'string', 'Primary email'],
-            ['contact', 'location', 'London, United Kingdom', 'string', 'Location'],
-            ['contact', 'opening_hours', 'Available 24/7', 'string', 'Opening hours'],
-            ['booking', 'saturday_collection_surcharge_pence', 5000, 'integer', 'Saturday collection surcharge'],
-            ['booking', 'pay_on_arrival_callout_fee_pence', 2500, 'integer', 'Pay on arrival callout fee'],
-            ['seo', 'default_meta_title', 'MR. TEE Removals', 'string', 'Default SEO title'],
-            ['seo', 'default_meta_description', 'Waste collection, rubbish removal, clearance and cleaning services.', 'string', 'Default SEO description'],
+            ['general', 'site_name', 'MR. TEE Removals', 'string', 'Site name', 'Shown in the browser title and across the website.', true],
+            ['contact', 'phone', '020 8226 6477', 'string', 'Primary phone', 'Displayed in the header, footer, and contact page.', true],
+            ['contact', 'email', 'info@wasteservices.com', 'email', 'Primary email', 'Receives contact enquiries and booking confirmations.', true],
+            ['contact', 'location', 'Portsmouth, United Kingdom', 'string', 'Location', 'Service base shown on the contact page.', true],
+            ['contact', 'opening_hours', 'Mon–Sat, 7:00am–7:00pm', 'string', 'Opening hours', 'Free text opening hours summary.', true],
+            ['booking', 'saturday_collection_surcharge_pence', 5000, 'integer', 'Saturday collection surcharge', 'Added to bookings collected on a Saturday.', true],
+            ['booking', 'pay_on_arrival_callout_fee_pence', 2500, 'integer', 'Pay on arrival callout fee', 'Charged when the customer pays the crew on arrival.', true],
+            ['seo', 'default_meta_title', 'MR. TEE Removals', 'string', 'Default SEO title', 'Used when a page has no meta title of its own.', true],
+            ['seo', 'default_meta_description', 'Waste collection, rubbish removal, clearance and cleaning services.', 'string', 'Default SEO description', 'Used when a page has no meta description of its own.', true],
+            ['seo', 'default_share_image_url', null, 'url', 'Default share image URL', 'Full address of the image shown when a page without its own share image is shared. Copy it from the Media Library; 1200 x 630 pixels works best.', true],
+            ['seo', 'google_site_verification', null, 'string', 'Google verification code', 'The content value of the google-site-verification tag from Google Search Console.', true],
+            ['seo', 'bing_site_verification', null, 'string', 'Bing verification code', 'The content value of the msvalidate.01 tag from Bing Webmaster Tools.', true],
+            ['seo', 'twitter_handle', null, 'string', 'X (Twitter) handle', 'Credited on shared link cards, for example @mrteeremovals.', true],
+            ['business', 'street_address', null, 'string', 'Street address', 'Used in the search engine business listing. Leave blank if the business has no public premises.', true],
+            ['business', 'locality', 'Portsmouth', 'string', 'Town or city', 'Used in the search engine business listing.', true],
+            ['business', 'region', 'Hampshire', 'string', 'County', 'Used in the search engine business listing.', true],
+            ['business', 'postal_code', null, 'string', 'Postcode', 'Used in the search engine business listing.', true],
+            ['business', 'country_code', 'GB', 'string', 'Country code', 'Two letter country code.', true],
+            ['business', 'opening_hours_spec', 'Mo-Sa 07:00-19:00', 'string', 'Opening hours (for search engines)', 'Machine readable, for example Mo-Sa 07:00-19:00 or Mo-Fr 08:00-18:00, Sa 09:00-13:00. The friendly version is in Contact.', true],
+            ['business', 'price_range', '££', 'string', 'Price range', 'Shown in some search listings, for example ££.', true],
+            ['social', 'facebook_url', null, 'url', 'Facebook URL', 'Full profile URL. Leave blank to hide the link.', true],
+            ['social', 'instagram_url', null, 'url', 'Instagram URL', 'Full profile URL. Leave blank to hide the link.', true],
+            ['social', 'linkedin_url', null, 'url', 'LinkedIn URL', 'Full profile URL. Leave blank to hide the link.', true],
+            ['social', 'x_url', null, 'url', 'X (Twitter) URL', 'Full profile URL. Leave blank to hide the link.', true],
+            // Private: these drive outgoing email and must never reach the public API.
+            ['notifications', 'office_email', null, 'email', 'Office alert email', 'Where new enquiry, booking, and review alerts are sent. Leave blank to use the primary contact email.', false],
+            ['notifications', 'notify_new_enquiry', true, 'boolean', 'Email the office about new enquiries', 'Sent when the contact form is submitted.', false],
+            ['notifications', 'notify_new_booking', true, 'boolean', 'Email the office about new bookings', 'Sent when a booking is placed online.', false],
+            ['notifications', 'notify_new_review', true, 'boolean', 'Email the office about new reviews', 'Sent when a visitor submits a review for moderation.', false],
+            ['notifications', 'send_customer_booking_confirmation', true, 'boolean', 'Email customers a booking confirmation', 'Sends the booking reference and summary to the billing email address.', false],
+            ['notifications', 'send_customer_status_updates', true, 'boolean', 'Email customers when a booking is confirmed, scheduled or cancelled', 'The office can still untick the email on each change.', false],
         ];
 
-        foreach ($settings as [$group, $key, $value, $type, $label]) {
-            DB::table('site_settings')->updateOrInsert(
-                ['group' => $group, 'key' => $key],
-                [
-                    'type' => $type,
-                    'value' => json_encode($value),
-                    'label' => $label,
-                    'is_public' => true,
-                    'updated_by' => $adminId,
-                    'updated_at' => $now,
-                    'created_at' => DB::raw('COALESCE(created_at, NOW())'),
-                ],
-            );
+        foreach ($settings as [$group, $key, $value, $type, $label, $helpText, $isPublic]) {
+            $exists = DB::table('site_settings')->where('group', $group)->where('key', $key)->exists();
+
+            if ($exists) {
+                // Values and visibility are admin-managed, so re-seeding only refreshes the descriptive columns.
+                DB::table('site_settings')
+                    ->where('group', $group)
+                    ->where('key', $key)
+                    ->update([
+                        'type' => $type,
+                        'label' => $label,
+                        'help_text' => $helpText,
+                        'updated_at' => $now,
+                    ]);
+
+                continue;
+            }
+
+            DB::table('site_settings')->insert([
+                'group' => $group,
+                'key' => $key,
+                'type' => $type,
+                'value' => json_encode($value),
+                'label' => $label,
+                'help_text' => $helpText,
+                'is_public' => $isPublic,
+                'updated_by' => $adminId,
+                'created_at' => $now,
+                'updated_at' => $now,
+            ]);
         }
     }
 
@@ -169,6 +258,7 @@ class DatabaseSeeder extends Seeder
                         : 'MR. TEE Removals website page.',
                     'status' => 'published',
                     'is_indexable' => ! in_array($template, ['checkout', 'payment'], true),
+                    'is_followable' => ! in_array($template, ['checkout', 'payment'], true),
                     'sort_order' => $index + 1,
                     'published_at' => $now,
                     'created_by' => $adminId,
@@ -457,27 +547,66 @@ class DatabaseSeeder extends Seeder
         }
     }
 
+    /**
+     * The business is based in Portsmouth. Each area carries its postcode district, which is
+     * what the booking coverage check matches a customer's outward code against.
+     */
     private function coverageAreas($now): void
     {
+        // The first build seeded London boroughs by mistake; remove them where they are left.
+        DB::table('coverage_regions')
+            ->whereIn('slug', ['central-london', 'north-london', 'south-london', 'east-london', 'west-london', 'greater-london'])
+            ->delete();
+
         $regions = [
-            'central-london' => ['Central London', ['Westminster', 'Camden', 'City of London', 'Islington']],
-            'north-london' => ['North London', ['Barnet', 'Enfield', 'Haringey', 'Hackney']],
-            'south-london' => ['South London', ['Croydon', 'Lambeth', 'Lewisham', 'Southwark']],
-            'east-london' => ['East London', ['Newham', 'Tower Hamlets', 'Barking & Dagenham', 'Redbridge']],
-            'west-london' => ['West London', ['Hammersmith & Fulham', 'Ealing', 'Hounslow', 'Richmond']],
-            'greater-london' => ['Greater London', ['Kingston', 'Bromley', 'Sutton', 'Waltham Forest']],
+            'portsmouth' => ['Portsmouth', [
+                ['Portsmouth City Centre', 'PO1'],
+                ['Southsea', 'PO5'],
+                ['Fratton', 'PO1'],
+                ['North End', 'PO2'],
+                ['Copnor', 'PO3'],
+                ['Hilsea', 'PO3'],
+                ['Milton', 'PO4'],
+                ['Eastney', 'PO4'],
+                ['Cosham', 'PO6'],
+                ['Drayton', 'PO6'],
+                ['Paulsgrove', 'PO6'],
+            ]],
+            'havant-waterlooville' => ['Havant & Waterlooville', [
+                ['Havant', 'PO9'],
+                ['Bedhampton', 'PO9'],
+                ['Leigh Park', 'PO9'],
+                ['Waterlooville', 'PO7'],
+                ['Purbrook', 'PO7'],
+                ['Denmead', 'PO7'],
+                ['Cowplain', 'PO8'],
+                ['Horndean', 'PO8'],
+                ['Emsworth', 'PO10'],
+                ['Hayling Island', 'PO11'],
+            ]],
+            'fareham-gosport' => ['Fareham & Gosport', [
+                ['Fareham', 'PO16'],
+                ['Portchester', 'PO16'],
+                ['Stubbington', 'PO14'],
+                ['Titchfield', 'PO14'],
+                ['Whiteley', 'PO15'],
+                ['Gosport', 'PO12'],
+                ['Lee-on-the-Solent', 'PO13'],
+                ['Wickham', 'PO17'],
+            ]],
         ];
 
-        foreach ($regions as $regionIndex => $definition) {
-            [$name, $areas] = $definition;
-            $regionSlug = is_string($regionIndex) ? $regionIndex : Str::slug($name);
+        $regionOrder = 0;
+
+        foreach ($regions as $regionSlug => [$name, $areas]) {
+            $regionOrder++;
 
             DB::table('coverage_regions')->updateOrInsert(
                 ['slug' => $regionSlug],
                 [
                     'name' => $name,
                     'is_active' => true,
-                    'sort_order' => array_search($regionSlug, array_keys($regions), true) + 1,
+                    'sort_order' => $regionOrder,
                     'updated_at' => $now,
                     'created_at' => DB::raw('COALESCE(created_at, NOW())'),
                 ],
@@ -485,12 +614,13 @@ class DatabaseSeeder extends Seeder
 
             $regionId = (int) DB::table('coverage_regions')->where('slug', $regionSlug)->value('id');
 
-            foreach ($areas as $index => $area) {
+            foreach ($areas as $index => [$area, $postcodePrefix]) {
                 DB::table('coverage_areas')->updateOrInsert(
                     ['slug' => Str::slug($area)],
                     [
                         'coverage_region_id' => $regionId,
                         'name' => $area,
+                        'postcode_prefix' => $postcodePrefix,
                         'is_featured' => $index === 0,
                         'is_active' => true,
                         'sort_order' => $index + 1,
@@ -505,7 +635,7 @@ class DatabaseSeeder extends Seeder
     private function faqs($now): void
     {
         foreach ([
-            ['What areas do you cover?', 'We provide our services across London and surrounding areas. You can visit our Areas Covered page to see whether we operate in your location.'],
+            ['What areas do you cover?', 'We cover Portsmouth and the surrounding area, including Southsea, Havant, Waterlooville, Fareham and Gosport. You can visit our Areas Covered page to see whether we operate in your location.'],
             ['How much does rubbish removal cost?', 'The price depends on the amount and type of rubbish, access, and location. Contact our team for a quick quotation.'],
             ['Do you offer same-day collection?', 'Yes, depending on availability. Contact us as early as possible and we will do our best to arrange a convenient collection time.'],
             ['Do you provide garden clearance?', 'Yes. We offer garden clearance and green waste removal services for homes, landlords and businesses.'],
@@ -553,7 +683,7 @@ class DatabaseSeeder extends Seeder
     private function serviceData(): array
     {
         return [
-            ['slug' => 'house-clearance', 'name' => 'House Clearance', 'route' => '/houseClearance', 'category' => 'rubbish-removal', 'media' => 'house_clearance', 'headline' => 'House clearance and rubbish removal in Portsmouth', 'summary' => 'Save time, heavy lifting and trips to the local tip.', 'description' => 'Our experienced team clears single items, rooms and complete properties with care.', 'items' => ['Single items & rooms', 'Furniture and appliances', 'Full house clearance', 'Garages & outbuildings']],
+            ['slug' => 'house-clearance', 'name' => 'House Clearance', 'route' => '/houseClearance', 'category' => 'rubbish-removal', 'media' => 'house_clearance', 'headline' => 'House clearance and rubbish removal in Portsmouth', 'summary' => 'Save time, heavy lifting and trips to the local tip. Our experienced team clears single items, rooms and complete properties with care.', 'description' => 'Our experienced team clears single items, rooms and complete properties with care.', 'items' => ['Single items & rooms', 'Furniture and appliances', 'Full house clearance', 'Garages & outbuildings']],
             ['slug' => 'garden-clearance', 'name' => 'Garden Clearance', 'route' => '/gardenClearance', 'category' => 'rubbish-removal', 'media' => 'garden_clearance', 'headline' => 'Garden clearance in Portsmouth', 'summary' => 'Clear the waste. Enjoy the garden again.', 'description' => 'We remove garden waste efficiently and without fuss, leaving you with a cleaner outdoor space to enjoy.', 'items' => ['Green waste & planting', 'Structures & boundaries', 'Landscaping materials', 'Outdoor features']],
             ['slug' => 'flat-clearance', 'name' => 'Flat Clearance', 'route' => '/flatClearance', 'category' => 'rubbish-removal', 'media' => 'flat_clearance', 'headline' => 'Flat clearance and rubbish removal in Portsmouth', 'summary' => 'A practical clearance service for flats, maisonettes and duplex properties.', 'description' => 'Our local team plans around the property access and handles the lifting, carrying and removal from start to finish.', 'items' => ['Careful access', 'Bulky items', 'Every clearance size']],
             ['slug' => 'garage-clearance', 'name' => 'Garage Clearance', 'route' => '/garageClearance', 'category' => 'rubbish-removal', 'media' => 'garage_clearance', 'headline' => 'Garage clearance and junk removal in Portsmouth', 'summary' => 'Turn an overcrowded garage back into useful space.', 'description' => 'Clear accumulated furniture, equipment and rubbish from garages and sheds with help from our removal team.', 'items' => ['Single bulky items', 'Complete clear-outs', 'Garage and shed collections']],

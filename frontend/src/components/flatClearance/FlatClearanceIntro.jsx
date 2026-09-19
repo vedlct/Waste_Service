@@ -15,7 +15,7 @@ export default function FlatClearanceIntro() {
           <div>
             <div className="flex items-center gap-3 text-xs font-extrabold uppercase tracking-[0.18em] text-[#b56808] sm:text-sm">
               <span className="h-0.5 w-9 bg-[#f0aa26]" />
-              Chingford flat clearance
+              Portsmouth flat clearance
             </div>
 
             <h2 className="mt-5 text-3xl font-bold leading-[1.04] tracking-tight text-[#102a4c] sm:text-4xl lg:text-4xl">
@@ -26,10 +26,10 @@ export default function FlatClearanceIntro() {
 
           <div className="border-l-2 border-[#f0aa26] pl-5 sm:pl-7">
             <p className="text-lg leading-8 text-slate-600 sm:text-xl">
-              We manage single items, room clearances and complete flatsâ€”including storage areas, basements, lofts, garages and sheds.
+              We manage single items, room clearances and complete flats—including storage areas, basements, lofts, garages and sheds.
             </p>
             <p className="mt-4 text-base leading-7 text-slate-500">
-              Our local team plans around the propertyâ€™s access and handles the lifting, carrying and removal from start to finish.
+              Our local team plans around the property’s access and handles the lifting, carrying and removal from start to finish.
             </p>
           </div>
         </div>

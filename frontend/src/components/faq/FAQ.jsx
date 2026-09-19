@@ -7,14 +7,15 @@ import {
   Phone,
 } from "lucide-react";
 
-export default function FAQ() {
+export default function FAQ({ faqs: remoteFaqs }) {
   const [open, setOpen] = useState(null);
 
-  const faqs = [
+  // Shown when the backend is unreachable, so the page never renders empty.
+  const fallbackFaqs = [
     {
       question: "What areas do you cover?",
       answer:
-        "We provide our services across London and surrounding areas. You can visit our Areas Covered page to see whether we operate in your location.",
+        "We cover Portsmouth and the surrounding area, including Southsea, Havant, Waterlooville, Fareham and Gosport. You can visit our Areas Covered page to see whether we operate in your location.",
     },
     {
       question: "How much does rubbish removal cost?",
@@ -37,6 +38,8 @@ export default function FAQ() {
         "Yes. You can contact us directly to arrange your service and receive a quotation.",
     },
   ];
+
+  const faqs = remoteFaqs?.length ? remoteFaqs : fallbackFaqs;
 
   return (
     <main className="min-h-screen bg-[#f7fbff] text-[#11224D]">

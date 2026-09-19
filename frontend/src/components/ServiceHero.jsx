@@ -1,11 +1,17 @@
 ﻿import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, Check, Phone } from 'lucide-react';
+import { heroContent } from '@/lib/services';
+import { FALLBACK_CONTACT, telHref } from '@/lib/site';
 
-export default function ServiceHero({ image, imageAlt, eyebrow, title, description, imagePosition = 'object-center', points = ['Flexible appointment times', 'Professional local service'] }) {
+// The headline, summary and image come from the service in the admin when it is available;
+// the props are the built-in fallback.
+export default function ServiceHero({ service, phone = FALLBACK_CONTACT.phone, image, imageAlt, eyebrow, title, description, imagePosition = 'object-center', points = ['Flexible appointment times', 'Professional local service'] }) {
+  const hero = heroContent(service, { title, description, image, imageAlt });
+
   return (
     <section className="relative isolate min-h-[620px] overflow-hidden bg-sky-50 sm:min-h-[660px] lg:min-h-[700px]">
-      <Image src={image} alt={imageAlt} fill priority sizes="100vw" className={`-z-30 object-cover ${imagePosition}`} />
+      <Image src={hero.image} alt={hero.imageAlt} fill priority sizes="100vw" unoptimized={!hero.image.startsWith('/')} className={`-z-30 object-cover ${imagePosition}`} />
 
       {/* <div className="absolute inset-0 -z-20 bg-gradient-to-t from-[#071d3b]/80 via-[#071d3b]/15 to-[#071d3b]/15 lg:bg-[linear-gradient(90deg,rgba(7,29,59,0.08)_20%,rgba(7,29,59,0.2)_48%,rgba(7,29,59,0.72)_72%,rgba(7,29,59,0.92)_100%)]" /> */}
 
@@ -18,9 +24,9 @@ export default function ServiceHero({ image, imageAlt, eyebrow, title, descripti
             {eyebrow}
           </div>
 
-          <h1 className="mt-5 text-3xl font-bold leading-[1.08] tracking-tight sm:text-4xl lg:text-4xl">{title}</h1>
+          <h1 className="mt-5 text-3xl font-bold leading-[1.08] tracking-tight sm:text-4xl lg:text-4xl">{hero.title}</h1>
 
-          <p className="mt-5 text-sm leading-7 text-[#102a4c]/78 sm:text-base">{description}</p>
+          <p className="mt-5 text-sm leading-7 text-[#102a4c]/78 sm:text-base">{hero.description}</p>
 
           <div className="mt-6 grid gap-2 sm:grid-cols-2">
             {points.map((point) => (
@@ -43,7 +49,8 @@ export default function ServiceHero({ image, imageAlt, eyebrow, title, descripti
             </Link>
 
             <a
-              href="tel:02082266477"
+              href={telHref(phone)}
+              aria-label={`Call ${phone}`}
               className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-white/30 px-5 py-3 text-sm font-bold transition duration-300 hover:border-white hover:bg-white hover:text-[#102a4c]"
             >
               <Phone className="size-4" />

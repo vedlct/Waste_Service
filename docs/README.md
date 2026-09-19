@@ -5,9 +5,9 @@ Use this directory for project understanding that should outlive individual task
 Suggested documents to add over time:
 
 - `requirements.md` - business goals, user roles, workflows, and content types.
-- `api.md` - frontend/backend API contracts, auth rules, payload examples, and errors.
+- `api.md` - frontend/backend API contracts, auth rules, payload examples, and errors. Written; covers `/api/v1`.
 - `admin-panel.md` - CMS/admin features, permissions, and data management notes.
-- `deployment.md` - hosting, environment variables, build steps, and release checklist.
+- `deployment.md` - hosting, environment variables, build steps, and release checklist. Written.
 - `decisions.md` - technical decisions and the reasons behind them.
 - `media-storage.md` - admin upload disk, path, naming, validation, metadata, deletion, and API rules.
 
