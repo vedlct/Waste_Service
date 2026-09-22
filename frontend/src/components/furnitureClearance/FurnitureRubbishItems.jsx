@@ -34,21 +34,21 @@ export default function FurnitureRubbishItems () {
       <div className="mx-auto w-full max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-28">
         <div className="grid gap-10 lg:grid-cols-[0.72fr_1.28fr] lg:gap-16">
           <div className="lg:sticky lg:top-28 lg:self-start">
-            <div className="flex items-center gap-3 text-xs font-extrabold uppercase tracking-[0.18em] text-[#b56808] sm:text-sm">
-              <span className="h-0.5 w-9 bg-[#f0aa26]" aria-hidden="true" />
+            <div className="flex items-center gap-3 text-xs font-extrabold uppercase tracking-[0.18em] text-[#0492E8] sm:text-sm">
+              <span className="h-0.5 w-9 bg-[#0492E8]" aria-hidden="true" />
               What we take
             </div>
 
             <h2 className="mt-5 text-3xl font-bold leading-[1.04] tracking-tight text-[#102a4c] sm:text-4xl lg:text-4xl">
               One collection.
-              <span className="block text-[#d67d0b]">More space to use.</span>
+              <span className="block text-[#0492E8]">More space to use.</span>
             </h2>
 
             <p className="mt-6 max-w-lg text-base leading-8 text-slate-600 sm:text-lg">
               From furniture and appliances to renovation materials, we clear a wide range of household items throughout Chingford.
             </p>
 
-            <div className="mt-8 border-l-2 border-[#f0aa26] pl-5">
+            <div className="mt-8 border-l-2 border-[#0492E8] pl-5">
               <p className="text-sm font-bold leading-6 text-[#102a4c] sm:text-base">
                 Cannot see your item listed?
               </p>
@@ -59,7 +59,7 @@ export default function FurnitureRubbishItems () {
 
             <Link
               href="/contactUs"
-              className="group mt-8 inline-flex min-h-12 items-center justify-center gap-3 rounded-full bg-[#102a4c] px-6 py-3 text-sm font-extrabold text-white transition duration-300 hover:-translate-y-0.5 hover:bg-[#f0aa26] hover:text-[#102a4c] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#102a4c]"
+              className="group mt-8 inline-flex min-h-12 items-center justify-center gap-3 rounded-full bg-[#102a4c] px-6 py-3 text-sm font-extrabold text-white transition duration-300 hover:-translate-y-0.5 hover:bg-[#0492E8] hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#102a4c]"
             >
               Ask about an item
               <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
@@ -87,7 +87,7 @@ export default function FurnitureRubbishItems () {
                       className="object-cover transition duration-700 ease-out group-hover/image:scale-110"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#071d3b]/35 via-transparent to-transparent" />
-                    <span className="absolute bottom-3 left-3 grid size-9 place-items-center rounded-full bg-[#ffd126] text-[#102a4c] shadow-md transition duration-500 group-hover/image:rotate-12">
+                    <span className="absolute bottom-3 left-3 grid size-9 place-items-center rounded-full bg-[#0492E8] text-white shadow-md transition duration-500 group-hover/image:rotate-12">
                       <Recycle className="size-4" aria-hidden="true" />
                     </span>
                   </div>
@@ -100,7 +100,7 @@ export default function FurnitureRubbishItems () {
             {categories.map(({ number, title, summary, items }) => (
               <article key={number} className="group/category border-b border-[#102a4c]/20 py-8 sm:py-10">
                 <div className="grid gap-5 sm:grid-cols-[4rem_1fr] sm:gap-6">
-                  <span className="text-sm font-black tracking-[0.16em] text-[#d67d0b]">{number}</span>
+                  <span className="text-sm font-black tracking-[0.16em] text-[#0492E8]">{number}</span>
 
                   <div>
                     <div className="flex items-start justify-between gap-4">
@@ -108,7 +108,7 @@ export default function FurnitureRubbishItems () {
                         <h3 className="text-2xl font-bold leading-tight text-[#102a4c] sm:text-3xl">{title}</h3>
                         <p className="mt-3 max-w-2xl text-sm leading-7 text-slate-600 sm:text-base">{summary}</p>
                       </div>
-                      <span className="hidden size-12 shrink-0 place-items-center rounded-full border border-[#102a4c]/15 text-[#102a4c] transition duration-500 group-hover/category:rotate-12 group-hover/category:border-[#f0aa26] group-hover/category:bg-[#f0aa26] sm:grid">
+                      <span className="hidden size-12 shrink-0 place-items-center rounded-full border border-[#102a4c]/15 text-[#102a4c] transition duration-500 group-hover/category:rotate-12 group-hover/category:border-[#0492E8] group-hover/category:bg-[#0492E8] group-hover/category:text-white sm:grid">
                         <Recycle className="size-5" aria-hidden="true" />
                       </span>
                     </div>
@@ -117,9 +117,9 @@ export default function FurnitureRubbishItems () {
                       {items.map((item) => (
                         <li
                           key={item}
-                          className="group/item flex min-h-11 items-center gap-3 border-t border-[#102a4c]/10 py-2.5 text-sm font-semibold text-[#38536b] transition duration-300 hover:translate-x-1 hover:border-[#f0aa26] hover:text-[#102a4c] sm:text-[0.95rem]"
+                          className="group/item flex min-h-11 items-center gap-3 border-t border-[#102a4c]/10 py-2.5 text-sm font-semibold text-[#38536b] transition duration-300 hover:translate-x-1 hover:border-[#0492E8] hover:text-[#102a4c] sm:text-[0.95rem]"
                         >
-                          <Check className="size-4 shrink-0 text-[#d67d0b] transition duration-300 group-hover/item:scale-110" strokeWidth={3} aria-hidden="true" />
+                          <Check className="size-4 shrink-0 text-[#0492E8] transition duration-300 group-hover/item:scale-110" strokeWidth={3} aria-hidden="true" />
                           {item}
                         </li>
                       ))}
@@ -133,12 +133,12 @@ export default function FurnitureRubbishItems () {
 
         <div className="mt-12 flex flex-col gap-5 border-t border-[#102a4c]/20 pt-8 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-start gap-3">
-            <Recycle className="mt-1 size-6 shrink-0 text-[#d67d0b]" aria-hidden="true" />
+            <Recycle className="mt-1 size-6 shrink-0 text-[#0492E8]" aria-hidden="true" />
             <p className="max-w-2xl text-sm leading-7 text-slate-600 sm:text-base">
               We separate reusable and recyclable material wherever possible, helping household clearances create space more responsibly.
             </p>
           </div>
-          <Link href="/#prices" className="group inline-flex shrink-0 items-center gap-2 text-sm font-extrabold text-[#102a4c] underline decoration-[#f0aa26] decoration-2 underline-offset-4 transition hover:text-[#d67d0b] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#102a4c] sm:text-base">
+          <Link href="/#prices" className="group inline-flex shrink-0 items-center gap-2 text-sm font-extrabold text-[#102a4c] underline decoration-[#0492E8] decoration-2 underline-offset-4 transition hover:text-[#0492E8] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#102a4c] sm:text-base">
             Check collection prices
             <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
           </Link>

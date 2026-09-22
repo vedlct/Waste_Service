@@ -25,7 +25,7 @@ export default function Hero() {
       <div className='relative mx-auto w-full max-w-7xl px-4 pb-10 pt-28 sm:px-6 sm:pb-12 sm:pt-32 lg:px-8 lg:pb-60 lg:pt-36 leading-tight'>
         <div className='max-w-3xl rounded-[2rem] border border-sky-200 bg-white/10 p-6 shadow-2xl shadow-black/30 backdrop-blur-xl sm:p-8 lg:p-10'>
           <div className='inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-black uppercase tracking-[0.2em] text-[#102a4c] shadow-lg backdrop-blur-md transition-all duration-300 hover:border-[#F4B942]/60 hover:bg-white/15'>
-            <span className='size-2 rounded-full bg-[#F4B942] shadow-[0_0_0_5px_rgba(244,185,66,0.14)]' />
+            <span className='size-2 rounded-full bg-[#102a4c] shadow-[0_0_0_5px_rgba(244,185,66,0.14)]' />
             Local waste collection specialists
           </div>
 
@@ -42,7 +42,7 @@ export default function Hero() {
           </p>
 
           <div className='mt-5 flex flex-col gap-3 sm:flex-row sm:items-center'>
-            <Link href='/#prices' className='group inline-flex w-full items-center justify-center gap-3 rounded-full bg-[#F4B942] px-4 py-2 xl:px-6 xl:py-3 text-sm font-black text-[#11224D] shadow-xl shadow-black/15 transition-all duration-300 hover:-translate-y-1 hover:bg-white hover:shadow-2xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white sm:w-auto sm:text-base'>
+            <Link href='/#prices' className='group inline-flex w-full items-center justify-center gap-3 rounded-full bg-[#11224D] px-4 py-2 xl:px-6 xl:py-3 text-sm font-black text-white hover:text-[#11224D] shadow-xl shadow-black/15 transition-all duration-300 hover:-translate-y-1 hover:bg-white hover:shadow-2xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white sm:w-auto sm:text-base'>
               Check prices &amp; book
               <ArrowRight aria-hidden='true' className='size-5 transition-transform duration-300 group-hover:translate-x-1' />
             </Link>
@@ -53,7 +53,7 @@ export default function Hero() {
             </Link>
           </div>
 
-          <div className='mt-5 grid max-w-2xl grid-cols-1 gap-2.5 min-[420px]:grid-cols-3 sm:gap-3'>
+          <div className='mt-5 grid max-w-2xl grid-cols-1 gap-2.5 min-[760px]:grid-cols-3 sm:gap-3'>
             {assurances.map((item) => {
               const Icon = item.icon
 

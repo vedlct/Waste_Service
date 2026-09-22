@@ -74,10 +74,10 @@ export default function HouseClearanceServices() {
           {clearanceOptions.map(({ icon: Icon, number, title, description, examples }) => (
             <article
               key={title}
-              className="group relative flex min-h-full flex-col overflow-hidden rounded-[1.75rem] border border-[#102a4c]/10 bg-white p-6 shadow-[0_18px_50px_-34px_rgba(16,42,76,0.45)] transition duration-500 hover:-translate-y-2 hover:border-[#f0aa26]/55 hover:shadow-[0_28px_60px_-30px_rgba(16,42,76,0.4)] sm:p-7"
+              className="group relative flex min-h-full flex-col overflow-hidden rounded-[1.75rem] border border-[#102a4c]/10 bg-white p-6 shadow-[0_18px_50px_-34px_rgba(16,42,76,0.45)] transition duration-500 hover:-translate-y-2 hover:border-[#102a4c]/55 hover:shadow-[0_28px_60px_-30px_rgba(16,42,76,0.4)] sm:p-7"
             >
               <div className="flex items-start justify-between gap-4">
-                <span className="grid size-14 place-items-center rounded-2xl border border-sky-200 bg-sky-50 text-[#102a4c] transition duration-500 group-hover:rotate-3 group-hover:bg-[#f0aa26] group-hover:text-[#102a4c]">
+                <span className="grid size-14 place-items-center rounded-2xl border border-sky-200 bg-sky-50 text-[#102a4c] transition duration-500 group-hover:rotate-3 group-hover:bg-[#102a4c] group-hover:text-white">
                   <Icon className="size-7" strokeWidth={1.8} aria-hidden="true" />
                 </span>
                 <span className="text-sm font-black tracking-[0.16em] text-[#102a4c]/25 transition-colors duration-300 group-hover:text-[#d67d0b]">
@@ -104,7 +104,7 @@ export default function HouseClearanceServices() {
           <div className="grid lg:grid-cols-[0.68fr_1.32fr]">
             <div className="relative overflow-hidden border-b border-white/10 p-7 sm:p-9 lg:border-b-0 lg:border-r lg:p-10">
               <Boxes className="absolute -bottom-7 -right-7 size-40 text-[#102a4c]/5" strokeWidth={1} aria-hidden="true" />
-              <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-[#ffd126]">A simpler clearance</p>
+              <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-[#1294E9]">A simpler clearance</p>
               <h3 className="mt-4 text-3xl font-bold leading-tight sm:text-4xl">Three clear steps. One helpful team.</h3>
               <p className="mt-4 max-w-md text-sm leading-7 text-[#102a4c]/70 sm:text-base">
                 We keep the process easy to understand from your first enquiry through to collection day.
@@ -114,9 +114,9 @@ export default function HouseClearanceServices() {
             <ol className="grid sm:grid-cols-3">
               {processSteps.map(([title, description], index) => (
                 <li key={title} className="group/step border-b border-white/10 p-6 transition-colors duration-300 last:border-b-0 hover:bg-white/8 sm:border-b-0 sm:border-r sm:last:border-r-0 lg:p-7">
-                  <span className="text-sm font-black text-[#ffd126]">0{index + 1}</span>
+                  <span className="text-sm font-black text-[#1294E9]">0{index + 1}</span>
                   <h4 className="mt-4 text-lg font-bold leading-snug">{title}</h4>
-                  <p className="mt-3 text-sm leading-6 text-[#102a4c]/65 transition-colors duration-300 group-hover/step:text-white/85">{description}</p>
+                  <p className="mt-3 text-sm leading-6 text-[#102a4c]/65 transition-colors duration-300 group-hover/step:text-[#1294E9]">{description}</p>
                 </li>
               ))}
             </ol>
@@ -129,7 +129,7 @@ export default function HouseClearanceServices() {
             <p className="mt-2 text-sm leading-6 text-slate-600 sm:text-base">Check your options online or speak directly with our team.</p>
           </div>
           <div className="flex shrink-0 flex-col gap-3 sm:flex-row">
-            <Link href="/#prices" className="group inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#ffd126] px-6 py-3 text-sm font-extrabold text-[#102a4c] transition duration-300 hover:-translate-y-0.5 hover:bg-[#102a4c] hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#102a4c]">
+            <Link href="/#prices" className="group inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#1294E9] px-6 py-3 text-sm font-extrabold text-white transition duration-300 hover:-translate-y-0.5 hover:bg-[#102a4c] hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#102a4c]">
               View prices
               <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
             </Link>

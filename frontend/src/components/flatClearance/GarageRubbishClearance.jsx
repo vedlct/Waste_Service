@@ -16,14 +16,14 @@ export default function GarageRubbishClearance() {
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#071d3b]/75 via-transparent to-transparent" />
           <div className="absolute bottom-6 left-6 right-6 rounded-2xl border border-sky-200 bg-white/90 p-5 text-[#102a4c] backdrop-blur-md sm:bottom-8 sm:left-8 sm:right-auto sm:max-w-sm">
-            <p className="text-xs font-extrabold uppercase tracking-[0.16em] text-[#ffd126]">Local collection team</p>
+            <p className="text-xs font-extrabold uppercase tracking-[0.16em] text-[#0492E8]">Local collection team</p>
             <p className="mt-2 text-lg font-bold">Branded vehicles. Experienced crews. Heavy lifting included.</p>
           </div>
         </div>
 
         <div className="flex flex-col justify-center rounded-b-[2rem] border border-sky-200 bg-sky-50 p-7 text-[#102a4c] sm:p-10 lg:rounded-r-[2rem] lg:rounded-bl-none lg:p-12">
-          <div className="flex items-center gap-3 text-xs font-extrabold uppercase tracking-[0.18em] text-[#ffd126] sm:text-sm">
-            <span className="h-0.5 w-9 bg-[#ffd126]" />
+          <div className="flex items-center gap-3 text-xs font-extrabold uppercase tracking-[0.18em] text-[#0492E8] sm:text-sm">
+            <span className="h-0.5 w-9 bg-[#0492E8]" />
             Garage &amp; shed clearance
           </div>
 
@@ -42,7 +42,7 @@ export default function GarageRubbishClearance() {
               'Same-day availability may be possible',
             ].map((item) => (
               <li key={item} className="flex items-center gap-3 text-sm font-semibold text-[#102a4c]/90 sm:text-base">
-                <span className="grid size-7 place-items-center rounded-full bg-[#ffd126] text-[#102a4c]">
+                <span className="grid size-7 place-items-center rounded-full bg-[#0492E8] text-white">
                   <Check className="size-4" strokeWidth={3} />
                 </span>
                 {item}
@@ -53,7 +53,7 @@ export default function GarageRubbishClearance() {
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
             <Link
               href="/#prices"
-              className="group inline-flex min-h-12 flex-1 items-center justify-center gap-2 rounded-full bg-[#ffd126] px-5 py-3 text-sm font-extrabold text-[#102a4c] transition duration-300 hover:-translate-y-0.5 hover:bg-white"
+              className="group inline-flex min-h-12 flex-1 items-center justify-center gap-2 rounded-full bg-[#0492E8] px-5 py-3 text-sm font-extrabold text-white hover:text-[#102a4c] transition duration-300 hover:-translate-y-0.5 hover:bg-white"
             >
               View prices
               <ArrowRight className="size-4 transition group-hover:translate-x-1" />

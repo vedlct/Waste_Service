@@ -21,7 +21,7 @@ const promises = [
     title: 'Guaranteed Next Day Collection',
     description: 'Book an eligible slot online and our experienced team will arrive ready to clear your waste.',
     href: '/#prices',
-    accent: 'bg-[#F4B942]',
+    accent: 'bg-[#B25353]',
   },
   {
     icon: Sparkles,
