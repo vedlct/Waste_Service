@@ -31,7 +31,7 @@ export default function WhyChooseUs() {
 
             <div className="absolute inset-x-5 bottom-5 rounded-2xl border border-sky-200 bg-white/90 p-5 text-[#102a4c] shadow-lg backdrop-blur-md sm:inset-x-7 sm:bottom-7 sm:p-6">
               <div className="flex items-center gap-4">
-                <span className="grid size-12 shrink-0 place-items-center rounded-full bg-[#ffd126] text-[#102a4c]">
+                <span className="grid size-12 shrink-0 place-items-center rounded-full bg-[#1294E9]/30 text-[#102a4c]">
                   <Recycle className="size-6" aria-hidden="true" />
                 </span>
                 <div>
@@ -43,14 +43,14 @@ export default function WhyChooseUs() {
           </div>
 
           <div>
-            <div className="flex items-center gap-3 text-xs font-extrabold uppercase tracking-[0.18em] text-[#b56808] sm:text-sm">
-              <span className="h-0.5 w-9 bg-[#f0aa26]" aria-hidden="true" />
+            <div className="flex items-center gap-3 text-xs font-extrabold uppercase tracking-[0.18em] text-[#0492E8] sm:text-sm">
+              <span className="h-0.5 w-9 bg-[#0492E8]" aria-hidden="true" />
               Why choose our team
             </div>
 
             <h2 className="mt-5 text-3xl font-bold leading-[1.05] tracking-tight text-[#102a4c] sm:text-4xl lg:text-4xl">
               clearance built around
-              <span className="mt-1 block text-[#d67d0b]">care, reliability and value.</span>
+              <span className="mt-1 block text-[#0492E8]">care, reliability and value.</span>
             </h2>
 
             <p className="mt-6 max-w-2xl text-base leading-8 text-slate-600 sm:text-lg">
@@ -61,9 +61,9 @@ export default function WhyChooseUs() {
               {benefits.map((benefit) => (
                 <li
                   key={benefit}
-                  className="group/item flex min-h-14 items-center gap-3 rounded-xl border border-[#102a4c]/8 bg-[#f7f8f4] px-4 py-3 text-sm font-semibold leading-5 text-[#294761] transition duration-300 hover:-translate-y-0.5 hover:border-[#f0aa26]/45 hover:bg-[#fff9e9] hover:shadow-md"
+                  className="group/item flex min-h-14 items-center gap-3 rounded-xl border border-[#102a4c]/8 bg-[#f7f8f4] px-4 py-3 text-sm font-semibold leading-5 text-[#294761] transition duration-300 hover:-translate-y-0.5 hover:border-[#1294E9]/25 hover:bg-[#1294E9]/10 hover:shadow-md"
                 >
-                  <span className="grid size-7 shrink-0 place-items-center rounded-full border border-sky-200 bg-sky-50 text-[#102a4c] transition duration-300 group-hover/item:bg-[#f0aa26] group-hover/item:text-[#102a4c]">
+                  <span className="grid size-7 shrink-0 place-items-center rounded-full border border-sky-200 bg-sky-50 text-[#102a4c] transition duration-300 group-hover/item:bg-[#1294E9] group-hover/item:text-white">
                     <Check className="size-4" strokeWidth={3} aria-hidden="true" />
                   </span>
                   {benefit}
@@ -71,7 +71,7 @@ export default function WhyChooseUs() {
               ))}
             </ul>
 
-            <Link href="/faq" className="group mt-7 inline-flex items-center gap-2 text-sm font-extrabold text-[#102a4c] underline decoration-[#f0aa26] decoration-2 underline-offset-4 transition hover:text-[#d67d0b] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#102a4c] sm:text-base">
+            <Link href="/faq" className="group mt-7 inline-flex items-center gap-2 text-sm font-extrabold text-[#102a4c] underline decoration-[#0492E8] decoration-2 underline-offset-4 transition hover:text-[#0492E8] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#102a4c] sm:text-base">
               Read helpful information and FAQs
               <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
             </Link>
@@ -90,7 +90,7 @@ export default function WhyChooseUs() {
 
           <div className="flex min-h-[360px] items-center p-6 sm:p-10 lg:min-h-[360px] lg:p-14">
             <div className="max-w-2xl">
-              <div className="flex items-center gap-3 text-xs font-extrabold uppercase tracking-[0.18em] text-[#ffd126] sm:text-sm">
+              <div className="flex items-center gap-3 text-xs font-extrabold uppercase tracking-[0.18em] text-[#1294E9] sm:text-sm">
                 <Clock3 className="size-5" aria-hidden="true" />
                 When timing matters
               </div>
@@ -107,14 +107,14 @@ export default function WhyChooseUs() {
               </p>
 
               <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
-                <a href="tel:02082266477" className="group/call inline-flex min-h-13 items-center justify-center gap-3 rounded-full bg-[#ffd126] px-6 py-3.5 text-sm font-extrabold text-[#102a4c] transition duration-300 hover:-translate-y-0.5 hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white sm:text-base">
+                <a href="tel:02082266477" className="group/call inline-flex min-h-13 items-center justify-center gap-3 rounded-full bg-[#1294E9] px-6 py-3.5 text-sm font-extrabold text-white hover:text-[#102a4c] transition duration-300 hover:-translate-y-0.5 hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white sm:text-base">
                   <Phone className="size-5" aria-hidden="true" />
                   call 020 8226 6477
                   <ArrowRight className="size-4 transition-transform duration-300 group-hover/call:translate-x-1" aria-hidden="true" />
                 </a>
 
                 <div className="flex items-center justify-center gap-2 text-sm font-semibold text-white/85 sm:justify-start">
-                  <ShieldCheck className="size-5 text-[#ffd126]" aria-hidden="true" />
+                  <ShieldCheck className="size-5 text-[#1294E9]" aria-hidden="true" />
                   Fully insured &amp; licensed
                 </div>
               </div>

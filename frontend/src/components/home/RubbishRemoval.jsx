@@ -3,6 +3,7 @@ import {
   Armchair,
   ArrowRight,
   Building2,
+  Check,
   HardHat,
   Hammer,
   Home,
@@ -26,39 +27,42 @@ const services = [
 
 export default function RubbishRemoval() {
   return (
-    <section style={{ backgroundColor: '#81D4FA' }} className='relative overflow-hidden py-12 text-[#102a4c] sm:py-14 lg:py-16'>
-      <div aria-hidden='true' className='absolute -left-32 top-10 size-80 rounded-full border-[70px] border-white/[0.06]' />
-      <div aria-hidden='true' className='absolute -right-24 bottom-0 size-72 rounded-full bg-[#BFE8FF]/20 blur-3xl' />
+    <section aria-labelledby='rubbish-removal-heading' className='bg-[#F4F8FD] py-14 text-[#11224D] sm:py-20 lg:py-24'>
+      <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
+        <div className='grid min-w-0 gap-12 lg:grid-cols-[minmax(0,1.55fr)_minmax(0,1fr)] lg:items-end lg:gap-10 xl:gap-16'>
+          <div>
+            <span className='flex items-center gap-3 font-mono text-xs uppercase tracking-[0.08em] text-[#385B82] before:size-1.5 before:rounded-full before:bg-[#037CC8] p-2 bg-white max-w-fit border border-[#037CC8]/20 shadow shadow-[#037CC8]/20 rounded-full'>
+              What we collect
+            </span>
 
-      <div className='relative mx-auto grid max-w-7xl gap-8 px-4 sm:px-6 lg:grid-cols-[0.68fr_1.32fr] lg:gap-10 lg:px-8 xl:gap-12'>
-        <div className='lg:sticky lg:top-28 lg:self-start'>
-          <span className='inline-flex rounded-full border border-white/25 bg-[#037CC8]/30 px-3.5 py-1.5 text-[0.68rem] font-black uppercase tracking-[0.18em] text-white/90 backdrop-blur'>
-            What we collect
-          </span>
+            <h2 id='rubbish-removal-heading' className='mt-6 min-w-0 text-[clamp(1.75rem,8.5vw,3.5rem)] font-black leading-[1.06] tracking-[-0.045em] [overflow-wrap:anywhere] sm:mt-7 sm:text-[3.5rem] lg:text-[3.5rem] xl:text-[4.5rem]'>
+              <span className='block max-w-[8ch]'>Rubbish removal,</span>
+              <span className='block text-[#037CC8]'>made straightforward.</span>
+            </h2>
 
-          <h2 className='mt-5 max-w-xl text-3xl font-black leading-[1.06] tracking-[-0.035em] sm:text-4xl lg:text-4xl'>
-            Rubbish removal,
-            <span className='block text-[#C8EEFF]'>made straightforward.</span>
-          </h2>
-
-          <p className='mt-5 max-w-lg text-sm leading-6 text-[#102a4c]/80 sm:text-base sm:leading-7'>
-            From everyday household junk to bulky furniture and building waste, our Portsmouth collection team handles the lifting, loading and responsible disposal.
-          </p>
-
-          <div className='mt-6 flex items-center gap-3 border-l-2 border-[#F4B942] pl-4'>
-            <p className='text-sm leading-6 text-[#102a4c]/80'>
-              <strong className='block text-base text-[#102a4c]'>One team. One simple collection.</strong>
-              Choose a service to view your options.
+            <p className='mt-7 max-w-xl text-base leading-7 text-[#385B82] sm:mt-8 sm:text-lg'>
+              From everyday household junk to bulky furniture and building waste, our Portsmouth collection team handles the lifting, loading and responsible disposal.
             </p>
           </div>
 
-          <Link href='/prices?service=show-all' className='group mt-6 inline-flex items-center gap-2.5 rounded-full bg-white px-5 py-2.5 text-sm font-black text-[#11224D] transition-all duration-300 hover:-translate-y-1 hover:bg-[#F4B942] hover:shadow-xl hover:shadow-black/20 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white'>
-            View all waste types
-            <ArrowRight aria-hidden='true' className='size-4 transition-transform duration-300 group-hover:translate-x-1' />
-          </Link>
+          <div className='group/callout relative min-w-0 border border-[#11224D]/30 bg-[#037CC8]/10 p-5 pt-10 transition-[transform,box-shadow,border-color] duration-500 ease-out hover:border-[#037CC8]/30 hover:shadow-[0_18px_45px_-20px_rgba(3,124,200,0.35)] focus-within:border-[#037CC8] focus-within:shadow-[0_18px_45px_-20px_rgba(3,124,200,0.35)] motion-safe:hover:-translate-y-1 sm:p-8 sm:pt-11 lg:p-6 lg:pt-11 xl:p-8 xl:pt-11 motion-reduce:transition-none rounded-xl'>
+            <span aria-hidden='true' className='absolute -top-5 right-6 flex size-14 items-center justify-center rounded-full border border-[#037CC8] bg-[#037CC8] text-white transition-[transform,box-shadow] duration-500 group-hover/callout:shadow-[0_0_0_6px_rgba(3,124,200,0.1)] motion-safe:group-hover/callout:-rotate-12 motion-safe:group-hover/callout:scale-105 sm:right-7 motion-reduce:transition-none'>
+              <Check className='size-6' strokeWidth={2} />
+            </span>
+
+            <p className='text-sm leading-6 text-[#385B82] sm:text-base sm:leading-7'>
+              <strong className='mb-4 block border-b border-dashed border-[#BCD4EA] pb-4 text-xl font-bold leading-7 text-[#11224D]'>One team. One simple collection.</strong>
+              Choose a service to view your options.
+            </p>
+
+            <Link href='/prices?service=show-all' className='group relative isolate mt-6 flex min-h-12 items-center justify-between gap-3 overflow-hidden bg-[#11224D] px-4 py-3.5 text-sm font-semibold text-white transition-[background-color,box-shadow,transform] duration-300 hover:bg-[#037CC8] hover:shadow-[0_8px_20px_-8px_rgba(3,124,200,0.5)] active:bg-[#075A8C] focus-visible:bg-[#037CC8] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#037CC8] motion-safe:active:scale-[0.98] sm:px-5 motion-reduce:transition-none rounded-xl'>
+              View all waste types
+              <ArrowRight aria-hidden='true' className='size-4 shrink-0 transition-transform duration-200 group-hover:translate-x-1 motion-reduce:transform-none motion-reduce:transition-none' />
+            </Link>
+          </div>
         </div>
 
-        <div className='grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3'>
+        <div className='mt-12 border-t border-[#11224D] pt-4 sm:mt-16 lg:mt-24'>
           {services.map((service, index) => {
             const Icon = service.icon
 
@@ -66,35 +70,27 @@ export default function RubbishRemoval() {
               <Link
                 key={service.title}
                 href={service.href}
-                className='group relative flex min-h-40 flex-col justify-between overflow-hidden rounded-[1.4rem] border border-white/20 bg-[#037CC8]/35 p-4 shadow-sm backdrop-blur-sm transition-all duration-500 hover:-translate-y-1.5 hover:border-white hover:bg-white hover:shadow-2xl hover:shadow-black/20 focus-visible:-translate-y-1 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#C8EEFF] sm:min-h-44 sm:p-5'
+                className='group relative grid min-w-0 grid-cols-[1rem_2.25rem_minmax(0,1fr)_2.75rem] items-center gap-x-2 gap-y-1 border-b border-[#CDDEEE] px-1 py-5 transition-[background-color,border-color,box-shadow] duration-300 ease-out before:pointer-events-none before:absolute before:inset-y-4 before:left-0 before:w-0.5 before:rounded-full before:bg-[#037CC8] before:opacity-0 before:transition-opacity before:duration-300 hover:border-[#91C9EF] hover:bg-white hover:shadow-[0_8px_28px_-16px_rgba(17,34,77,0.2)] hover:before:opacity-100 active:bg-[#E9F4FF] focus-visible:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#037CC8] focus-visible:before:opacity-100 sm:gap-x-4 sm:px-3 md:min-h-24 md:grid-cols-[2rem_2.5rem_minmax(0,1fr)_auto_2.75rem] md:gap-x-5 md:py-6 lg:gap-x-7 motion-reduce:transition-none motion-reduce:before:transition-none'
               >
-                <div aria-hidden='true' className='absolute -right-10 -top-10 size-32 rounded-full bg-white/10 transition-transform duration-700 group-hover:scale-[2.2]' />
+                <span className='row-span-2 font-mono text-[0.65rem] tabular-nums text-[#385B82] transition-colors duration-300 group-hover:text-[#037CC8] md:row-span-1 md:text-xs motion-reduce:transition-none'>
+                  {String(index + 1).padStart(2, '0')}
+                </span>
 
-                <div className='relative flex items-start justify-between gap-4'>
-                  <span className='flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#C8EEFF] text-[#075A8C] shadow-lg shadow-black/10 transition-all duration-500 group-hover:rotate-6 group-hover:scale-110 group-hover:bg-[#0492E8] group-hover:text-white'>
-                    <Icon aria-hidden='true' className='size-5' strokeWidth={1.8} />
-                  </span>
-                  <span className='text-xs font-black tracking-[0.16em] text-[#102a4c]/55 transition-colors duration-300 group-hover:text-[#0497E2]'>
-                    {String(index + 1).padStart(2, '0')}
-                  </span>
-                </div>
+                <span className={`row-span-2 flex size-9 items-center justify-center rounded-full text-white transition-[transform,box-shadow] duration-300 ease-out group-hover:shadow-[0_0_0_5px_rgba(3,124,200,0.1)] group-focus-visible:shadow-[0_0_0_5px_rgba(3,124,200,0.1)] motion-safe:group-hover:-rotate-6 motion-safe:group-hover:scale-110 md:row-span-1 md:size-10 motion-reduce:transition-none ${index % 2 === 0 ? 'bg-[#11224D]' : 'bg-[#037CC8]'}`}>
+                  <Icon aria-hidden='true' className='size-[18px] sm:size-5' strokeWidth={1.7} />
+                </span>
 
-                <div className='relative mt-5'>
-                  <h3 className='max-w-xs text-base font-black leading-snug text-[#102a4c] transition-colors duration-300 group-hover:text-[#11224D] sm:text-lg'>
-                    {service.title}
-                  </h3>
+                <h3 className='min-w-0 text-sm font-bold leading-6 tracking-[-0.015em] text-[#11224D] [overflow-wrap:anywhere] transition-colors duration-300 group-hover:text-[#037CC8] group-focus-visible:text-[#037CC8] sm:text-base lg:text-lg motion-reduce:transition-none'>
+                  {service.title}
+                </h3>
 
-                  <div className='mt-3 flex items-center justify-between gap-3 border-t border-white/20 pt-3 transition-colors duration-300 group-hover:border-[#0492E8]/10'>
-                    <span className='text-xs font-bold uppercase tracking-[0.14em] text-[#C8EEFF] transition-colors duration-300 group-hover:text-[#0497E2]'>
-                      Explore service
-                    </span>
-                    <span className='flex size-8 shrink-0 items-center justify-center rounded-full border border-white/30 text-white/90 transition-all duration-300 group-hover:border-[#0492E8] group-hover:bg-[#0492E8] group-hover:text-white'>
-                      <ArrowRight aria-hidden='true' className='size-4 transition-transform duration-300 group-hover:translate-x-1' />
-                    </span>
-                  </div>
-                </div>
+                <span className='col-start-3 row-start-2 font-mono text-[0.6rem] uppercase tracking-[0.06em] text-[#176EA6] underline-offset-4 group-hover:underline group-focus-visible:underline md:col-start-4 md:row-start-1 md:whitespace-nowrap md:text-[0.65rem] lg:mr-5'>
+                  Explore service
+                </span>
 
-                <span className='absolute inset-x-6 bottom-0 h-1 origin-left scale-x-0 rounded-full bg-linear-to-r from-[#C8EEFF] to-[#F4B942] transition-transform duration-500 group-hover:scale-x-100' />
+                <span className='col-start-4 row-span-2 row-start-1 flex size-11 items-center justify-center rounded-full border border-[#CDDEEE] bg-white text-[#385B82] transition-[background-color,border-color,color,transform,box-shadow] duration-300 ease-out group-hover:border-[#037CC8] group-hover:bg-[#037CC8] group-hover:text-white group-hover:shadow-[0_4px_12px_rgba(3,124,200,0.2)] group-focus-visible:border-[#037CC8] group-focus-visible:bg-[#037CC8] group-focus-visible:text-white motion-safe:group-hover:-rotate-45 md:col-start-5 md:row-span-1 motion-reduce:transition-none'>
+                  <ArrowRight aria-hidden='true' className='size-4' strokeWidth={1.5} />
+                </span>
               </Link>
             )
           })}

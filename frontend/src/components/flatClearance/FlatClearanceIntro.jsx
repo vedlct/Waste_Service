@@ -61,7 +61,7 @@ export default function FlatClearanceIntro() {
 
           <Link
             href="/#prices"
-            className="group inline-flex min-h-12 shrink-0 items-center justify-center gap-3 rounded-full bg-[#102a4c] px-6 py-3 text-sm font-extrabold text-white transition duration-300 hover:-translate-y-0.5 hover:bg-[#f0aa26] hover:text-[#102a4c]"
+            className="group inline-flex min-h-12 shrink-0 items-center justify-center gap-3 rounded-full bg-[#102a4c] px-6 py-3 text-sm font-extrabold text-white transition duration-300 hover:-translate-y-0.5 hover:bg-[#0492E8] hover:text-white"
           >
             Check flat clearance prices
             <ArrowRight className="size-4 transition group-hover:translate-x-1" />

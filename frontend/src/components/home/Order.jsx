@@ -103,7 +103,7 @@ export default function Order() {
             <p className='mt-1 text-sm text-white/65'>Browse every waste type or speak with our friendly collection team.</p>
           </div>
           <div className='flex flex-wrap gap-3'>
-            <Link href='/prices?service=show-all' className='rounded-full bg-white px-5 py-2.5 text-sm font-bold text-[#11224D] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#F4B942] hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white'>
+            <Link href='/prices?service=show-all' className='rounded-full bg-white px-5 py-2.5 text-sm font-bold text-[#11224D] hover:text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#11224D] hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white'>
               Browse all items
             </Link>
             <Link href='/contactUs' className='rounded-full border border-white/25 px-5 py-2.5 text-sm font-bold text-white transition-all duration-300 hover:-translate-y-0.5 hover:border-white hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white'>

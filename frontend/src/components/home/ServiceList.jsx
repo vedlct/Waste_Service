@@ -124,7 +124,7 @@ export default function ServiceList() {
             <p className='text-2xl font-black text-white'>Unsure which service fits your clearance?</p>
             <p className='mt-2 max-w-2xl text-sm leading-6 text-white/65 sm:text-base'>Tell us what needs to go and our team will help you choose the most practical and cost-effective collection.</p>
           </div>
-          <Link href='/contactUs' className='group inline-flex shrink-0 items-center justify-center gap-3 self-start rounded-full bg-white px-5 py-3 text-sm font-black text-[#11224D] transition-all duration-300 hover:-translate-y-1 hover:bg-[#F4B942] hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white sm:self-auto'>
+          <Link href='/contactUs' className='group inline-flex shrink-0 items-center justify-center gap-3 self-start rounded-full bg-white px-5 py-3 text-sm font-black text-[#11224D] hover:text-white transition-all duration-300 hover:-translate-y-1 hover:bg-[#11224D] hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white sm:self-auto'>
             Talk to our team
             <ArrowRight aria-hidden='true' className='size-4 transition-transform duration-300 group-hover:translate-x-1' />
           </Link>

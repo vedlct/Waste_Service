@@ -47,7 +47,7 @@ export default function WhyChooseOurService() {
               />
             </div>
 
-            <div className="absolute bottom-[31%] left-5 rounded-2xl bg-[#ffd126] p-4 text-[#102a4c] shadow-xl">
+            <div className="absolute bottom-[31%] left-5 rounded-2xl bg-[#0492E8] p-4 text-white shadow-xl">
               <Recycle className="size-7" />
               <p className="mt-2 text-2xl font-black">95%</p>
               <p className="text-xs font-bold">recycled</p>
@@ -91,7 +91,7 @@ export default function WhyChooseOurService() {
         <div className="mt-20 overflow-hidden rounded-[2rem] border border-sky-200 bg-sky-50 text-[#102a4c]">
           <div className="grid lg:grid-cols-[.65fr_1.35fr]">
             <div className="p-7 sm:p-10">
-              <ShieldCheck className="size-9 text-[#ffd126]" />
+              <ShieldCheck className="size-9 text-[#0492E8]" />
               <h3 className="mt-5 text-3xl font-bold sm:text-4xl">Builders rubbish removal, made simple.</h3>
             </div>
 
@@ -99,11 +99,11 @@ export default function WhyChooseOurService() {
               {steps.map(([title, text], i) => (
                 <li
                   key={title}
-                  className="group border-t border-white/10 p-6 transition hover:bg-[#ffd126] hover:text-[#102a4c] sm:border-l sm:border-t-0"
+                  className="group border-t border-white/10 p-6 transition hover:bg-[#0492E8] hover:text-white sm:border-l sm:border-t-0"
                 >
-                  <span className="text-sm font-black text-[#ffd126] group-hover:text-[#102a4c]/50">0{i + 1}</span>
+                  <span className="text-sm font-black text-[#0492E8] group-hover:text-white">0{i + 1}</span>
                   <h4 className="mt-4 text-lg font-bold">{title}</h4>
-                  <p className="mt-3 text-sm leading-6 text-[#102a4c]/65 group-hover:text-[#102a4c]/75">{text}</p>
+                  <p className="mt-3 text-sm leading-6 text-[#102a4c]/65 group-hover:text-white">{text}</p>
                 </li>
               ))}
             </ol>

@@ -58,7 +58,7 @@ export default function BuildersWasteInfo() {
 
           <div className="flex min-h-[360px] items-center p-7 sm:p-10 lg:p-14">
             <div className="max-w-2xl text-white">
-              <div className="flex items-center gap-3 text-xs font-extrabold uppercase tracking-[.18em] text-[#ffd126]">
+              <div className="flex items-center gap-3 text-xs font-extrabold uppercase tracking-[.18em] text-[#0492E8]">
                 <Clock3 className="size-5" />
                 Fast collection availability
               </div>
@@ -74,7 +74,7 @@ export default function BuildersWasteInfo() {
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                 <a
                   href="tel:02082266477"
-                  className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#ffd126] px-6 py-3 font-extrabold text-[#102a4c] transition hover:-translate-y-0.5 hover:bg-white"
+                  className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#0492E8] px-6 py-3 font-extrabold text-white hover:text-[#102a4c] transition hover:-translate-y-0.5 hover:bg-white"
                 >
                   <Phone className="size-4" />
                   020 8226 6477

@@ -37,7 +37,7 @@ export default function OfficeWasteServices() {
             <div className="absolute -right-16 -top-16 size-56 rounded-full border-[2.5rem] border-white/5" aria-hidden="true" />
 
             <div className="absolute inset-x-6 bottom-6 rounded-2xl border border-sky-200 bg-white/90 p-5 text-[#102a4c] backdrop-blur-sm sm:inset-x-8 sm:bottom-8">
-              <p className="text-xs font-extrabold uppercase tracking-[0.16em] text-[#ffd126]">Business-ready collections</p>
+              <p className="text-xs font-extrabold uppercase tracking-[0.16em] text-[#0492E8]">Business-ready collections</p>
               <p className="mt-2 text-lg font-bold leading-snug sm:text-xl">Planned to reduce disruption to your staff and working day.</p>
             </div>
           </div>
@@ -61,7 +61,7 @@ export default function OfficeWasteServices() {
               {serviceScope.map(({ icon: icon, title, description }, index) => (
                 <div key={title} className="group/row grid gap-4 border-b border-[#102a4c]/15 py-6 transition duration-300 hover:bg-white hover:px-4 sm:grid-cols-[2.5rem_3.5rem_1fr] sm:items-start">
                   <span className="text-xs font-black tracking-[0.14em] text-[#d67d0b]">0{index + 1}</span>
-                  <span className="grid size-11 place-items-center rounded-full border border-sky-200 bg-sky-50 text-[#102a4c] transition duration-500 group-hover/row:rotate-6 group-hover/row:bg-[#f0aa26] group-hover/row:text-[#102a4c]">
+                  <span className="grid size-11 place-items-center rounded-full border border-sky-200 bg-sky-50 text-[#102a4c] transition duration-500 group-hover/row:rotate-6 group-hover/row:bg-[#0492E8] group-hover/row:text-[#102a4c]">
                     <icon className="size-5" aria-hidden="true" />
                   </span>
                   <div>

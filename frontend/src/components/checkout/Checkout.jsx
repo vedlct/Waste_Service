@@ -12,8 +12,48 @@ export default function Checkout() {
     <Link href='/#prices' className='group inline-flex items-center gap-2 text-sm font-bold text-[#11224D] transition hover:text-[#0497E2]'><ArrowLeft className='size-4 transition group-hover:-translate-x-1'/>Continue choosing items</Link>
     <div className='mt-8 flex flex-col gap-4 border-b border-[#11224D]/15 pb-8 sm:flex-row sm:items-end sm:justify-between'><div><p className='text-xs font-black uppercase tracking-[.18em] text-[#0497E2]'>Your collection</p><h1 className='mt-3 text-3xl font-black text-[#11224D] sm:text-4xl'>Checkout</h1><p className='mt-3 text-slate-600'>{count} {count === 1 ? 'item' : 'items'} ready to review.</p></div>{items.length > 0 && <button onClick={clearCart} className='inline-flex items-center gap-2 self-start text-sm font-bold text-slate-500 transition hover:text-red-600 sm:self-auto'><Trash2 className='size-4'/>Clear basket</button>}</div>
     {items.length === 0 ? <div className='mt-10 grid min-h-80 place-items-center rounded-[2rem] border border-[#11224D]/10 bg-white p-8 text-center shadow-sm'><div><span className='mx-auto grid size-16 place-items-center rounded-full bg-[#eaf3fb] text-[#0497E2]'><ShoppingBasket className='size-7'/></span><h2 className='mt-5 text-2xl font-bold text-[#11224D]'>Your basket is empty</h2><p className='mt-2 text-slate-600'>Choose a collection option or add individual items to continue.</p><Link href='/#prices' style={{ color: '#ffffff' }} className='mt-6 inline-flex rounded-full bg-[#11224D] px-6 py-3 text-sm font-bold text-white! transition hover:bg-[#0497E2]'>Browse prices</Link></div></div> : <div className='mt-10 grid gap-8 lg:grid-cols-[1fr_23rem] lg:items-start'>
-      <div className='overflow-hidden rounded-[2rem] border border-[#11224D]/10 bg-white shadow-sm'>{items.map((item,index)=><div key={item.id} className='group grid gap-5 border-b border-[#11224D]/10 p-5 last:border-0 sm:grid-cols-[3rem_1fr_auto] sm:items-center sm:p-6'><span className='grid size-11 place-items-center rounded-full bg-[#eaf3fb] text-xs font-black text-[#0497E2]'>{String(index+1).padStart(2,'0')}</span><div><h2 className='text-lg font-bold text-[#11224D]'>{item.name}</h2><p className='mt-1 text-sm text-slate-500'>{item.detail}</p><p className='mt-2 text-sm font-extrabold text-[#0497E2]'>£{item.unitPrice.toFixed(2)} each</p></div><div className='flex items-center justify-between gap-5 sm:justify-end'><div className='flex items-center rounded-full border border-[#11224D]/15 p-1'><button onClick={()=>updateQuantity(item.id,item.quantity-1)} aria-label={`Decrease ${item.name}`} className='grid size-8 place-items-center rounded-full transition hover:bg-[#eaf3fb]'><Minus className='size-4'/></button><span className='w-8 text-center font-bold text-[#11224D]'>{item.quantity}</span><button onClick={()=>updateQuantity(item.id,item.quantity+1)} aria-label={`Increase ${item.name}`} className='grid size-8 place-items-center rounded-full transition hover:bg-[#eaf3fb]'><Plus className='size-4'/></button></div><p className='w-24 text-right text-lg font-black text-[#11224D]'>£{(item.unitPrice*item.quantity).toFixed(2)}</p><button onClick={()=>removeItem(item.id)} aria-label={`Remove ${item.name}`} className='text-slate-400 transition hover:text-red-600'><Trash2 className='size-5'/></button></div></div>)}</div>
-      <aside className='rounded-[2rem] border border-sky-200 bg-sky-50 p-6 text-[#102a4c] shadow-xl lg:sticky lg:top-28'><p className='text-xs font-black uppercase tracking-[.17em] text-[#8fd3f4]'>Order summary</p><div className='mt-6 space-y-4 border-y border-sky-200 py-5'><div className='flex justify-between text-sm text-[#102a4c]/70'><span>Items</span><span>{count}</span></div><div className='flex justify-between text-sm text-[#102a4c]/70'><span>VAT</span><span>Included</span></div></div><div className='mt-6 flex items-end justify-between'><span className='font-bold'>Total to pay</span><span className='text-3xl font-black text-[#f4b942]'>£{total.toFixed(2)}</span></div><Link href='/payment' className='mt-7 flex min-h-12 items-center justify-center rounded-full bg-[#f4b942] px-5 py-3 text-sm font-black text-[#11224D] transition hover:-translate-y-0.5 hover:bg-white'>Continue to payment</Link><div className='mt-5 space-y-2 text-xs text-[#102a4c]/60'><p className='flex gap-2'><ShieldCheck className='size-4 text-[#8fd3f4]'/>Secure order review</p><p className='flex gap-2'><Check className='size-4 text-[#8fd3f4]'/>Prices shown include VAT</p></div></aside>
+      <div className='overflow-hidden rounded-[2rem] border border-[#11224D]/10 bg-white shadow-sm'>
+        {items.map((item,index)=>
+          <div key={item.id} className='group grid gap-5 border-b border-[#11224D]/10 p-5 last:border-0 sm:grid-cols-[3rem_1fr_auto] sm:items-center sm:p-6'>
+            <span className='grid size-11 place-items-center rounded-full bg-[#eaf3fb] text-xs font-black text-[#0497E2]'>{String(index+1).padStart(2,'0')}</span>
+            <div>
+              <h2 className='text-lg font-bold text-[#11224D]'>{item.name}</h2>
+              <p className='mt-1 text-sm text-slate-500'>{item.detail}</p>
+              <p className='mt-2 text-sm font-extrabold text-[#0497E2]'>£{item.unitPrice.toFixed(2)} each</p>
+            </div>
+            <div className='flex items-center justify-between gap-5 sm:justify-end'>
+              <div className='flex items-center rounded-full border border-[#11224D]/15 p-1'>
+                <button onClick={()=>updateQuantity(item.id,item.quantity-1)} aria-label={`Decrease ${item.name}`} className='grid size-8 place-items-center rounded-full transition hover:bg-[#eaf3fb]'><Minus className='size-4'/></button>
+                <span className='w-8 text-center font-bold text-[#11224D]'>{item.quantity}</span>
+                <button onClick={()=>updateQuantity(item.id,item.quantity+1)} aria-label={`Increase ${item.name}`} className='grid size-8 place-items-center rounded-full transition hover:bg-[#eaf3fb]'><Plus className='size-4'/></button>
+              </div>
+              <p className='w-24 text-right text-lg font-black text-[#11224D]'>£{(item.unitPrice*item.quantity).toFixed(2)}</p>
+              <button onClick={()=>removeItem(item.id)} aria-label={`Remove ${item.name}`} className='text-slate-400 transition hover:text-red-600'><Trash2 className='size-5'/></button>
+            </div>
+          </div>)}
+      </div>
+      <aside className='rounded-[2rem] border border-sky-200 bg-sky-50 p-6 text-[#102a4c] shadow-xl lg:sticky lg:top-28'>
+        <p className='text-xs font-black uppercase tracking-[.17em] text-[#8fd3f4]'>Order summary</p>
+        <div className='mt-6 space-y-4 border-y border-sky-200 py-5'>
+          <div className='flex justify-between text-sm text-[#102a4c]/70'>
+            <span>Items</span>
+            <span>{count}</span>
+          </div>
+          <div className='flex justify-between text-sm text-[#102a4c]/70'>
+            <span>VAT</span>
+            <span>Included</span>
+          </div>
+        </div>
+        <div className='mt-6 flex items-end justify-between'>
+          <span className='font-bold'>Total to pay</span>
+          <span className='text-3xl font-black text-black'>£{total.toFixed(2)}</span>
+        </div>
+        <Link href='/payment' className='mt-7 flex min-h-12 items-center justify-center rounded-full bg-[#0492E8] px-5 py-3 text-sm font-black text-white hover:text-[#11224D] transition hover:-translate-y-0.5 hover:bg-white'>Continue to payment</Link>
+        <div className='mt-5 space-y-2 text-xs text-[#102a4c]/60'>
+          <p className='flex gap-2'><ShieldCheck className='size-4 text-[#8fd3f4]'/>Secure order review</p>
+          <p className='flex gap-2'><Check className='size-4 text-[#8fd3f4]'/>Prices shown include VAT</p>
+        </div>
+      </aside>
     </div>}
   </div></main>
 }

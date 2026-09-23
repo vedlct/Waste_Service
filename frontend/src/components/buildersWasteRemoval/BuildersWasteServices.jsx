@@ -22,7 +22,7 @@ export default function BuildersWasteServices() {
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#071d3b]/75 via-transparent to-transparent" />
           <div className="absolute bottom-6 left-6 flex items-center gap-3 rounded-2xl bg-white/90 p-4 text-[#102a4c] backdrop-blur-md">
-            <HardHat className="size-7 text-[#ffd126]" />
+            <HardHat className="size-7 text-[#0492E8]" />
             <span className="font-bold">Site-ready collection teams</span>
           </div>
         </div>

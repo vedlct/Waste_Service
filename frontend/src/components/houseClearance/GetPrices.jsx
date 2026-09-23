@@ -17,7 +17,7 @@ export default function GetPrices() {
 
       <div className="mx-auto flex w-full max-w-7xl items-center px-4 py-10 sm:px-6 sm:py-12 lg:px-8">
         <div className="max-w-2xl">
-          <span className="block font-serif text-3xl font-black leading-[0.6] text-[#ffd126] transition-transform duration-500 group-hover:-translate-y-1 sm:text-4xl" aria-hidden="true">
+          <span className="block font-serif text-3xl font-black leading-[0.6] text-[#1294E9] transition-transform duration-500 group-hover:-translate-y-1 sm:text-4xl" aria-hidden="true">
             &ldquo;
           </span>
 
@@ -25,15 +25,15 @@ export default function GetPrices() {
             Clear pricing makes clearing your space feel simple from the start.
           </h2>
 
-          <div className="mt-5 flex items-center gap-3 text-xs font-extrabold uppercase tracking-[0.17em] text-[#ffd126] sm:text-sm">
-            <span className="h-0.5 w-8 bg-[#ffd126] transition-all duration-500 group-hover:w-12" aria-hidden="true" />
+          <div className="mt-5 flex items-center gap-3 text-xs font-extrabold uppercase tracking-[0.17em] text-[#1294E9] sm:text-sm">
+            <span className="h-0.5 w-8 bg-[#1294E9] transition-all duration-500 group-hover:w-12" aria-hidden="true" />
             Choose your collection
           </div>
 
           <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center">
             <Link
               href="/#prices"
-              className="group/cta inline-flex min-h-12 items-center justify-center gap-3 rounded-full bg-[#ffd126] px-6 py-3 text-sm font-extrabold text-[#102a4c] shadow-[0_14px_28px_-16px_rgba(255,209,38,0.8)] transition duration-300 hover:-translate-y-0.5 hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+              className="group/cta inline-flex min-h-12 items-center justify-center gap-3 rounded-full bg-[#1294E9] px-6 py-3 text-sm font-extrabold text-white hover:text-[#102a4c] shadow-lg shadow-[#1294E9]/30 transition duration-300 hover:-translate-y-0.5 hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
             >
               View prices &amp; book
               <ArrowRight className="size-4 transition-transform duration-300 group-hover/cta:translate-x-1" aria-hidden="true" />
