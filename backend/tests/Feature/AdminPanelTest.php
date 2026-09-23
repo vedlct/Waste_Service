@@ -9,18 +9,8 @@ use Tests\TestCase;
 
 class AdminPanelTest extends TestCase
 {
-    private function useMysqlDatabase(): void
-    {
-        config([
-            'database.default' => 'mysql',
-            'database.connections.mysql.database' => 'mr_tee',
-        ]);
-    }
-
     public function test_admin_pages_render_for_authenticated_users(): void
     {
-        $this->useMysqlDatabase();
-
         $user = User::query()->updateOrCreate(
             ['email' => 'admin-panel-test@example.com'],
             ['name' => 'Admin Panel Test', 'password' => 'password', 'role' => 'super_admin', 'status' => 'active'],
@@ -48,7 +38,6 @@ class AdminPanelTest extends TestCase
 
     public function test_admin_routes_require_active_admin_user(): void
     {
-        $this->useMysqlDatabase();
         $token = Str::uuid()->toString();
 
         $this->get(route('admin.dashboard'))
@@ -75,7 +64,6 @@ class AdminPanelTest extends TestCase
 
     public function test_authenticated_user_can_update_profile_and_password(): void
     {
-        $this->useMysqlDatabase();
         $token = Str::uuid()->toString();
 
         $user = User::query()->updateOrCreate(
@@ -117,7 +105,6 @@ class AdminPanelTest extends TestCase
 
     public function test_admin_can_create_and_update_users(): void
     {
-        $this->useMysqlDatabase();
         $token = Str::uuid()->toString();
 
         $admin = User::query()->updateOrCreate(
@@ -174,7 +161,6 @@ class AdminPanelTest extends TestCase
 
     public function test_password_recovery_views_use_admin_auth_shell(): void
     {
-        $this->useMysqlDatabase();
         $token = Str::uuid()->toString();
 
         $this->get(route('password.request'))

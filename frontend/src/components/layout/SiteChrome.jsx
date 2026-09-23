@@ -7,7 +7,7 @@ import ScrollToTop from '../buttons/ScrollToTop'
 import StickyCart from '../buttons/StickyCart'
 import { CartProvider } from '../cart/CartContext'
 
-export default function SiteChrome({ children }) {
+export default function SiteChrome({ children, contact }) {
   const pathname = usePathname()
   const isAdminRoute = pathname === '/admin' || pathname.startsWith('/admin/')
 
@@ -17,13 +17,13 @@ export default function SiteChrome({ children }) {
 
   return (
     <CartProvider>
-      <Header />
+      <Header contact={contact} />
       <div className='fixed z-50 flex flex-col items-center gap-3' style={{ right: '1.5rem', bottom: '1.5rem' }}>
         <StickyCart />
         <ScrollToTop />
       </div>
       {children}
-      <Footer />
+      <Footer contact={contact} />
     </CartProvider>
   )
 }

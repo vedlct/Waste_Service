@@ -1,13 +1,13 @@
 import ServiceHero from '../ServiceHero';
 
-export default function WaitLoadHero() {
+export default function WaitLoadHero({ service, phone }) {
   return (
-    <ServiceHero
+    <ServiceHero service={service} phone={phone}
       image="/images/LoadHero.jpg"
-      imageAlt="Junk Collection service in Chingford"
+      imageAlt="Wait and load collection in Portsmouth"
       eyebrow="Junk Collection specialists"
-      title="Junk Collection in Chingford"
-      description="We remove Junk Collection efficiently and without fuss, leaving you with a cleaner outdoor space to enjoy."
+      title="Wait and load collection in Portsmouth"
+      description="A practical option when waste is ready to load quickly."
       points={['Green and bulky waste', 'Over 90% recycled']}
     />
   );

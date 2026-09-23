@@ -69,7 +69,7 @@ export default function QuoteForm() {
             <ShieldCheck aria-hidden='true' className='size-5 shrink-0 text-[#0492E8]' />
             Your details are used only to respond to your clearance enquiry.
           </p>
-          <p className='font-semibold text-[#102a4c]'>Friendly support Â· Clear options Â· No pressure</p>
+          <p className='font-semibold text-[#102a4c]'>Friendly support · Clear options · No pressure</p>
         </div>
       </div>
     </section>

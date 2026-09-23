@@ -34,7 +34,7 @@ export default function GardenRubbishItems() {
       eyebrow="Garden clearance directory"
       heading="Clear the garden."
       accent="Keep the space you enjoy."
-      intro="We remove green waste, outdoor structures and heavy landscaping material across Chingford."
+      intro="We remove green waste, outdoor structures and heavy landscaping material across Portsmouth."
       note="Tell us what is in your garden and we will confirm the right collection."
       categories={categories}
       images={images}

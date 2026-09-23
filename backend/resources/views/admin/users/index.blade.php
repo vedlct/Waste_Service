@@ -38,7 +38,7 @@
 @endsection
 
 @push('scripts')
-<script>
+<script @nonce>
     new DataTable('#users-table', {
         processing: true,
         serverSide: true,

@@ -29,7 +29,7 @@ export default function GardenClearanceService() {
           <div>
             <div className="flex items-center gap-3 text-xs font-extrabold uppercase tracking-[0.18em] text-[#52731f] sm:text-sm">
               <span className="h-0.5 w-9 bg-[#8dbb45]" aria-hidden="true" />
-              Chingford garden clearance
+              Portsmouth garden clearance
             </div>
 
             <h2 className="mt-5 text-3xl font-bold leading-[1.04] tracking-tight text-[#102a4c] sm:text-4xl lg:text-4xl">

@@ -2,6 +2,7 @@
  
 import { useState } from "react";
 import { Star, Plus, X } from "lucide-react";
+import { apiPost } from "@/lib/api";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Carousel,
@@ -11,6 +12,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
  
+// Shown when the backend is unreachable, so the section never renders empty.
 const initialReviews = [
   {
     name: "Sue Lewis",
@@ -60,15 +62,30 @@ function Stars({ count }) {
   );
 }
 
-function AddReviewForm({ onClose, onSubmit }) {
+function AddReviewForm({ onClose }) {
   const [name, setName] = useState("");
   const [text, setText] = useState("");
   const [rating, setRating] = useState(5);
+  const [honeypot, setHoneypot] = useState("");
+  const [status, setStatus] = useState({ state: "idle", message: "" });
 
-  const handleSubmit = () => {
-    if (!name.trim() || !text.trim()) return;
-    onSubmit({ name, text, rating, time: "Just now" });
-    onClose();
+  const handleSubmit = async () => {
+    if (!name.trim() || !text.trim() || status.state === "sending") return;
+
+    setStatus({ state: "sending", message: "" });
+
+    // Reviews are stored as pending and only appear once the office has approved them,
+    // so nothing is added to the carousel here.
+    const result = await apiPost("reviews", {
+      reviewer_name: name,
+      rating,
+      body: text,
+      website: honeypot,
+    });
+
+    setStatus(result.ok
+      ? { state: "sent", message: result.message || "Thanks for your review. It will appear once our team has checked it." }
+      : { state: "error", message: result.message });
   };
 
   return (
@@ -77,24 +94,38 @@ function AddReviewForm({ onClose, onSubmit }) {
         <button onClick={onClose} className="absolute top-3 right-3 text-[#9ca3af]" aria-label="Close review form"><X size={18} /></button>
         <CardContent className="pt-6 flex flex-col gap-3">
           <h3 className="font-semibold text-[#1f2937]">Write a review</h3>
-          <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Your name" aria-label="Your name" className="border rounded-md px-3 py-2 text-sm bg-[#ffffff] text-[#1f2937] border-[#d1d5db] min-w-0" />
-          <div className="flex gap-1">
-            {Array.from({ length: 5 }).map((_, i) => (
-              <button key={i} onClick={() => setRating(i + 1)} aria-label={`${i + 1} stars`}>
-                <Star size={20} className={i < rating ? "fill-[#2563eb] text-[#2563eb]" : "fill-none text-[#d1d5db]"} />
+          {status.state === "sent" ? (
+            <>
+              <p className="text-sm text-[#4b5563]" role="status">{status.message}</p>
+              <button onClick={onClose} className="rounded-md py-2 text-sm font-medium bg-[#2563eb] text-[#ffffff]">Close</button>
+            </>
+          ) : (
+            <>
+              <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Your name" aria-label="Your name" className="border rounded-md px-3 py-2 text-sm bg-[#ffffff] text-[#1f2937] border-[#d1d5db] min-w-0" />
+              {/* Honeypot: hidden from people, filled by bots. */}
+              <input value={honeypot} onChange={(e) => setHoneypot(e.target.value)} name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" className="hidden" />
+              <div className="flex gap-1">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <button key={i} onClick={() => setRating(i + 1)} aria-label={`${i + 1} stars`}>
+                    <Star size={20} className={i < rating ? "fill-[#2563eb] text-[#2563eb]" : "fill-none text-[#d1d5db]"} />
+                  </button>
+                ))}
+              </div>
+              <textarea value={text} onChange={(e) => setText(e.target.value)} placeholder="Your review" aria-label="Your review" rows={3} className="border rounded-md px-3 py-2 text-sm resize-none bg-[#ffffff] text-[#1f2937] border-[#d1d5db] min-w-0" />
+              {status.state === "error" && <p className="text-sm text-red-600" role="alert">{status.message}</p>}
+              <button onClick={handleSubmit} disabled={status.state === "sending"} className="rounded-md py-2 text-sm font-medium bg-[#2563eb] text-[#ffffff] disabled:opacity-60">
+                {status.state === "sending" ? "Sending..." : "Submit"}
               </button>
-            ))}
-          </div>
-          <textarea value={text} onChange={(e) => setText(e.target.value)} placeholder="Your review" aria-label="Your review" rows={3} className="border rounded-md px-3 py-2 text-sm resize-none bg-[#ffffff] text-[#1f2937] border-[#d1d5db] min-w-0" />
-          <button onClick={handleSubmit} className="rounded-md py-2 text-sm font-medium bg-[#2563eb] text-[#ffffff]">Submit</button>
+            </>
+          )}
         </CardContent>
       </Card>
     </div>
   );
 }
 
-export default function Review() {
-  const [reviews, setReviews] = useState(initialReviews);
+export default function Review({ reviews: remoteReviews }) {
+  const reviews = remoteReviews?.length ? remoteReviews : initialReviews;
   const [showForm, setShowForm] = useState(false);
 
   return (
@@ -126,7 +157,7 @@ export default function Review() {
         <CarouselPrevious className="left-0 bg-[#ffffff] text-[#171717] border-[#d1d5db]" />
         <CarouselNext className="right-0 bg-[#ffffff] text-[#171717] border-[#d1d5db]" />
       </Carousel>
-      {showForm && <AddReviewForm onClose={() => setShowForm(false)} onSubmit={(review) => setReviews((prev) => [...prev, review])} />}
+      {showForm && <AddReviewForm onClose={() => setShowForm(false)} />}
       </div>
     </section>
   );

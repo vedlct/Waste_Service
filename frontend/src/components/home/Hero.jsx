@@ -35,7 +35,7 @@ export default function Hero() {
           </h1>
 
           <p className='mt-2 max-w-2xl text-sm font-semibold leading-7 text-[#102a4c]/90 sm:text-base lg:text-lg'>
-            Professional rubbish clearance for homes and businesses throughout London and the Home Countries.
+            Professional rubbish clearance for homes and businesses throughout Portsmouth and the surrounding area.
           </p>
           <p className='mt-2 max-w-2xl text-sm leading-6 text-[#102a4c]/65 sm:text-base'>
             From garage junk and old furniture to complete property clearances, our experienced team handles the lifting, loading and responsible disposal.
@@ -75,7 +75,7 @@ export default function Hero() {
         {/* <div className='mt-8 flex items-center justify-between gap-5 border-t border-white/15 pt-5 sm:mt-10'>
           <p className='inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-[#102a4c]/55 sm:text-sm'>
             <Check aria-hidden='true' className='size-4 text-[#F4B942]' />
-            Friendly team Â· Clear pricing Â· Responsible disposal
+            Friendly team · Clear pricing · Responsible disposal
           </p>
           <Link href='/#prices' aria-label='Scroll to prices and booking' className='group hidden size-11 shrink-0 items-center justify-center rounded-full border border-white/25 bg-white/10 text-[#102a4c] backdrop-blur transition-all duration-300 hover:-translate-y-1 hover:border-white hover:bg-white hover:text-[#11224D] sm:flex'>
             <ArrowDown aria-hidden='true' className='size-5 transition-transform duration-300 group-hover:translate-y-1' />

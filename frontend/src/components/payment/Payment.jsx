@@ -1,9 +1,10 @@
-﻿'use client'
+'use client'
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { ArrowLeft, BadgeCheck, CreditCard, Info, LockKeyhole, ShieldCheck, Tag } from 'lucide-react'
-import { useCart } from '../cart/CartContext'
+import { ArrowLeft, BadgeCheck, CircleAlert, CircleCheck, Info, LoaderCircle, LockKeyhole, ShieldCheck, Wallet } from 'lucide-react'
+import { apiPost } from '@/lib/api'
+import { isBookable, useCart } from '../cart/CartContext'
 
 const inputClass = 'mt-2 min-h-12 w-full rounded-md border-2 border-slate-200 bg-white px-4 text-sm text-slate-800 outline-none transition-all duration-200 placeholder:text-slate-400 hover:border-slate-300 focus:border-[#0497E2] focus:ring-4 focus:ring-[#0497E2]/15'
 
@@ -53,15 +54,112 @@ function SectionHeading({ icon: Icon, step, title, hint }) {
   )
 }
 
-export default function Payment() {
-  const { items, ready, count, total } = useCart()
-  const [showVoucher, setShowVoucher] = useState(false)
-  const [differentAddress, setDifferentAddress] = useState(false)
-  const [message, setMessage] = useState('')
+function address(formData, prefix, contact) {
+  return {
+    ...contact,
+    address_line_1: formData.get(`${prefix}Address`),
+    address_line_2: formData.get(`${prefix}AddressTwo`) || null,
+    city: formData.get(`${prefix}City`),
+    county: formData.get(`${prefix}County`) || null,
+    postcode: formData.get(`${prefix}Postcode`),
+    country: formData.get(`${prefix}Country`) || 'United Kingdom',
+  }
+}
 
-  const handleSubmit = (event) => {
+// Online card payment is not offered yet, so no card details are ever collected here.
+// Pay-on-arrival jobs are paid to the crew; pay-now jobs are followed up by the office.
+function paymentNote(paymentOption) {
+  return paymentOption === 'arrival'
+    ? 'You pay on arrival. The callout fee and the balance are paid to our team on the day of collection.'
+    : 'No card details are taken online. Our team will contact you to arrange payment before your collection.'
+}
+
+function Confirmation({ booking }) {
+  return (
+    <div className='grid min-h-80 place-items-center p-8 text-center'>
+      <div className='max-w-lg'>
+        <span className='mx-auto grid size-16 place-items-center rounded-full bg-emerald-50 text-emerald-600'>
+          <CircleCheck className='size-8' />
+        </span>
+        <h2 className='mt-5 text-2xl font-black text-slate-900'>Thank you, your booking is in</h2>
+        <p className='mt-2 text-slate-600'>Your booking reference is</p>
+        <p className='mt-1 text-3xl font-black tracking-wider text-[#11224D]'>{booking.reference}</p>
+        <p className='mt-4 text-sm text-slate-600'>
+          {booking.requires_payment
+            ? 'Our team will be in touch shortly to take payment and confirm your collection.'
+            : 'Our team will be in touch shortly to confirm your collection.'}
+        </p>
+        {booking.totals?.total_pence != null && (
+          <p className='mt-4 text-sm font-bold text-slate-700'>
+            Total: £{(booking.totals.total_pence / 100).toFixed(2)} <span className='font-normal text-slate-500'>(inc. VAT)</span>
+          </p>
+        )}
+        <p className='mt-2 text-xs text-slate-500'>Please quote your reference if you contact us about this booking.</p>
+        <Link href='/' className='mt-6 inline-flex rounded-full bg-[#11224D] px-6 py-3 font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#0d1a3b]'>
+          Back to home
+        </Link>
+      </div>
+    </div>
+  )
+}
+
+export default function Payment() {
+  const { items, ready, count, total, collection, clearCart } = useCart()
+  const [differentAddress, setDifferentAddress] = useState(false)
+  const [submission, setSubmission] = useState({ state: 'idle', message: '' })
+  const [booking, setBooking] = useState(null)
+
+  const handleSubmit = async (event) => {
     event.preventDefault()
-    setMessage('Your details are complete. Secure payment processing can now be connected to this form.')
+    if (submission.state === 'sending') return
+
+    // Lines added before the site was wired to the booking API carry no catalogue id.
+    const staleLines = items.filter((item) => item.catalogueType !== 'surcharge' && !isBookable(item))
+    if (staleLines.length > 0) {
+      setSubmission({ state: 'error', message: 'Some items in your basket are out of date. Please remove them and add them again from the prices page.' })
+      return
+    }
+
+    if (!collection?.collection_date) {
+      setSubmission({ state: 'error', message: 'Your collection details are missing. Please choose a collection date on the prices page and add your items again.' })
+      return
+    }
+
+    const formData = new FormData(event.currentTarget)
+    const contact = {
+      first_name: formData.get('firstName'),
+      last_name: formData.get('lastName'),
+      company: formData.get('company') || null,
+      phone: formData.get('phone'),
+      mobile: formData.get('mobile') || null,
+      email: formData.get('email'),
+    }
+
+    setSubmission({ state: 'sending', message: '' })
+
+    // Only catalogue ids and quantities are sent. Prices are always read from the
+    // catalogue on the server, and surcharges are added there too.
+    const result = await apiPost('bookings', {
+      items: items.filter(isBookable).map((item) => ({
+        type: item.catalogueType,
+        id: item.catalogueId,
+        quantity: item.quantity,
+      })),
+      collection,
+      billing: address(formData, 'billing', contact),
+      collection_address: differentAddress ? address(formData, 'collection', contact) : null,
+      company_website: formData.get('company_website') || '',
+    })
+
+    if (!result.ok) {
+      setSubmission({ state: 'error', message: result.message })
+      return
+    }
+
+    // A honeypot hit comes back ok without a reference; treat it like any other success.
+    setBooking(result.data?.reference ? result.data : { reference: 'Received', requires_payment: false })
+    clearCart()
+    setSubmission({ state: 'sent', message: '' })
   }
 
   if (!ready) return <div className='min-h-[60vh] bg-[#0d1424]' />
@@ -79,13 +177,15 @@ export default function Payment() {
             <div aria-hidden='true' className='pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(104,196,239,0.18),transparent_45%),radial-gradient(circle_at_85%_75%,rgba(244,185,66,0.16),transparent_45%)]' />
             <p className='relative inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-1.5 text-xs font-bold uppercase tracking-[.2em] text-white backdrop-blur-sm'>
               <LockKeyhole className='size-3.5' />
-              Secure payment
+              Secure checkout
             </p>
             <h1 className='relative mt-4 text-3xl font-black tracking-tight text-white sm:text-4xl'>Complete your order</h1>
             <p className='relative mx-auto mt-2 max-w-2xl text-sm text-white/85'>Enter your billing information and review your collection before placing the order.</p>
           </header>
 
-          {items.length === 0 ? (
+          {booking ? (
+            <Confirmation booking={booking} />
+          ) : items.length === 0 ? (
             <div className='grid min-h-80 place-items-center p-8 text-center'>
               <div>
                 <h2 className='text-2xl font-black text-slate-900'>Your basket is empty</h2>
@@ -97,36 +197,12 @@ export default function Payment() {
             </div>
           ) : (
             <form onSubmit={handleSubmit} className='p-4 sm:p-7 lg:p-9'>
-              <section className='rounded-2xl border-2 border-dashed border-[#F4B942]/50 bg-[#FFFBEF] p-4 transition-colors duration-200 hover:border-[#F4B942] sm:p-5'>
-                <button type='button' onClick={() => setShowVoucher((value) => !value)} aria-expanded={showVoucher} className='group flex w-full items-center gap-3 text-left text-sm font-bold text-slate-700'>
-                  <span className='grid size-9 place-items-center rounded-full bg-[#F4B942] text-[#11224D] shadow-sm transition-transform duration-200 group-hover:rotate-12'>
-                    <Tag className='size-4' />
-                  </span>
-                  <span className='flex-1'>
-                    Have a voucher? <span className='font-bold text-[#b5810f] underline decoration-[#F4B942] underline-offset-2'>Enter your code</span>
-                  </span>
-                </button>
-                {showVoucher && (
-                  <div className='mt-4 flex flex-col gap-2 sm:flex-row'>
-                    <input name='voucher' placeholder='Voucher code' className={`${inputClass} mt-0 flex-1 border-[#F4B942]/60 focus:border-[#F4B942] focus:ring-[#F4B942]/20`} />
-                    <button type='button' className='min-h-12 rounded-md bg-[#11224D] px-6 text-sm font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#0d1a3b] hover:shadow-md active:translate-y-0'>
-                      Apply voucher
-                    </button>
-                  </div>
-                )}
-              </section>
+              {/* Honeypot: hidden from people, filled by bots. */}
+              <input type='text' name='company_website' tabIndex={-1} autoComplete='off' aria-hidden='true' className='hidden' />
 
-              <button type='button' className='mt-5 flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-emerald-500 to-emerald-600 px-5 text-sm font-bold text-white shadow-[0_10px_24px_-8px_rgba(5,150,105,0.55)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_16px_32px_-8px_rgba(5,150,105,0.65)] active:translate-y-0'>
-                <LockKeyhole className='size-4' />
-                Fast, secure checkout
-              </button>
-
-              <div className='my-7 flex items-center gap-4 text-xs font-bold uppercase tracking-[.16em] text-slate-400'>
-                <span className='h-px flex-1 bg-gradient-to-r from-transparent via-slate-200 to-slate-200' />
-                or pay by card
-                <span className='h-px flex-1 bg-gradient-to-l from-transparent via-slate-200 to-slate-200' />
-              </div>
-
+              {/* The voucher box was removed: the backend has no voucher support, so a code
+                  typed there silently did nothing. `bookings.discount_pence` is ready if
+                  vouchers are built later. */}
               <div className='grid gap-8 lg:grid-cols-[minmax(0,1.35fr)_minmax(20rem,.65fr)] lg:items-start'>
                 <div className='space-y-8'>
                   <section>
@@ -158,16 +234,15 @@ export default function Payment() {
                   </section>
 
                   <section>
-                    <SectionHeading icon={CreditCard} step={2} title='Payment details' hint='Use the card details associated with your billing address.' />
+                    <SectionHeading icon={Wallet} step={2} title='Payment' hint='How your collection will be paid for.' />
                     <div className='rounded-2xl border-l-2 border-slate-100 bg-gradient-to-br from-slate-50 to-white p-4 pl-5 ring-1 ring-slate-200 sm:p-5'>
-                      <Field label='Card number' name='cardNumber' placeholder='1234 1234 1234 1234' required autoComplete='cc-number' />
-                      <div className='mt-4 grid gap-4 sm:grid-cols-2'>
-                        <Field label='Expiry date' name='expiry' placeholder='MM / YY' required autoComplete='cc-exp' />
-                        <Field label='Security code' name='securityCode' placeholder='CVC' required autoComplete='cc-csc' />
-                      </div>
+                      <p className='text-sm font-bold text-slate-800'>
+                        {collection?.payment_option === 'arrival' ? 'Pay on arrival' : 'Pay now'}
+                      </p>
+                      <p className='mt-2 text-sm text-slate-600'>{paymentNote(collection?.payment_option)}</p>
                       <p className='mt-4 flex items-center gap-2 text-xs font-medium text-slate-500'>
                         <ShieldCheck className='size-3.5 text-emerald-600' />
-                        Your payment details are protected during checkout.
+                        We never ask for card details on this page.
                       </p>
                     </div>
                   </section>
@@ -205,6 +280,7 @@ export default function Payment() {
                         <span className='font-bold text-[#11224D]'>Total</span>
                         <span className='text-3xl font-black text-[#11224D]'>£{total.toFixed(2)}</span>
                       </div>
+                      <p className='text-xs text-slate-500'>Prices and any surcharges are confirmed when you place the order.</p>
                     </div>
 
                     <label id='terms' className='flex cursor-pointer items-start gap-3 rounded-xl bg-slate-50 p-3 text-xs leading-relaxed text-slate-600 ring-1 ring-slate-200 transition-colors duration-200 hover:bg-slate-100'>
@@ -214,12 +290,19 @@ export default function Payment() {
                       </span>
                     </label>
 
-                    <button type='submit' className='group mt-5 flex min-h-13 w-full items-center justify-center gap-2 overflow-hidden rounded-full border border-[#0497E2] bg-[#0497E2] px-5 text-sm font-black uppercase tracking-wide text-white shadow-[0_14px_28px_-10px_rgba(17,34,77,0.6)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_20px_36px_-10px_rgba(17,34,77,0.7)] focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[#0497E2] active:translate-y-0'>
-                      <ShieldCheck className='size-5 transition-transform duration-200 group-hover:scale-110' />
-                      Place order
+                    <button type='submit' disabled={submission.state === 'sending'} className='group mt-5 flex min-h-13 w-full items-center justify-center gap-2 overflow-hidden rounded-full border border-[#0497E2] bg-[#0497E2] px-5 text-sm font-black uppercase tracking-wide text-white shadow-[0_14px_28px_-10px_rgba(17,34,77,0.6)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_20px_36px_-10px_rgba(17,34,77,0.7)] focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[#0497E2] active:translate-y-0 disabled:cursor-wait disabled:opacity-70'>
+                      {submission.state === 'sending'
+                        ? <LoaderCircle className='size-5 animate-spin' />
+                        : <ShieldCheck className='size-5 transition-transform duration-200 group-hover:scale-110' />}
+                      {submission.state === 'sending' ? 'Placing order...' : 'Place order'}
                     </button>
 
-                    <p aria-live='polite' className='mt-3 text-center text-xs font-semibold text-emerald-600'>{message}</p>
+                    {submission.state === 'error' && (
+                      <p role='alert' className='mt-3 flex items-start justify-center gap-2 text-center text-xs font-semibold text-rose-600'>
+                        <CircleAlert className='mt-px size-4 shrink-0' />
+                        {submission.message}
+                      </p>
+                    )}
 
                     <div className='mt-4 flex items-center justify-center gap-2 text-xs font-medium text-slate-400'>
                       <BadgeCheck className='size-4 text-emerald-600' />

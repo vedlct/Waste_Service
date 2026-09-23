@@ -45,7 +45,7 @@ export default function OfficeWasteServices() {
           <div>
             <div className="flex items-center gap-3 text-xs font-extrabold uppercase tracking-[0.18em] text-[#b56808] sm:text-sm">
               <span className="h-0.5 w-9 bg-[#f0aa26]" aria-hidden="true" />
-              Chingford office clearance
+              Portsmouth office clearance
             </div>
 
             <h2 className="mt-5 text-3xl font-bold leading-[1.04] tracking-tight text-[#102a4c] sm:text-4xl lg:text-4xl">

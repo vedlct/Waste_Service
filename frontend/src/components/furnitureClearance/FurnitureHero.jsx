@@ -1,13 +1,13 @@
 import ServiceHero from '../ServiceHero';
 
-export default function FurnitureHero() {
+export default function FurnitureHero({ service, phone }) {
   return (
-    <ServiceHero
+    <ServiceHero service={service} phone={phone}
       image="/images/furnitureHero.jpg"
-      imageAlt="Furniture Disposal service in Chingford"
+      imageAlt="Furniture Disposal service in Portsmouth"
       eyebrow="Furniture Disposal specialists"
-      title="Furniture Disposal in Chingford"
-      description="We make furniture disposal efficiently and without fuss, leaving you with a cleaner outdoor space to enjoy."
+      title="Furniture Disposal in Portsmouth"
+      description="Clear promises. Reliable collections."
       points={['Green and bulky waste', 'Over 90% recycled']}
     />
   );

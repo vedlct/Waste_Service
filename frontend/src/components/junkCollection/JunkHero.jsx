@@ -1,13 +1,13 @@
 import ServiceHero from '../ServiceHero';
 
-export default function JunkHero() {
+export default function JunkHero({ service, phone }) {
   return (
-    <ServiceHero
+    <ServiceHero service={service} phone={phone}
       image="/images/junkHero.jpg"
-      imageAlt="Junk Collection service in Chingford"
+      imageAlt="Junk Collection service in Portsmouth"
       eyebrow="Junk Collection specialists"
-      title="Junk Collection in Chingford"
-      description="We remove Junk Collection efficiently and without fuss, leaving you with a cleaner outdoor space to enjoy."
+      title="Junk Collection in Portsmouth"
+      description="Reliable collections for unwanted household junk."
       points={['Green and bulky waste', 'Over 90% recycled']}
     />
   );

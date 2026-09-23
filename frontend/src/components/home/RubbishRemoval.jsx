@@ -41,7 +41,7 @@ export default function RubbishRemoval() {
             </h2>
 
             <p className='mt-7 max-w-xl text-base leading-7 text-[#385B82] sm:mt-8 sm:text-lg'>
-              From everyday household junk to bulky furniture and building waste, our Chingford collection team handles the lifting, loading and responsible disposal.
+              From everyday household junk to bulky furniture and building waste, our Portsmouth collection team handles the lifting, loading and responsible disposal.
             </p>
           </div>
 

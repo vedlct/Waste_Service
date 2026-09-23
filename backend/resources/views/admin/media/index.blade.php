@@ -33,8 +33,10 @@
                 <th>Type</th>
                 <th>Size</th>
                 <th>Dimensions</th>
+                <th>Usage</th>
                 <th>Uploaded By</th>
                 <th>Created</th>
+                <th class="text-end">Actions</th>
             </tr>
         </thead>
     </table>
@@ -42,20 +44,22 @@
 @endsection
 
 @push('scripts')
-<script>
+<script @nonce>
     new DataTable('#media-table', {
         processing: true,
         serverSide: true,
         ajax: '{{ route('admin.media.data') }}',
-        order: [[6, 'desc']],
+        order: [[7, 'desc']],
         columns: [
             { data: 'preview', name: 'path', orderable: false, searchable: false },
             { data: 'file', name: 'original_name', orderable: true, searchable: true },
             { data: 'mime_type', name: 'mime_type' },
             { data: 'size_bytes', name: 'size_bytes', searchable: false },
             { data: 'dimensions', name: 'width', searchable: false },
+            { data: 'usage', name: 'usage_count', orderable: false, searchable: false },
             { data: 'uploaded_by', name: 'uploadedBy.name', orderable: false },
-            { data: 'created_at', name: 'created_at' }
+            { data: 'created_at', name: 'created_at' },
+            { data: 'actions', name: 'actions', orderable: false, searchable: false, className: 'text-end' }
         ]
     });
 </script>

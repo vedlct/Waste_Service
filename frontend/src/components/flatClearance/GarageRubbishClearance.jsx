@@ -38,7 +38,7 @@ export default function GarageRubbishClearance() {
           <ul className="mt-7 space-y-3">
             {[
               'Single bulky items or complete clear-outs',
-              'Garage and shed collections across Greater London',
+              'Garage and shed collections across Portsmouth',
               'Same-day availability may be possible',
             ].map((item) => (
               <li key={item} className="flex items-center gap-3 text-sm font-semibold text-[#102a4c]/90 sm:text-base">

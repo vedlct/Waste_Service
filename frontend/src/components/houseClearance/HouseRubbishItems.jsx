@@ -71,7 +71,7 @@ export default function HouseRubbishItems() {
             </h2>
 
             <p className="mt-6 max-w-lg text-base leading-8 text-slate-600 sm:text-lg">
-              From furniture and appliances to renovation materials, we clear a wide range of household items throughout Chingford.
+              From furniture and appliances to renovation materials, we clear a wide range of household items throughout Portsmouth.
             </p>
 
             <div className="mt-8 border-l-2 border-[#0492E8] pl-5">

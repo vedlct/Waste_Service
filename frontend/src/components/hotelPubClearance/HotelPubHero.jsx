@@ -1,13 +1,13 @@
 import ServiceHero from '../ServiceHero';
 
-export default function HotelPubHero() {
+export default function HotelPubHero({ service, phone }) {
   return (
-    <ServiceHero
+    <ServiceHero service={service} phone={phone}
       image="/images/hotelHero.jpg"
-      imageAlt="Hotel & Pub Waste Clearance service in Chingford"
+      imageAlt="Hotel & Pub Waste Clearance service in Portsmouth"
       eyebrow="Hotel & Pub Waste Clearance specialists"
-      title="Hotel & Pub Waste Clearance in Chingford"
-      description="We make Hotel & Pub Waste Clearance efficiently and without fuss, leaving you with a cleaner outdoor space to enjoy."
+      title="Hotel & Pub Waste Clearance in Portsmouth"
+      description="Clearance support for refurbishing rooms, bars and hospitality spaces."
       points={['Green and bulky waste', 'Over 90% recycled']}
     />
   );

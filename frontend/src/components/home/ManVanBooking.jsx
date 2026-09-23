@@ -1,6 +1,6 @@
 ﻿'use client'
 
-import React, { useMemo, useState } from 'react'
+import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useCart } from '../cart/CartContext'
 import CollectionDetails from './CollectionDetails'
@@ -26,6 +26,8 @@ import {
 } from 'lucide-react'
 import Image from 'next/image'
 
+// Fallback catalogue, shown only when the backend API is unreachable. Items from it have
+// no catalogue id, so they can be browsed but not booked.
 export const CATEGORIES = [
   { id: 'sofas', label: 'Sofas', icon: Armchair },
   { id: 'mattress-bed', label: 'Mattress & Bed', icon: Bed },
@@ -41,9 +43,9 @@ export const CATEGORIES = [
   { id: 'show-all', label: 'Show All', icon: LayoutGrid },
 ]
 
-// NOTE: descriptions & prices below are placeholder catalogue data â€”
+// NOTE: descriptions & prices below are placeholder catalogue data —
 // swap in your real item list / pricing per category.
-const ITEMS_BY_CATEGORY = {
+const FALLBACK_ITEMS_BY_CATEGORY = {
   sofas: [
     { id: 'sofa-2seater', name: '2 Seater Sofa / Chaise Lounge', img: '/images/sofa1.jpg', description: 'Standard 2 seater. Love seat. Chaise lounge. Wicker sofa.', price: 70 },
     { id: 'sofa-3piece', name: '3 Piece Suite', img: '/images/sofa2.jpg', description: '1 x armchair. 1 x 2 seater sofa. 1 x 3 seater sofa. 1 x footstool.', price: 185 },
@@ -113,26 +115,54 @@ const ITEMS_BY_CATEGORY = {
 }
 
 // NOTE: only the first three sizes' prices are confirmed from the reference
-// design; Medium / Large / Full are placeholders â€” adjust as needed.
-const LOAD_SIZES = [
-  { id: 'mini', name: 'Mini Load', priceIncVat: 34.99, priceExVat: 29.16, maxWeight: '50KG', volume: '1.05 ydsÂ³', sacks: 6, time: '10mins', popular: true },
-  { id: 'small', name: 'Small Load', priceIncVat: 64.99, priceExVat: 54.16, maxWeight: '125KG', volume: '2.1 ydsÂ³', sacks: 12, time: '15mins', popular: true },
-  { id: 'small-plus', name: 'Small Load +', priceIncVat: 89.99, priceExVat: 74.99, maxWeight: '250KG', volume: '4.5 ydsÂ³', sacks: 25, time: '25mins', popular: false },
-  { id: 'medium', name: 'Medium Load', priceIncVat: 129.99, priceExVat: 108.32, maxWeight: '375KG', volume: '6.5 ydsÂ³', sacks: 35, time: '35mins', popular: false },
-  { id: 'large', name: 'Large Load', priceIncVat: 179.99, priceExVat: 149.99, maxWeight: '500KG', volume: '9 ydsÂ³', sacks: 48, time: '45mins', popular: false },
-  { id: 'full', name: 'Full Load', priceIncVat: 249.99, priceExVat: 208.32, maxWeight: '750KG', volume: '12 ydsÂ³', sacks: 65, time: '60mins', popular: false },
+// design; Medium / Large / Full are placeholders — adjust as needed.
+const FALLBACK_LOAD_SIZES = [
+  { id: 'mini', name: 'Mini Load', priceIncVat: 34.99, priceExVat: 29.16, maxWeight: '50KG', volume: '1.05 yds³', sacks: 6, time: '10mins', popular: true },
+  { id: 'small', name: 'Small Load', priceIncVat: 64.99, priceExVat: 54.16, maxWeight: '125KG', volume: '2.1 yds³', sacks: 12, time: '15mins', popular: true },
+  { id: 'small-plus', name: 'Small Load +', priceIncVat: 89.99, priceExVat: 74.99, maxWeight: '250KG', volume: '4.5 yds³', sacks: 25, time: '25mins', popular: false },
+  { id: 'medium', name: 'Medium Load', priceIncVat: 129.99, priceExVat: 108.32, maxWeight: '375KG', volume: '6.5 yds³', sacks: 35, time: '35mins', popular: false },
+  { id: 'large', name: 'Large Load', priceIncVat: 179.99, priceExVat: 149.99, maxWeight: '500KG', volume: '9 yds³', sacks: 48, time: '45mins', popular: false },
+  { id: 'full', name: 'Full Load', priceIncVat: 249.99, priceExVat: 208.32, maxWeight: '750KG', volume: '12 yds³', sacks: 65, time: '60mins', popular: false },
 ]
 
-const ALL_ITEMS = Object.values(ITEMS_BY_CATEGORY).flat()
+const FALLBACK_SATURDAY_SURCHARGE = 50
 
-export default function ManVanBooking ({ defaultMode = 'lorry', initialCategoryId = null }) {
-  const { addItems } = useCart()
+// Bundled per-item photos, keyed by slug. Used when an API item has no image of its own.
+const BUNDLED_IMAGE_BY_SLUG = Object.fromEntries(
+  Object.values(FALLBACK_ITEMS_BY_CATEGORY).flat().map((item) => [item.id, item.img]),
+)
+
+// An image set on the item in admin wins, then the bundled photo, then the category image.
+function resolveItemImages(itemsByCategory) {
+  return Object.fromEntries(Object.entries(itemsByCategory).map(([categoryId, items]) => [
+    categoryId,
+    items.map((item) => ({ ...item, img: item.img ?? BUNDLED_IMAGE_BY_SLUG[item.id] ?? item.categoryImg ?? null })),
+  ]))
+}
+
+const CATEGORY_ICONS = Object.fromEntries(CATEGORIES.map((category) => [category.id, category.icon]))
+
+// Categories from the API carry no icon, so reuse the one for the matching slug.
+function withIcons(categories) {
+  return [
+    ...categories.map((category) => ({ ...category, icon: CATEGORY_ICONS[category.id] ?? Package })),
+    CATEGORIES.find((category) => category.id === 'show-all'),
+  ]
+}
+
+export default function ManVanBooking ({ defaultMode = 'lorry', initialCategoryId = null, catalogue = null }) {
+  const categoriesSource = catalogue?.categories?.length ? withIcons(catalogue.categories) : CATEGORIES
+  const itemsByCategory = catalogue?.itemsByCategory ? resolveItemImages(catalogue.itemsByCategory) : FALLBACK_ITEMS_BY_CATEGORY
+  const loadSizes = catalogue?.loadSizes?.length ? catalogue.loadSizes : FALLBACK_LOAD_SIZES
+  const saturdaySurcharge = catalogue?.saturdaySurcharge ?? FALLBACK_SATURDAY_SURCHARGE
+  const allItems = Object.values(itemsByCategory).flat()
+  const { addItems, setCollection } = useCart()
   const router = useRouter()
   const [mode, setMode] = useState(defaultMode)
   const [selectedLoadSize, setSelectedLoadSize] = useState(null)
   const [selectedCategories, setSelectedCategories] = useState(
     initialCategoryId === 'show-all'
-      ? CATEGORIES.map((category) => category.id)
+      ? categoriesSource.map((category) => category.id)
       : initialCategoryId
         ? [initialCategoryId]
         : []
@@ -148,7 +178,7 @@ export default function ManVanBooking ({ defaultMode = 'lorry', initialCategoryI
   const toggleCategory = (id) => {
     if (id === 'show-all') {
       setSelectedCategories((prev) =>
-        prev.includes('show-all') ? [] : CATEGORIES.map((c) => c.id)
+        prev.includes('show-all') ? [] : categoriesSource.map((c) => c.id)
       )
       return
     }
@@ -176,28 +206,20 @@ export default function ManVanBooking ({ defaultMode = 'lorry', initialCategoryI
     })
   }
 
-  const activeCategories = useMemo(
-    () => CATEGORIES.filter((c) => c.id !== 'show-all' && selectedCategories.includes(c.id)),
-    [selectedCategories]
-  )
+  // The React Compiler memoises these derived values, so no manual useMemo is needed.
+  const activeCategories = categoriesSource.filter((c) => c.id !== 'show-all' && selectedCategories.includes(c.id))
 
-  const individualTotal = useMemo(
-    () =>
-      Object.entries(quantities).reduce((sum, [itemId, qty]) => {
-        const item = ALL_ITEMS.find((i) => i.id === itemId)
-        return sum + (item ? item.price * qty : 0)
-      }, 0),
-    [quantities]
-  )
+  const individualTotal = Object.entries(quantities).reduce((sum, [itemId, qty]) => {
+    const item = allItems.find((i) => i.id === itemId)
+    return sum + (item ? item.price * qty : 0)
+  }, 0)
 
-  const lorryTotal = useMemo(() => {
-    const size = LOAD_SIZES.find((l) => l.id === selectedLoadSize)
-    return size ? size.priceIncVat : 0
-  }, [selectedLoadSize])
+  const selectedSize = loadSizes.find((l) => l.id === selectedLoadSize)
+  const lorryTotal = selectedSize ? selectedSize.priceIncVat : 0
 
   const selectionTotal = mode === 'lorry' ? lorryTotal : individualTotal
   const hasSelection = mode === 'lorry' ? !!selectedLoadSize : Object.keys(quantities).length > 0
-  const total = selectionTotal + (hasSelection && saturdayCollection ? 50 : 0)
+  const total = selectionTotal + (hasSelection && saturdayCollection ? saturdaySurcharge : 0)
 
   const handleAddToBasket = (event) => {
     event.preventDefault()
@@ -212,17 +234,31 @@ export default function ManVanBooking ({ defaultMode = 'lorry', initialCategoryI
       formData.get('accessRestrictions'),
     ].filter(Boolean).join(' · ')
 
+    // Structured copy of the collection form, sent with the booking at checkout.
+    setCollection({
+      collection_date: formData.get('collectionDate') || collectionDate,
+      saturday_collection: saturdayCollection,
+      notice_minutes: Number(notice),
+      payment_option: paymentOption,
+      access_confirmed: accessConfirmed,
+      restricted_access: restrictedAccess || 'no',
+      access_restrictions: formData.get('accessRestrictions') || null,
+      large_items: formData.get('largeItems') || null,
+      collection_notes: formData.get('collectionNotes') || null,
+    })
+
     if (mode === 'lorry') {
-      const size = LOAD_SIZES.find((load) => load.id === selectedLoadSize)
-      if (size) addItems([{ id: `load-${size.id}`, name: size.name, detail: `${size.maxWeight} · ${size.volume} · ${size.time} · ${collectionDetail}`, unitPrice: size.priceIncVat, quantity: 1 }])
+      const size = loadSizes.find((load) => load.id === selectedLoadSize)
+      if (size) addItems([{ id: `load-${size.id}`, catalogueType: 'load_package', catalogueId: size.catalogueId, name: size.name, detail: `${size.maxWeight} · ${size.volume} · ${size.time} · ${collectionDetail}`, unitPrice: size.priceIncVat, quantity: 1 }])
     } else {
       addItems(Object.entries(quantities).map(([itemId, quantity]) => {
-        const item = ALL_ITEMS.find((entry) => entry.id === itemId)
-        const category = CATEGORIES.find((entry) => (ITEMS_BY_CATEGORY[entry.id] || []).some((entryItem) => entryItem.id === itemId))
-        return { id: `item-${itemId}`, name: item.name, detail: `${category?.label || 'Waste collection'} · ${collectionDetail}`, unitPrice: item.price, quantity }
+        const item = allItems.find((entry) => entry.id === itemId)
+        const category = categoriesSource.find((entry) => (itemsByCategory[entry.id] || []).some((entryItem) => entryItem.id === itemId))
+        return { id: `item-${itemId}`, catalogueType: 'service_item', catalogueId: item.catalogueId, name: item.name, detail: `${category?.label || 'Waste collection'} · ${collectionDetail}`, unitPrice: item.price, quantity }
       }))
     }
-    if (saturdayCollection) addItems([{ id: 'saturday-collection', name: 'Saturday collection', detail: 'Weekend collection surcharge', unitPrice: 50, quantity: 1 }])
+    // Display only: the booking API adds the Saturday surcharge itself.
+    if (saturdayCollection) addItems([{ id: 'saturday-collection', catalogueType: 'surcharge', name: 'Saturday collection', detail: 'Weekend collection surcharge', unitPrice: saturdaySurcharge, quantity: 1 }])
     router.push('/checkout')
   }
   return (
@@ -265,7 +301,7 @@ export default function ManVanBooking ({ defaultMode = 'lorry', initialCategoryI
         <div className='mt-8'>
           <h3 className='text-xl font-bold text-[#11224D] sm:text-2xl'>Load size</h3>
           <div className='mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3'>
-            {LOAD_SIZES.map((size) => {
+            {loadSizes.map((size) => {
               const isSelected = selectedLoadSize === size.id
               return (
                 <button
@@ -290,11 +326,11 @@ export default function ManVanBooking ({ defaultMode = 'lorry', initialCategoryI
                   </div>
                   <div className='flex flex-1 flex-col items-center gap-1 px-4 py-4 text-center'>
                     <p className='text-2xl font-extrabold text-[#0497E2] sm:text-3xl'>
-                      Â£{size.priceIncVat.toFixed(2)}
+                      £{size.priceIncVat.toFixed(2)}
                       <span className='ml-1 text-xs font-semibold text-[#0497E2]/70'>inc. VAT</span>
                     </p>
                     <p className='text-sm font-semibold text-[#4974AF]'>
-                      Â£{size.priceExVat.toFixed(2)} <span className='text-xs font-normal'>ex. VAT</span>
+                      £{size.priceExVat.toFixed(2)} <span className='text-xs font-normal'>ex. VAT</span>
                     </p>
                     <div className='mt-2 space-y-0.5 text-xs text-neutral-500 sm:text-sm'>
                       <p>Max Weight: <span className='font-semibold text-[#11224D]'>{size.maxWeight}</span></p>
@@ -318,7 +354,7 @@ export default function ManVanBooking ({ defaultMode = 'lorry', initialCategoryI
           <h3 className='text-xl font-bold text-[#11224D] sm:text-2xl'>Choose Your Items to be Collected:</h3>
 
           <div className='mt-5 grid grid-cols-2 gap-2.5 sm:grid-cols-3 sm:gap-3 lg:grid-cols-4 xl:grid-cols-5'>
-            {CATEGORIES.map((category) => {
+            {categoriesSource.map((category) => {
               const isSelected = selectedCategories.includes(category.id)
               return (
                 <button
@@ -354,7 +390,7 @@ export default function ManVanBooking ({ defaultMode = 'lorry', initialCategoryI
             <div key={category.id} className='mt-8'>
               <h4 className='text-lg font-bold text-[#11224D] sm:text-xl'>{category.label}</h4>
               <div className='mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4'>
-                {(ITEMS_BY_CATEGORY[category.id] || []).map((item) => {
+                {(itemsByCategory[category.id] || []).map((item) => {
                   const qty = quantities[item.id] || 0
                   const isSelected = qty > 0
                   const Icon = category.icon
@@ -372,6 +408,7 @@ export default function ManVanBooking ({ defaultMode = 'lorry', initialCategoryI
                             alt={item.name}
                             fill
                             sizes='(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 25vw'
+                            unoptimized={/^https?:\/\//.test(item.img)}
                             className='object-contain p-3'
                           />
                         ) : (
@@ -381,8 +418,19 @@ export default function ManVanBooking ({ defaultMode = 'lorry', initialCategoryI
                       <p className='mt-4 text-sm font-bold leading-snug text-[#11224D] transition-colors duration-200 group-hover:text-[#0497E2]'>{item.name}</p>
                       <p className='mt-2 flex-1 text-xs leading-relaxed text-neutral-500'>{item.description}</p>
                       <div className='mt-4 flex flex-wrap items-center justify-between gap-2 border-t border-[#0492E8]/10 pt-4'>
-                        <p className='text-lg font-extrabold text-[#0497E2]'>£{item.price.toFixed(2)}</p>
-                        {isSelected ? (
+                        {item.requiresQuote ? (
+                          <p className='text-sm font-bold text-[#11224D]'>Quote on request</p>
+                        ) : (
+                          <p className='text-lg font-extrabold text-[#0497E2]'>£{item.price.toFixed(2)}</p>
+                        )}
+                        {item.requiresQuote ? (
+                          <a
+                            href='/contactUs'
+                            className='inline-flex min-h-11 shrink-0 items-center justify-center rounded-lg border border-[#11224D]/20 px-4 text-sm font-bold text-[#11224D] transition-colors hover:border-[#0497E2] hover:text-[#0497E2]'
+                          >
+                            Ask for a quote
+                          </a>
+                        ) : isSelected ? (
                           <div className='flex shrink-0 items-center gap-1 rounded-lg border border-[#0497E2]/30 bg-[#EAF3FB] p-1'>
                             <button
                               type='button'

@@ -3,42 +3,32 @@
 import { Building2, ChevronRight, MapPin, X } from "lucide-react";
 import { useState } from "react";
 
-const areas = [
+// Shown when the backend is unreachable, so the page never renders empty.
+const FALLBACK_AREAS = [
   {
-    division: "Central London",
-    places: ["Westminster", "Camden", "City of London", "Islington"],
+    division: "Portsmouth",
+    places: ["Portsmouth City Centre", "Southsea", "Fratton", "North End", "Copnor", "Hilsea", "Milton", "Eastney", "Cosham", "Drayton", "Paulsgrove"],
   },
   {
-    division: "North London",
-    places: ["Barnet", "Enfield", "Haringey", "Hackney"],
+    division: "Havant & Waterlooville",
+    places: ["Havant", "Bedhampton", "Leigh Park", "Waterlooville", "Purbrook", "Denmead", "Cowplain", "Horndean", "Emsworth", "Hayling Island"],
   },
   {
-    division: "South London",
-    places: ["Croydon", "Lambeth", "Lewisham", "Southwark"],
-  },
-  {
-    division: "East London",
-    places: ["Newham", "Tower Hamlets", "Barking & Dagenham", "Redbridge"],
-  },
-  {
-    division: "West London",
-    places: ["Hammersmith & Fulham", "Ealing", "Hounslow", "Richmond"],
-  },
-  {
-    division: "Greater London",
-    places: ["Kingston", "Bromley", "Sutton", "Waltham Forest"],
+    division: "Fareham & Gosport",
+    places: ["Fareham", "Portchester", "Stubbington", "Titchfield", "Whiteley", "Gosport", "Lee-on-the-Solent", "Wickham"],
   },
 ];
 
-export default function AreasWeCoverSection() {
-  const [selectedPlace, setSelectedPlace] = useState("Westminster");
+export default function AreasWeCoverSection({ areas: remoteAreas }) {
+  const areas = remoteAreas?.length ? remoteAreas : FALLBACK_AREAS;
+  const [selectedPlace, setSelectedPlace] = useState(areas[0]?.places[0] ?? "Portsmouth");
 
   const handlePlaceClick = (place) => {
     setSelectedPlace(place);
   };
 
   const mapUrl = `https://www.google.com/maps?q=${encodeURIComponent(
-    selectedPlace + ", London, UK"
+    selectedPlace + ", Hampshire, UK"
   )}&output=embed`;
 
   return (
@@ -55,7 +45,7 @@ export default function AreasWeCoverSection() {
         </h2>
 
         <p className="max-w-2xl text-sm leading-relaxed text-slate-500 sm:text-base">
-          We provide reliable rubbish removal services across London.
+          We provide reliable rubbish removal services across Portsmouth and the surrounding area.
           Click on any area below to view its location on the map.
         </p>
 
@@ -150,7 +140,7 @@ export default function AreasWeCoverSection() {
 
             <div className="flex items-center gap-2 rounded-lg bg-blue-50 px-3 py-2 text-sm font-semibold text-blue-600">
               <MapPin className="h-4 w-4" />
-              London, UK
+              Hampshire, UK
             </div>
 
           </div>

@@ -62,10 +62,10 @@ export default function HouseClearanceServices() {
 
           <div className="border-l-2 border-[#f0aa26] pl-5 sm:pl-7">
             <p className="text-lg leading-8 text-slate-600 sm:text-xl">
-              From one unwanted item to the contents of an entire property, our Chingford clearance team manages the hard work so you do not have to.
+              From one unwanted item to the contents of an entire property, our Portsmouth clearance team manages the hard work so you do not have to.
             </p>
             <p className="mt-4 text-base leading-7 text-slate-500">
-              We make every collection straightforward, respectful and efficientâ€”with clear options, careful handling and responsible disposal throughout.
+              We make every collection straightforward, respectful and efficient—with clear options, careful handling and responsible disposal throughout.
             </p>
           </div>
         </div>
@@ -125,7 +125,7 @@ export default function HouseClearanceServices() {
 
         <div className="mt-10 flex flex-col gap-5 rounded-[1.5rem] border border-[#102a4c]/10 bg-white p-6 shadow-sm sm:flex-row sm:items-center sm:justify-between sm:p-8">
           <div>
-            <h3 className="text-xl font-bold text-[#102a4c] sm:text-2xl">Ready to arrange your Chingford clearance?</h3>
+            <h3 className="text-xl font-bold text-[#102a4c] sm:text-2xl">Ready to arrange your Portsmouth clearance?</h3>
             <p className="mt-2 text-sm leading-6 text-slate-600 sm:text-base">Check your options online or speak directly with our team.</p>
           </div>
           <div className="flex shrink-0 flex-col gap-3 sm:flex-row">
