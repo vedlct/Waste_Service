@@ -10,7 +10,13 @@ export const SITE_NAME = 'MR. TEE Removals'
 const DEFAULT_DESCRIPTION = 'Rubbish removal, house and garden clearance, commercial waste collection and cleaning services, booked online.'
 
 // Shown when a page has no share image and the admin has not set a site default.
-const DEFAULT_SHARE_IMAGE = '/images/HeroImage.jpg'
+const DEFAULT_SHARE_IMAGE = '/images/brand/og-default.jpg'
+
+function publicAssetUrl(url) {
+  if (/^https?:\/\//i.test(url)) return url
+
+  return `${SITE_URL}/${url.replace(/^\/+/, '')}`
+}
 
 /**
  * Every published page with its route and SEO fields, as managed in the admin. Identical
@@ -49,9 +55,8 @@ export async function metadataFor(routePath, fallback = {}) {
   const description = seo.meta_description || fallback.description || DEFAULT_DESCRIPTION
   const shareTitle = seo.og_title || title
   const shareDescription = seo.og_description || description
-  const image = seo.og_image?.url
-    ? { url: seo.og_image.url, alt: seo.og_image.alt || shareTitle }
-    : { url: settings.seo?.default_share_image_url || DEFAULT_SHARE_IMAGE, alt: shareTitle }
+  const imageUrl = seo.og_image?.url || settings.seo?.default_share_image_url || DEFAULT_SHARE_IMAGE
+  const image = { url: publicAssetUrl(imageUrl), alt: seo.og_image?.alt || shareTitle }
   const canonical = seo.canonical_url || routePath
   const indexable = fallback.indexable ?? seo.is_indexable ?? true
   const followable = fallback.followable ?? seo.is_followable ?? indexable
@@ -125,7 +130,7 @@ export function localBusinessJsonLd(settings = {}, coverage = []) {
     '@id': `${SITE_URL}/#business`,
     name: settings.general?.site_name || SITE_NAME,
     url: SITE_URL,
-    image: new URL(settings.seo?.default_share_image_url || DEFAULT_SHARE_IMAGE, SITE_URL).toString(),
+    image: publicAssetUrl(settings.seo?.default_share_image_url || DEFAULT_SHARE_IMAGE),
     telephone: contact.phone,
     email: contact.email,
     priceRange: business.price_range,

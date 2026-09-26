@@ -56,9 +56,12 @@ Start from `backend/.env.example`. Every line below must be checked before go-li
 | --- | --- |
 | `NEXT_PUBLIC_API_URL` | the backend's public URL, for example `https://admin.example.co.uk` |
 | `NEXT_PUBLIC_SITE_URL` | the site's own public URL, for example `https://www.example.co.uk`; used for canonical links and `sitemap.xml` |
+| `STATIC_EXPORT` | Optional. Set to `true` to produce an `out/` directory for static hosting. |
+| `NEXT_PUBLIC_BASE_PATH` | Optional subpath for static hosting, for example `/demo/mrtree`. |
+| `NEXT_PUBLIC_CONTACT_ENDPOINT` | Optional same-origin PHP contact endpoint for a static deployment. This replaces only the enquiry submission URL; bookings and reviews still require Laravel. |
 | `FRONTEND_API_KEY` | the same value as the backend's `FRONTEND_API_KEY`. Server-only: never prefix it with `NEXT_PUBLIC_`. |
 
-The two `NEXT_PUBLIC_` settings are **inlined at build time**. Set them before `npm run build`, and rebuild whenever they change.
+The `NEXT_PUBLIC_` settings are **inlined at build time**. Set them before `npm run build`, and rebuild whenever they change.
 
 ## First deploy
 

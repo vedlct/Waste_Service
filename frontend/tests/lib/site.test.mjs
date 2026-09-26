@@ -16,13 +16,14 @@ describe('getSiteContact', () => {
   test('uses the contact details set in the admin', async () => {
     serveSettings({
       general: { site_name: 'MR. TEE' },
-      contact: { phone: '023 9200 0000', email: 'hello@mrtee.test', location: 'Southsea, Portsmouth', opening_hours: 'Mon–Fri' },
+      contact: { phone: '023 9200 0000', phone_secondary: '07700 900123', email: 'hello@mrtee.test', location: 'Southsea, Portsmouth', opening_hours: 'Mon–Fri' },
       social: { facebook: 'https://facebook.com/mrtee', instagram: '' },
     })
 
     assert.deepEqual(await getSiteContact(), {
       siteName: 'MR. TEE',
       phone: '023 9200 0000',
+      phoneSecondary: '07700 900123',
       email: 'hello@mrtee.test',
       location: 'Southsea, Portsmouth',
       openingHours: 'Mon–Fri',
@@ -38,6 +39,13 @@ describe('getSiteContact', () => {
     assert.equal(contact.phone, '023 9200 0000')
     assert.equal(contact.email, FALLBACK_CONTACT.email)
     assert.equal(contact.location, 'Portsmouth, United Kingdom')
+    assert.equal(contact.phoneSecondary, FALLBACK_CONTACT.phoneSecondary)
+  })
+
+  test('shows one phone number when the admin blanks the second', async () => {
+    serveSettings({ contact: { phone: '023 9200 0000', phone_secondary: null } })
+
+    assert.equal((await getSiteContact()).phoneSecondary, null)
   })
 
   test('falls back entirely when the backend is down', async () => {

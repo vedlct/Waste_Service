@@ -48,18 +48,18 @@ export default function StickyCart() {
         maxWidth: 'calc(100vw - 2rem)',
         maxHeight: 'min(30rem, calc(100dvh - 6rem))',
       }}
-      className='fixed z-60 flex w-96 shrink-0 flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_24px_60px_-16px_rgba(17,34,77,0.35)]'
+      className='fixed z-60 flex w-96 shrink-0 flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_24px_60px_-16px_rgba(15,37,87,0.35)]'
     >
       <header className='flex shrink-0 items-center justify-between border-b border-slate-100 px-5 py-4'>
         <div>
-          <p className='text-[15px] font-semibold text-[#11224D]'>Your cart</p>
+          <p className='text-[15px] font-semibold text-ink'>Your cart</p>
           <p className='mt-0.5 text-xs text-slate-500'>{count} {count === 1 ? 'item' : 'items'}</p>
         </div>
         <button
           type='button'
           onClick={() => setIsOpen(false)}
           aria-label='Close cart'
-          className='grid size-8 place-items-center rounded-full text-slate-400 transition hover:bg-slate-100 hover:text-[#11224D] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0497E2]'
+          className='grid size-8 place-items-center rounded-full text-slate-400 transition hover:bg-slate-100 hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600'
         >
           <X className='size-4.5' />
         </button>
@@ -70,12 +70,12 @@ export default function StickyCart() {
           <div className='grid size-12 place-items-center rounded-full bg-slate-50'>
             <ShoppingBag className='size-10 text-slate-400' />
           </div>
-          <p className='mt-4 text-sm font-semibold text-[#11224D]'>Your cart is empty</p>
+          <p className='mt-4 text-sm font-semibold text-ink'>Your cart is empty</p>
           <p className='mt-1 max-w-[16rem] text-sm text-slate-500'>Browse our collections and add something you like.</p>
           <Link
             href='/#prices'
             onClick={() => setIsOpen(false)}
-            className='mt-5 rounded-full border border-slate-200 px-4 py-2 text-sm font-medium text-[#11224D] transition hover:border-[#0497E2] hover:text-[#0497E2]'
+            className='mt-5 rounded-full border border-slate-200 px-4 py-2 text-sm font-medium text-ink transition hover:border-brand-600 hover:text-brand-600'
           >
             Continue browsing
           </Link>
@@ -86,7 +86,7 @@ export default function StickyCart() {
             {items.map((item) => (
               <li key={item.id} className='flex items-start gap-3 rounded-xl px-2 py-3 transition hover:bg-slate-50'>
                 <div className='min-w-0 flex-1'>
-                  <p className='truncate text-sm font-medium text-[#11224D]'>{item.name}</p>
+                  <p className='truncate text-sm font-medium text-ink'>{item.name}</p>
                   <p className='mt-0.5 truncate text-xs text-slate-500'>{item.detail}</p>
 
                   <div className='mt-2 flex items-center justify-between'>
@@ -95,21 +95,21 @@ export default function StickyCart() {
                         type='button'
                         onClick={() => updateQuantity(item.id, item.quantity - 1)}
                         aria-label={`Decrease ${item.name} quantity`}
-                        className='grid size-6 place-items-center rounded-full border border-slate-200 text-[#11224D] transition hover:border-[#0497E2] hover:text-[#0497E2]'
+                        className='grid size-6 place-items-center rounded-full border border-slate-200 text-ink transition hover:border-brand-600 hover:text-brand-600'
                       >
                         <Minus className='size-3' />
                       </button>
-                      <span className='w-4 text-center text-xs font-semibold tabular-nums text-[#11224D]'>{item.quantity}</span>
+                      <span className='w-4 text-center text-xs font-semibold tabular-nums text-ink'>{item.quantity}</span>
                       <button
                         type='button'
                         onClick={() => updateQuantity(item.id, item.quantity + 1)}
                         aria-label={`Increase ${item.name} quantity`}
-                        className='grid size-6 place-items-center rounded-full border border-slate-200 text-[#11224D] transition hover:border-[#0497E2] hover:text-[#0497E2]'
+                        className='grid size-6 place-items-center rounded-full border border-slate-200 text-ink transition hover:border-brand-600 hover:text-brand-600'
                       >
                         <Plus className='size-3' />
                       </button>
                     </div>
-                    <p className='text-sm font-semibold tabular-nums text-[#11224D]'>£{(item.unitPrice * item.quantity).toFixed(2)}</p>
+                    <p className='text-sm font-semibold tabular-nums text-ink'>£{(item.unitPrice * item.quantity).toFixed(2)}</p>
                   </div>
                 </div>
 
@@ -128,12 +128,12 @@ export default function StickyCart() {
           <div className='shrink-0 border-t border-slate-100 px-5 pb-5 pt-4'>
             <div className='mb-4 flex items-baseline justify-between'>
               <span className='text-sm text-slate-500'>Total</span>
-              <span className='text-lg font-semibold tabular-nums text-[#11224D]'>£{total.toFixed(2)}</span>
+              <span className='text-lg font-semibold tabular-nums text-ink'>£{total.toFixed(2)}</span>
             </div>
             <Link
               href='/checkout'
               onClick={() => setIsOpen(false)}
-              className='flex min-h-11 items-center justify-center rounded-full bg-[#11224D] px-5 text-sm font-semibold text-white transition hover:bg-[#1b3570] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0497E2]'
+              className='flex min-h-11 items-center justify-center rounded-full bg-brand-900 px-5 text-sm font-semibold text-white transition hover:bg-brand-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600'
             >
               Review cart
             </Link>
@@ -155,11 +155,11 @@ export default function StickyCart() {
         aria-expanded={isOpen}
         aria-controls='sticky-cart-panel'
         aria-label={`${isOpen ? 'Close' : 'Open'} cart with ${count} ${count === 1 ? 'item' : 'items'}`}
-        className='relative grid size-14 shrink-0 place-items-center rounded-full bg-[#0497E2] text-white shadow-[0_10px_24px_-6px_rgba(4,151,226,0.55)] transition hover:-translate-y-0.5 hover:bg-[#0489cc] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#11224D]'
+        className='relative grid size-14 shrink-0 place-items-center rounded-full bg-brand-600 text-white shadow-[0_10px_24px_-6px_rgba(4,151,226,0.55)] transition hover:-translate-y-0.5 hover:bg-brand-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink'
       >
         {isOpen ? <X className='size-5' /> : <ShoppingBag className='size-5' />}
         {count > 0 && (
-          <span className='absolute -right-1 -top-1 grid min-h-5 min-w-5 place-items-center rounded-full bg-[#F4B942] px-1 text-[11px] font-bold text-[#11224D] ring-2 ring-white'>
+          <span className='absolute -right-1 -top-1 grid min-h-5 min-w-5 place-items-center rounded-full bg-brand-500 px-1 text-[11px] font-bold text-white ring-2 ring-white'>
             {count > 99 ? '99+' : count}
           </span>
         )}

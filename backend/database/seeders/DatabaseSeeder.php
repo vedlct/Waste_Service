@@ -86,7 +86,7 @@ class DatabaseSeeder extends Seeder
             'logo' => '/images/MainLogo.png',
             'footer_logo' => '/images/footerLogo.png',
             'home_hero' => '/images/HeroImage.jpg',
-            'house_clearance' => '/images/Garbage.jpg',
+            'house_clearance' => '/images/waste4.jpg',
             'garden_clearance' => '/images/GardenHero.jpg',
             'flat_clearance' => '/images/FlatWaste.jpg',
             'garage_clearance' => '/images/garage.jpg',
@@ -144,13 +144,15 @@ class DatabaseSeeder extends Seeder
     {
         // Setting values are admin-managed and never overwritten on re-seed. The exceptions are
         // defaults the first build got wrong, corrected only while still untouched: the London
-        // location, a placeholder example.com email, and 24/7 hours that contradicted the
-        // "six days a week" copy on the site.
+        // location and phone number, placeholder emails, and 24/7 hours that contradicted the
+        // "six days a week" copy on the site. The real details come from the company's flyers.
         foreach ([
-            'location' => ['London, United Kingdom', 'Portsmouth, United Kingdom'],
-            'email' => ['info@example.com', 'info@wasteservices.com'],
-            'opening_hours' => ['Available 24/7', 'Mon–Sat, 7:00am–7:00pm'],
-        ] as $key => [$wrong, $right]) {
+            ['location', 'London, United Kingdom', 'Portsmouth, United Kingdom'],
+            ['phone', '020 8226 6477', '078 6213 8033'],
+            ['email', 'info@example.com', 'info@mrteeremovals.co.uk'],
+            ['email', 'info@wasteservices.com', 'info@mrteeremovals.co.uk'],
+            ['opening_hours', 'Available 24/7', 'Mon–Sat, 7:00am–7:00pm'],
+        ] as [$key, $wrong, $right]) {
             DB::table('site_settings')
                 ->where('group', 'contact')
                 ->where('key', $key)
@@ -160,8 +162,9 @@ class DatabaseSeeder extends Seeder
 
         $settings = [
             ['general', 'site_name', 'MR. TEE Removals', 'string', 'Site name', 'Shown in the browser title and across the website.', true],
-            ['contact', 'phone', '020 8226 6477', 'string', 'Primary phone', 'Displayed in the header, footer, and contact page.', true],
-            ['contact', 'email', 'info@wasteservices.com', 'email', 'Primary email', 'Receives contact enquiries and booking confirmations.', true],
+            ['contact', 'phone', '078 6213 8033', 'string', 'Primary phone', 'Displayed in the header, footer, and contact page.', true],
+            ['contact', 'phone_secondary', '023 9378 8241', 'string', 'Second phone', 'Landline shown next to the primary phone. Leave blank to show one number.', true],
+            ['contact', 'email', 'info@mrteeremovals.co.uk', 'email', 'Primary email', 'Receives contact enquiries and booking confirmations.', true],
             ['contact', 'location', 'Portsmouth, United Kingdom', 'string', 'Location', 'Service base shown on the contact page.', true],
             ['contact', 'opening_hours', 'Mon–Sat, 7:00am–7:00pm', 'string', 'Opening hours', 'Free text opening hours summary.', true],
             ['booking', 'saturday_collection_surcharge_pence', 5000, 'integer', 'Saturday collection surcharge', 'Added to bookings collected on a Saturday.', true],

@@ -3,9 +3,12 @@ import assert from 'node:assert/strict'
 import { apiGet, apiPost, apiUrl, timeAgo } from '../../src/lib/api.js'
 
 const realFetch = globalThis.fetch
+const realContactEndpoint = process.env.NEXT_PUBLIC_CONTACT_ENDPOINT
 
 afterEach(() => {
   globalThis.fetch = realFetch
+  if (realContactEndpoint === undefined) delete process.env.NEXT_PUBLIC_CONTACT_ENDPOINT
+  else process.env.NEXT_PUBLIC_CONTACT_ENDPOINT = realContactEndpoint
 })
 
 function respondWith(status, body, { json = true } = {}) {
@@ -66,6 +69,15 @@ describe('apiGet', () => {
 })
 
 describe('apiPost', () => {
+  test('uses the static contact endpoint for enquiries when configured', async () => {
+    process.env.NEXT_PUBLIC_CONTACT_ENDPOINT = '/demo/mrtree/contact.php'
+    const calls = respondWith(200, { ok: true })
+
+    await apiPost('enquiries', { name: 'Test' })
+
+    assert.equal(calls[0].url, '/demo/mrtree/contact.php')
+  })
+
   test('resolves ok with the server message on success', async () => {
     const calls = respondWith(201, { ok: true, message: 'Thanks', reference: 'MT-2609-0001' })
 

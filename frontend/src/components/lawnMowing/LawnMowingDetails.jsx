@@ -21,11 +21,11 @@ export default function LawnMowingDetails() {
       <div className="mx-auto w-full max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-28">
         <div className="grid gap-10 lg:grid-cols-[.72fr_1.28fr] lg:gap-16">
           <div>
-            <p className="text-xs font-extrabold uppercase tracking-[.18em] text-[#1a68a3]">
+            <p className="text-xs font-extrabold uppercase tracking-[.18em] text-brand-700">
               Professional grass cutting
             </p>
 
-            <h2 className="mt-5 text-3xl font-bold leading-[1.04] text-[#102a4c] sm:text-4xl">
+            <h2 className="mt-5 text-4xl font-bold leading-[0.95] text-ink sm:text-5xl uppercase">
               The right finish for every lawn size.
             </h2>
 
@@ -35,7 +35,7 @@ export default function LawnMowingDetails() {
 
             <Link
               href="/contactUs"
-              className="group mt-8 inline-flex items-center gap-2 font-bold text-[#102a4c] underline decoration-[#1a68a3] decoration-2 underline-offset-4 hover:text-[#1a68a3]"
+              className="group mt-8 inline-flex items-center gap-2 font-bold text-ink underline decoration-brand-700 decoration-2 underline-offset-4 hover:text-brand-700"
             >
               Discuss your lawn
               <ArrowRight className="size-4 transition group-hover:translate-x-1" />
@@ -47,9 +47,9 @@ export default function LawnMowingDetails() {
               {services.map((s) => (
                 <li
                   key={s}
-                  className="flex min-h-14 items-center gap-3 border-t border-[#102a4c]/12 py-3 text-sm font-semibold text-[#38536b] transition hover:translate-x-1 hover:border-[#1a68a3]"
+                  className="flex min-h-14 items-center gap-3 border-t border-ink/12 py-3 text-sm font-semibold text-slate-600 transition hover:translate-x-1 hover:border-brand-700"
                 >
-                  <Check className="size-4 text-[#1a68a3]" strokeWidth={3} />
+                  <Check className="size-4 text-brand-700" strokeWidth={3} />
                   {s}
                 </li>
               ))}
@@ -72,18 +72,18 @@ export default function LawnMowingDetails() {
                 sizes="(max-width:640px) 50vw,25vw"
                 className="object-cover transition duration-700 group-hover:scale-110"
               />
-              <div className="absolute inset-0 bg-[#102a4c]/10 transition group-hover:bg-transparent" />
+              <div className="absolute inset-0 bg-brand-900/10 transition group-hover:bg-transparent" />
             </div>
           ))}
         </div>
 
-        <div className="mt-12 rounded-[2rem] border border-sky-200 bg-sky-50 p-7 text-[#102a4c] sm:p-9">
+        <div className="mt-12 rounded-[2rem] border border-sky-200 bg-sky-50 p-7 text-ink sm:p-9">
           <div className="flex items-center gap-3">
-            <ShieldCheck className="size-7 text-[#7dc6f2]" />
+            <ShieldCheck className="size-7 text-brand-300" />
             <h3 className="text-2xl font-bold sm:text-3xl">Why choose our lawn team</h3>
           </div>
 
-          <p className="mt-4 max-w-3xl leading-7 text-[#102a4c]/70">
+          <p className="mt-4 max-w-3xl leading-7 text-ink/70">
             Experienced local staff, professional equipment, close attention to detail and dependable value for scheduled lawn maintenance.
           </p>
         </div>

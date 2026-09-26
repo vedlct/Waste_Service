@@ -1,4 +1,5 @@
 ﻿"use client";
+import PageBanner from "@/components/ui/PageBanner";
 
 import { useState } from "react";
 import {
@@ -42,35 +43,20 @@ export default function FAQ({ faqs: remoteFaqs }) {
   const faqs = remoteFaqs?.length ? remoteFaqs : fallbackFaqs;
 
   return (
-    <main className="min-h-screen bg-[#f7fbff] text-[#11224D]">
+    <main className="min-h-screen bg-mist text-ink">
+      <PageBanner
+        crumb="FAQ"
+        eyebrow="Frequently asked questions"
+        title="Got questions?"
+        accent="We've got answers"
+        intro="The things people ask us most about rubbish removal, clearances and garden services across Portsmouth."
+        image="/images/highlight4.jpeg"
+      />
 
-      <section className="relative overflow-hidden px-5 pb-24 pt-35">
-
-        <div className="absolute left-0 top-10 h-80 w-80 rounded-full bg-blue-100/40 blur-3xl" />
-        <div className="absolute right-0 top-32 h-96 w-96 rounded-full bg-blue-50 blur-3xl" />
-
-        <div className="relative mx-auto max-w-5xl text-center">
-
-          <p className="mb-4 text-sm font-bold uppercase tracking-[0.25em] text-[#087FE8]">
-            Frequently Asked Questions
-          </p>
-
-          <h1 className="text-3xl font-black leading-tight text-[#11224D] sm:text-4xl">
-            Got
-            <span className="block text-[#087FE8]">
-              Questions?
-            </span>
-          </h1>
-
-          <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-slate-500">
-            Find answers to some of the most common questions about our
-            rubbish removal and garden services.
-          </p>
-
-        </div>
+      <section className="relative overflow-hidden px-5 pb-24 pt-14">
 
 
-        <div className="relative mx-auto mt-14 max-w-4xl">
+        <div className="relative mx-auto max-w-4xl">
 
           <div className="space-y-4">
 
@@ -82,7 +68,7 @@ export default function FAQ({ faqs: remoteFaqs }) {
                   key={faq.question}
                   className={`group overflow-hidden rounded-2xl border bg-white transition-all duration-500 ${
                     isOpen
-                      ? "border-[#087FE8]/30 shadow-xl shadow-blue-100"
+                      ? "border-brand-600/30 shadow-xl shadow-blue-100"
                       : "border-slate-100 shadow-sm hover:-translate-y-1 hover:border-blue-100 hover:shadow-xl hover:shadow-blue-100"
                   }`}
                 >
@@ -97,14 +83,14 @@ export default function FAQ({ faqs: remoteFaqs }) {
                       <span
                         className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-sm font-bold transition-all duration-500 ${
                           isOpen
-                            ? "bg-[#11224D] text-white"
-                            : "bg-[#11224D]/5 text-[#11224D] group-hover:bg-[#11224D] group-hover:text-white"
+                            ? "bg-brand-900 text-white"
+                            : "bg-brand-900/5 text-ink group-hover:bg-brand-700 group-hover:text-white"
                         }`}
                       >
                         {String(index + 1).padStart(2, "0")}
                       </span>
 
-                      <span className="font-bold text-[#11224D] transition-colors duration-300 group-hover:text-[#087FE8]">
+                      <span className="font-bold text-ink transition-colors duration-300 group-hover:text-brand-600">
                         {faq.question}
                       </span>
 
@@ -113,8 +99,8 @@ export default function FAQ({ faqs: remoteFaqs }) {
                     <span
                       className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full transition-all duration-500 ${
                         isOpen
-                          ? "rotate-180 bg-[#087FE8] text-white"
-                          : "bg-slate-50 text-[#11224D] group-hover:bg-[#11224D] group-hover:text-white"
+                          ? "rotate-180 bg-brand-600 text-white"
+                          : "bg-slate-50 text-white group-hover:bg-brand-700 group-hover:text-white"
                       }`}
                     >
                       <ChevronDown className="h-5 w-5" />
@@ -148,13 +134,13 @@ export default function FAQ({ faqs: remoteFaqs }) {
           </div>
 
 
-          <div className="mt-12 overflow-hidden rounded-3xl border border-sky-200 bg-sky-50 p-8 text-center shadow-2xl shadow-[#11224D]/20 transition-all duration-500 hover:shadow-[#11224D]/30">
+          <div className="mt-12 overflow-hidden rounded-3xl border border-sky-200 bg-sky-50 p-8 text-center shadow-2xl shadow-ink/20 transition-all duration-500 hover:shadow-ink/30">
 
             <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-white transition-all duration-500 hover:rotate-12 hover:scale-110 hover:bg-sky-100">
               <Phone className="h-6 w-6 text-sky-600" />
             </div>
 
-            <h2 className="mt-5 text-2xl font-black text-[#11224D]">
+            <h2 className="mt-5 text-3xl font-bold text-ink uppercase leading-[0.95]">
               Still Have Questions?
             </h2>
 
@@ -163,10 +149,10 @@ export default function FAQ({ faqs: remoteFaqs }) {
             </p>
 
             <a
-              href="tel:02082266477"
-              className="group mt-6 inline-flex items-center gap-3 rounded-full bg-white px-7 py-3 font-bold text-[#11224D] transition-all duration-300 hover:scale-105 hover:bg-[#087FE8] hover:text-white hover:shadow-xl"
+              href="tel:07862138033"
+              className="group mt-6 inline-flex items-center gap-3 rounded-full bg-white px-7 py-3 font-bold text-ink transition-all duration-300 hover:scale-105 hover:bg-brand-600 hover:text-white hover:shadow-xl"
             >
-              020 8226 6477
+              078 6213 8033
               <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
             </a>
 

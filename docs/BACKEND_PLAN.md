@@ -496,6 +496,13 @@ Documentation:
 - The remaining "Chingford" copy (about 45 places) now says Portsmouth. The copy-paste hero fallbacks (Wait & Load titled "Junk Collection", "outdoor space" on the shop and warehouse pages) now use the seeded summaries. The House Clearance seed now uses the image and full intro the page actually shows.
 - **Rate limit fix.** The Next.js server renders every page from one IP, so the 60 per minute per-IP limit throttled builds (every request returned 429 in testing), and would throttle production revalidation too. The server now sends `X-Frontend-Key`, matching `FRONTEND_API_KEY` in both `.env` files, and gets a separate 1200 per minute allowance. Local keys were generated in `backend/.env` and `frontend/.env.local`. Production needs its own matching key.
 
+### Site Redesign And Real Contact Details (Phase 26)
+
+- The public site was redesigned to match the company's flyers: royal blue, ink and white, Barlow Condensed headings, and photo-led sections. The design system is recorded in `docs/design.md`.
+- The real contact details from the flyers replace the London placeholders: phone `078 6213 8033`, a new `contact.phone_secondary` setting (`023 9378 8241`), and `info@mrteeremovals.co.uk`. The seeder fixes the old `020 8226 6477`, `info@wasteservices.com` and `info@example.com` values only while they are untouched; anything an admin changed is kept.
+- The old "WASTE SERVICES" logo with a London skyline and the London Eye share image are no longer used. The logo and share image were rebuilt from the MR. TEE artwork.
+- "How it works" described a house-moving service (survey, packing boxes, moving day) and was rewritten for rubbish clearance.
+
 ### Verification Done For Earlier Work
 
 - `php8.4 artisan migrate`
@@ -521,8 +528,8 @@ Run on Windows/Laragon with PHP 8.4.25 on 2026-09-18:
 - `php artisan route:list` (confirmed the new media and settings routes).
 - `php artisan view:cache` then `php artisan view:clear` (all Blade views compile).
 - `php artisan storage:link`.
-- `php artisan test` - 163 passed (after Phase 25), against the isolated `mr_tee_testing` database.
-- `npm run lint`, `npm test` (47 passed), and `npm run build` in `frontend/`, with the backend running and with it stopped.
+- `php artisan test` - 165 passed (after Phase 26), against the isolated `mr_tee_testing` database.
+- `npm run lint`, `npm test` (48 passed), and `npm run build` in `frontend/`, with the backend running and with it stopped.
 
 Note: `SiteSettingsTest::test_settings_update_validates_input_by_type` depends on the reseeded `contact.email` type, so run `db:seed` before the tests.
 
@@ -792,7 +799,7 @@ Deliberately left for later:
 
 ## Immediate Next Task Recommendation
 
-Phases 1 to 25 are done. The client's answers on 2026-09-19 set the remaining work:
+Phases 1 to 26 are done. The client's answers on 2026-09-19 set the remaining work:
 
 1. **SEO content.** In the admin, fill in the Google Search Console verification code, the default share image and the Business Listing address, then replace the placeholder meta descriptions.
 2. **Service content.** Assign FAQs and related services to each service in the admin; they appear on the service pages automatically.

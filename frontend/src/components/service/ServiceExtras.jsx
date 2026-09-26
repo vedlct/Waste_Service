@@ -24,7 +24,7 @@ export default function ServiceExtras({ service }) {
         <section className="bg-white" aria-labelledby="service-faqs">
           <div className="mx-auto w-full max-w-4xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
             <Eyebrow>Questions</Eyebrow>
-            <h2 id="service-faqs" className="mt-3 text-3xl font-bold tracking-tight text-[#102a4c] sm:text-4xl">
+            <h2 id="service-faqs" className="mt-3 text-4xl font-bold text-ink sm:text-5xl uppercase leading-[0.95]">
               {service.name} FAQs
             </h2>
             <div className="mt-8 divide-y divide-sky-100 rounded-3xl border border-sky-100">
@@ -41,7 +41,7 @@ export default function ServiceExtras({ service }) {
         <section className="bg-sky-50" aria-labelledby="related-services">
           <div className="mx-auto w-full max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
             <Eyebrow>More services</Eyebrow>
-            <h2 id="related-services" className="mt-3 text-3xl font-bold tracking-tight text-[#102a4c] sm:text-4xl">
+            <h2 id="related-services" className="mt-3 text-4xl font-bold text-ink sm:text-5xl uppercase leading-[0.95]">
               Related services
             </h2>
             <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -58,8 +58,8 @@ export default function ServiceExtras({ service }) {
 
 function Eyebrow({ children }) {
   return (
-    <p className="flex items-center gap-3 text-xs font-extrabold uppercase tracking-[0.18em] text-[#0398E9] sm:text-sm">
-      <span className="h-px w-8 bg-[#ffd126]" aria-hidden="true" />
+    <p className="flex items-center gap-3 text-xs font-extrabold uppercase tracking-[0.18em] text-brand-600 sm:text-sm">
+      <span className="h-px w-8 bg-brand-500" aria-hidden="true" />
       {children}
     </p>
   );
@@ -68,11 +68,11 @@ function Eyebrow({ children }) {
 function Faq({ question, answer }) {
   return (
     <details className="group px-5 py-4 sm:px-6">
-      <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-bold text-[#102a4c]">
+      <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-bold text-ink">
         {question}
-        <ChevronDown className="size-5 shrink-0 text-[#0398E9] transition group-open:rotate-180" aria-hidden="true" />
+        <ChevronDown className="size-5 shrink-0 text-brand-600 transition group-open:rotate-180" aria-hidden="true" />
       </summary>
-      <div className="mt-3 space-y-3 text-sm leading-7 text-[#102a4c]/78 sm:text-base">
+      <div className="mt-3 space-y-3 text-sm leading-7 text-ink/78 sm:text-base">
         {paragraphs(answer).map((text) => <p key={text}>{text}</p>)}
       </div>
     </details>
@@ -102,13 +102,13 @@ function ContentBlock({ block, shaded }) {
     const href = safeHref(items[0]?.url) ?? '/#prices';
 
     return (
-      <section className="bg-[#102a4c]">
+      <section className="bg-brand-900">
         <div className="mx-auto flex w-full max-w-7xl flex-col items-start gap-6 px-4 py-14 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8">
           <div className="max-w-2xl text-white">
-            {block.heading && <h2 className="text-2xl font-bold sm:text-3xl">{block.heading}</h2>}
+            {block.heading && <h2 className="text-3xl font-bold sm:text-4xl uppercase leading-[0.95]">{block.heading}</h2>}
             {body.map((text) => <p key={text} className="mt-3 text-white/80">{text}</p>)}
           </div>
-          <Link href={href} className="inline-flex min-h-12 items-center gap-2 rounded-full bg-[#ffd126] px-6 py-3 text-sm font-extrabold text-[#102a4c] transition hover:bg-white">
+          <Link href={href} className="inline-flex min-h-12 items-center gap-2 rounded-full bg-brand-500 px-6 py-3 text-sm font-extrabold text-white transition hover:bg-white">
             {items[0]?.title || 'Check prices & book'}
             <ArrowRight className="size-4" aria-hidden="true" />
           </Link>
@@ -118,14 +118,14 @@ function ContentBlock({ block, shaded }) {
   }
 
   return (
-    <section className={shaded ? 'bg-[#f7f8f4]' : 'bg-white'}>
+    <section className={shaded ? 'bg-mist' : 'bg-white'}>
       <div className="mx-auto w-full max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
         <div className={block.image?.url ? 'grid gap-10 lg:grid-cols-2 lg:items-center' : 'max-w-3xl'}>
           <div>
             {block.eyebrow && <Eyebrow>{block.eyebrow}</Eyebrow>}
-            {block.heading && <h2 className="mt-3 text-3xl font-bold tracking-tight text-[#102a4c] sm:text-4xl">{block.heading}</h2>}
-            {block.subheading && <p className="mt-3 text-lg font-semibold text-[#102a4c]/80">{block.subheading}</p>}
-            <div className="mt-5 space-y-4 leading-7 text-[#102a4c]/78">
+            {block.heading && <h2 className="mt-3 text-4xl font-bold text-ink sm:text-5xl uppercase leading-[0.95]">{block.heading}</h2>}
+            {block.subheading && <p className="mt-3 text-lg font-semibold text-ink/80">{block.subheading}</p>}
+            <div className="mt-5 space-y-4 leading-7 text-ink/78">
               {body.map((text) => <p key={text}>{text}</p>)}
             </div>
           </div>
@@ -161,7 +161,7 @@ function BlockItems({ component, items }) {
             <div className="relative aspect-square overflow-hidden rounded-2xl">
               <MediaImage image={item.image} sizes="(min-width: 1024px) 33vw, 50vw" className="object-cover" />
             </div>
-            {item.title && <figcaption className="mt-2 text-sm font-semibold text-[#102a4c]">{item.title}</figcaption>}
+            {item.title && <figcaption className="mt-2 text-sm font-semibold text-ink">{item.title}</figcaption>}
           </figure>
         ))}
       </div>
@@ -183,13 +183,13 @@ function BlockItems({ component, items }) {
               </div>
             )}
             {numbered && (
-              <span className="mb-3 grid size-9 place-items-center rounded-full bg-[#ffd126] text-sm font-extrabold text-[#102a4c]">{index + 1}</span>
+              <span className="mb-3 grid size-9 place-items-center rounded-full bg-brand-500 text-sm font-extrabold text-white">{index + 1}</span>
             )}
-            <h3 className="text-lg font-bold text-[#102a4c]">{item.title}</h3>
-            {item.subtitle && <p className="mt-1 text-sm font-semibold text-[#0398E9]">{item.subtitle}</p>}
-            {paragraphs(item.body).map((text) => <p key={text} className="mt-2 text-sm leading-6 text-[#102a4c]/78">{text}</p>)}
+            <h3 className="text-lg font-bold text-ink">{item.title}</h3>
+            {item.subtitle && <p className="mt-1 text-sm font-semibold text-brand-600">{item.subtitle}</p>}
+            {paragraphs(item.body).map((text) => <p key={text} className="mt-2 text-sm leading-6 text-ink/78">{text}</p>)}
             {href && (
-              <Link href={href} className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-[#0398E9] hover:underline">
+              <Link href={href} className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-brand-600 hover:underline">
                 Learn more <ArrowRight className="size-4" aria-hidden="true" />
               </Link>
             )}
@@ -211,9 +211,9 @@ function RelatedCard({ service }) {
         </div>
       )}
       <div className="p-6">
-        <h3 className="text-lg font-bold text-[#102a4c]">{service.short_name || service.name}</h3>
-        {service.summary && <p className="mt-2 text-sm leading-6 text-[#102a4c]/78">{service.summary}</p>}
-        <span className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-[#0398E9]">
+        <h3 className="text-lg font-bold text-ink">{service.short_name || service.name}</h3>
+        {service.summary && <p className="mt-2 text-sm leading-6 text-ink/78">{service.summary}</p>}
+        <span className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-brand-600">
           View service <ArrowRight className="size-4 transition group-hover:translate-x-1" aria-hidden="true" />
         </span>
       </div>

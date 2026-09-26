@@ -50,7 +50,11 @@ export async function apiPost(path, payload) {
   let response
 
   try {
-    response = await fetch(apiUrl(path), {
+    const endpoint = path === 'enquiries' && process.env.NEXT_PUBLIC_CONTACT_ENDPOINT
+      ? process.env.NEXT_PUBLIC_CONTACT_ENDPOINT
+      : apiUrl(path)
+
+    response = await fetch(endpoint, {
       method: 'POST',
       headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),

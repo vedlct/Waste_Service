@@ -11,17 +11,17 @@ export default function GardenServiceCards({ theme = 'green' }) {
   const blue = theme === 'blue';
 
   return (
-    <section className={`${blue ? 'bg-sky-50' : 'bg-white'} text-[#102a4c]`}>
+    <section className={`${blue ? 'bg-sky-50' : 'bg-white'} text-ink`}>
       <div className="mx-auto w-full max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
         <p
           className={`text-xs font-extrabold uppercase tracking-[.18em] ${
-            blue ? 'text-[#7dc6f2]' : 'text-[#badd70]'
+            blue ? 'text-brand-300' : 'text-brand-300'
           }`}
         >
           Connected garden services
         </p>
 
-        <h2 className="mt-4 text-3xl font-bold sm:text-4xl">
+        <h2 className="mt-4 text-4xl font-bold sm:text-5xl uppercase leading-[0.95]">
           One team for a better-kept outdoor space.
         </h2>
 
@@ -32,15 +32,15 @@ export default function GardenServiceCards({ theme = 'green' }) {
               href={h}
               className={`group grid min-h-24 grid-cols-[3rem_1fr_auto] items-center gap-4 border-b border-white/15 px-2 transition duration-500 hover:px-5 sm:min-h-28 sm:grid-cols-[5rem_1fr_auto] ${
                 blue
-                  ? 'hover:bg-[#7dc6f2] hover:text-[#081f3d]'
-                  : 'hover:bg-[#badd70] hover:text-[#173525]'
+                  ? 'hover:bg-brand-300 hover:text-ink'
+                  : 'hover:bg-brand-300 hover:text-ink'
               }`}
             >
               <span
                 className={`text-xs font-black ${
                   blue
-                    ? 'text-[#7dc6f2] group-hover:text-[#081f3d]/50'
-                    : 'text-[#badd70] group-hover:text-[#173525]/50'
+                    ? 'text-brand-300 group-hover:text-ink/50'
+                    : 'text-brand-300 group-hover:text-ink/50'
                 }`}
               >
                 {n}

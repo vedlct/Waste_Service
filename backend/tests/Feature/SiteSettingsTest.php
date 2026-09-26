@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\SiteSetting;
 use App\Models\User;
+use Database\Seeders\DatabaseSeeder;
 use Illuminate\Support\Str;
 use Tests\TestCase;
 
@@ -15,6 +16,24 @@ class SiteSettingsTest extends TestCase
             ['email' => "settings-admin-{$token}@example.com"],
             ['name' => 'Settings Admin Test', 'password' => 'password', 'role' => 'admin', 'status' => 'active'],
         );
+    }
+
+    public function test_seeded_contact_details_match_the_company_flyers(): void
+    {
+        $this->assertSame('078 6213 8033', SiteSetting::valueOf('contact', 'phone'));
+        $this->assertSame('023 9378 8241', SiteSetting::valueOf('contact', 'phone_secondary'));
+        $this->assertSame('info@mrteeremovals.co.uk', SiteSetting::valueOf('contact', 'email'));
+    }
+
+    public function test_reseeding_corrects_untouched_old_contact_details_only(): void
+    {
+        SiteSetting::query()->where('group', 'contact')->where('key', 'phone')->update(['value' => json_encode('020 8226 6477')]);
+        SiteSetting::query()->where('group', 'contact')->where('key', 'email')->update(['value' => json_encode('office@example.org')]);
+
+        $this->seed(DatabaseSeeder::class);
+
+        $this->assertSame('078 6213 8033', SiteSetting::valueOf('contact', 'phone'), 'the old London number is replaced');
+        $this->assertSame('office@example.org', SiteSetting::valueOf('contact', 'email'), 'an email the admin changed is kept');
     }
 
     public function test_settings_index_redirects_to_the_first_group(): void

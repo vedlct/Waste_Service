@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { apiPost } from "@/lib/api";
 import { FALLBACK_CONTACT, telHref } from "@/lib/site";
+import PageBanner from "@/components/ui/PageBanner";
 import {
   Phone,
   Mail,
@@ -47,38 +48,22 @@ export default function ContactUs({ contact = FALLBACK_CONTACT }) {
   }
 
   return (
-    <main className="min-h-screen bg-[#f7fbff] text-[#11224D]">
+    <main className="min-h-screen bg-mist text-ink">
+      <PageBanner
+        crumb="Contact"
+        eyebrow="Get in touch"
+        title="Let's talk"
+        accent="about your clearance"
+        intro="Have a question or need a free quote? Call the team, send a message, or book online. We're happy to help."
+        image="/images/highlight2.jpeg"
+      />
 
-      <section className="relative overflow-hidden px-5 pb-24 pt-35 sm:px-8 lg:px-14 xl:px-20">
+      <section className="relative overflow-hidden px-5 pb-24 pt-14 sm:px-8 lg:px-14 xl:px-20">
 
-        <div className="absolute -left-32 top-20 h-80 w-80 rounded-full bg-blue-100/40 blur-3xl" />
-        <div className="absolute -right-32 top-40 h-96 w-96 rounded-full bg-[#11224D]/5 blur-3xl" />
 
         <div className="relative mx-auto max-w-7xl">
 
-          <div className="mx-auto max-w-4xl text-center">
-
-            <p className="mb-4 text-sm font-bold uppercase tracking-[0.25em] text-[#087FE8]">
-              Get In Touch
-            </p>
-
-            <h1 className="text-3xl font-black leading-tight text-[#11224D] sm:text-4xl">
-              Let&apos;s
-              <span className="block text-[#087FE8]">
-                Talk
-              </span>
-            </h1>
-
-            <p className="mx-auto mt-6 max-w-2xl text-base leading-8 text-slate-500 sm:text-lg">
-              Have a question about our services or need a free quotation?
-              Get in touch with our friendly team and we&apos;ll be happy to
-              help.
-            </p>
-
-          </div>
-
-
-          <div className="mt-16 grid gap-10 lg:grid-cols-[0.85fr_1.15fr]">
+          <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr]">
 
             <div className="space-y-5">
 
@@ -86,8 +71,8 @@ export default function ContactUs({ contact = FALLBACK_CONTACT }) {
 
                 <div className="flex items-center gap-5">
 
-                  <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-[#11224D]/5 transition-all duration-500 group-hover:rotate-6 group-hover:scale-110 group-hover:bg-[#11224D]">
-                    <Phone className="h-6 w-6 text-[#11224D] transition-colors duration-300 group-hover:text-white" />
+                  <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-brand-900/5 transition-all duration-500 group-hover:rotate-6 group-hover:scale-110 group-hover:bg-brand-700">
+                    <Phone className="h-6 w-6 text-ink transition-colors duration-300 group-hover:text-white" />
                   </div>
 
                   <div>
@@ -97,7 +82,7 @@ export default function ContactUs({ contact = FALLBACK_CONTACT }) {
 
                     <a
                       href={telHref(contact.phone)}
-                      className="mt-1 block font-bold text-[#11224D] transition-colors duration-300 group-hover:text-[#087FE8]"
+                      className="mt-1 block font-bold text-ink transition-colors duration-300 group-hover:text-brand-600"
                     >
                       {contact.phone}
                     </a>
@@ -112,8 +97,8 @@ export default function ContactUs({ contact = FALLBACK_CONTACT }) {
 
                 <div className="flex items-center gap-5">
 
-                  <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-[#11224D]/5 transition-all duration-500 group-hover:rotate-6 group-hover:scale-110 group-hover:bg-[#11224D]">
-                    <Mail className="h-6 w-6 text-[#11224D] transition-colors duration-300 group-hover:text-white" />
+                  <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-brand-900/5 transition-all duration-500 group-hover:rotate-6 group-hover:scale-110 group-hover:bg-brand-700">
+                    <Mail className="h-6 w-6 text-ink transition-colors duration-300 group-hover:text-white" />
                   </div>
 
                   <div>
@@ -123,7 +108,7 @@ export default function ContactUs({ contact = FALLBACK_CONTACT }) {
 
                     <a
                       href={`mailto:${contact.email}`}
-                      className="mt-1 block font-bold text-[#11224D] transition-colors duration-300 group-hover:text-[#087FE8]"
+                      className="mt-1 block font-bold text-ink transition-colors duration-300 group-hover:text-brand-600"
                     >
                       {contact.email}
                     </a>
@@ -138,8 +123,8 @@ export default function ContactUs({ contact = FALLBACK_CONTACT }) {
 
                 <div className="flex items-center gap-5">
 
-                  <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-[#11224D]/5 transition-all duration-500 group-hover:rotate-6 group-hover:scale-110 group-hover:bg-[#11224D]">
-                    <MapPin className="h-6 w-6 text-[#11224D] transition-colors duration-300 group-hover:text-white" />
+                  <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-brand-900/5 transition-all duration-500 group-hover:rotate-6 group-hover:scale-110 group-hover:bg-brand-700">
+                    <MapPin className="h-6 w-6 text-ink transition-colors duration-300 group-hover:text-white" />
                   </div>
 
                   <div>
@@ -147,7 +132,7 @@ export default function ContactUs({ contact = FALLBACK_CONTACT }) {
                       Location
                     </p>
 
-                    <p className="mt-1 font-bold text-[#11224D]">
+                    <p className="mt-1 font-bold text-ink">
                       {contact.location}
                     </p>
                   </div>
@@ -161,8 +146,8 @@ export default function ContactUs({ contact = FALLBACK_CONTACT }) {
 
                 <div className="flex items-center gap-5">
 
-                  <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-[#11224D]/5 transition-all duration-500 group-hover:rotate-6 group-hover:scale-110 group-hover:bg-[#11224D]">
-                    <Clock className="h-6 w-6 text-[#11224D] transition-colors duration-300 group-hover:text-white" />
+                  <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-brand-900/5 transition-all duration-500 group-hover:rotate-6 group-hover:scale-110 group-hover:bg-brand-700">
+                    <Clock className="h-6 w-6 text-ink transition-colors duration-300 group-hover:text-white" />
                   </div>
 
                   <div>
@@ -170,7 +155,7 @@ export default function ContactUs({ contact = FALLBACK_CONTACT }) {
                       Opening Hours
                     </p>
 
-                    <p className="mt-1 font-bold text-[#11224D]">
+                    <p className="mt-1 font-bold text-ink">
                       {contact.openingHours}
                     </p>
                   </div>
@@ -182,15 +167,15 @@ export default function ContactUs({ contact = FALLBACK_CONTACT }) {
             </div>
 
 
-            <div className="group rounded-[2rem] border border-slate-100 bg-white p-6 shadow-xl shadow-[#11224D]/5 transition-all duration-500 hover:shadow-2xl hover:shadow-blue-100 sm:p-8 lg:p-10">
+            <div className="group rounded-[2rem] border border-slate-100 bg-white p-6 shadow-xl shadow-ink/5 transition-all duration-500 hover:shadow-2xl hover:shadow-blue-100 sm:p-8 lg:p-10">
 
               <div className="mb-8">
 
-                <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#087FE8]">
+                <p className="text-sm font-bold uppercase tracking-[0.2em] text-brand-600">
                   Send Us A Message
                 </p>
 
-                <h2 className="mt-3 text-3xl font-black text-[#11224D] sm:text-4xl">
+                <h2 className="mt-3 text-4xl font-bold text-ink sm:text-5xl uppercase leading-[0.95]">
                   How Can We Help?
                 </h2>
 
@@ -223,7 +208,7 @@ export default function ContactUs({ contact = FALLBACK_CONTACT }) {
 
                   <div className="group/input">
 
-                    <label htmlFor="contact-name" className="mb-2 block text-sm font-bold text-[#11224D]">
+                    <label htmlFor="contact-name" className="mb-2 block text-sm font-bold text-ink">
                       Your Name
                     </label>
 
@@ -236,7 +221,7 @@ export default function ContactUs({ contact = FALLBACK_CONTACT }) {
                       minLength={2}
                       maxLength={100}
                       required
-                      className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm outline-none transition-all duration-300 placeholder:text-slate-400 focus:border-[#087FE8] focus:bg-white focus:ring-4 focus:ring-blue-100 hover:border-[#11224D]/30"
+                      className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm outline-none transition-all duration-300 placeholder:text-slate-400 focus:border-brand-600 focus:bg-white focus:ring-4 focus:ring-blue-100 hover:border-ink/30"
                     />
 
                   </div>
@@ -244,7 +229,7 @@ export default function ContactUs({ contact = FALLBACK_CONTACT }) {
 
                   <div className="group/input">
 
-                    <label htmlFor="contact-phone" className="mb-2 block text-sm font-bold text-[#11224D]">
+                    <label htmlFor="contact-phone" className="mb-2 block text-sm font-bold text-ink">
                       Phone Number
                     </label>
 
@@ -257,7 +242,7 @@ export default function ContactUs({ contact = FALLBACK_CONTACT }) {
                       minLength={7}
                       maxLength={30}
                       required
-                      className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm outline-none transition-all duration-300 placeholder:text-slate-400 focus:border-[#087FE8] focus:bg-white focus:ring-4 focus:ring-blue-100 hover:border-[#11224D]/30"
+                      className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm outline-none transition-all duration-300 placeholder:text-slate-400 focus:border-brand-600 focus:bg-white focus:ring-4 focus:ring-blue-100 hover:border-ink/30"
                     />
 
                   </div>
@@ -267,7 +252,7 @@ export default function ContactUs({ contact = FALLBACK_CONTACT }) {
 
                 <div>
 
-                  <label htmlFor="contact-email" className="mb-2 block text-sm font-bold text-[#11224D]">
+                  <label htmlFor="contact-email" className="mb-2 block text-sm font-bold text-ink">
                     Email Address
                   </label>
 
@@ -279,7 +264,7 @@ export default function ContactUs({ contact = FALLBACK_CONTACT }) {
                     autoComplete="email"
                     maxLength={150}
                     required
-                    className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm outline-none transition-all duration-300 placeholder:text-slate-400 focus:border-[#087FE8] focus:bg-white focus:ring-4 focus:ring-blue-100 hover:border-[#11224D]/30"
+                    className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm outline-none transition-all duration-300 placeholder:text-slate-400 focus:border-brand-600 focus:bg-white focus:ring-4 focus:ring-blue-100 hover:border-ink/30"
                   />
 
                 </div>
@@ -287,7 +272,7 @@ export default function ContactUs({ contact = FALLBACK_CONTACT }) {
 
                 <div>
 
-                  <label htmlFor="contact-service" className="mb-2 block text-sm font-bold text-[#11224D]">
+                  <label htmlFor="contact-service" className="mb-2 block text-sm font-bold text-ink">
                     Service Required
                   </label>
 
@@ -295,7 +280,7 @@ export default function ContactUs({ contact = FALLBACK_CONTACT }) {
                     id="contact-service"
                     name="service"
                     required
-                    className="w-full cursor-pointer rounded-xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm text-slate-500 outline-none transition-all duration-300 focus:border-[#087FE8] focus:bg-white focus:ring-4 focus:ring-blue-100 hover:border-[#11224D]/30"
+                    className="w-full cursor-pointer rounded-xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm text-slate-500 outline-none transition-all duration-300 focus:border-brand-600 focus:bg-white focus:ring-4 focus:ring-blue-100 hover:border-ink/30"
                   >
                     <option value="">Select a service</option>
                     <option value="house">House clearance</option>
@@ -310,7 +295,7 @@ export default function ContactUs({ contact = FALLBACK_CONTACT }) {
 
                 <div>
 
-                  <label htmlFor="contact-message" className="mb-2 block text-sm font-bold text-[#11224D]">
+                  <label htmlFor="contact-message" className="mb-2 block text-sm font-bold text-ink">
                     Your Message
                   </label>
 
@@ -322,7 +307,7 @@ export default function ContactUs({ contact = FALLBACK_CONTACT }) {
                     minLength={10}
                     maxLength={2000}
                     required
-                    className="w-full resize-none rounded-xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm outline-none transition-all duration-300 placeholder:text-slate-400 focus:border-[#087FE8] focus:bg-white focus:ring-4 focus:ring-blue-100 hover:border-[#11224D]/30"
+                    className="w-full resize-none rounded-xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm outline-none transition-all duration-300 placeholder:text-slate-400 focus:border-brand-600 focus:bg-white focus:ring-4 focus:ring-blue-100 hover:border-ink/30"
                   />
 
                 </div>
@@ -350,11 +335,11 @@ export default function ContactUs({ contact = FALLBACK_CONTACT }) {
                 <button
                   type="submit"
                   disabled={submission.state === "loading"}
-                  className="group flex w-full items-center justify-center gap-3 rounded-xl bg-[#11224D] px-6 py-4 font-bold text-white transition-all duration-300 hover:-translate-y-1 hover:bg-[#087FE8] hover:shadow-xl hover:shadow-blue-200 disabled:cursor-wait disabled:opacity-70 disabled:hover:translate-y-0"
+                  className="group flex w-full items-center justify-center gap-3 rounded-xl bg-brand-900 px-6 py-4 font-bold text-white transition-all duration-300 hover:-translate-y-1 hover:bg-brand-600 hover:shadow-xl hover:shadow-blue-200 disabled:cursor-wait disabled:opacity-70 disabled:hover:translate-y-0"
                 >
                   {submission.state === "loading" ? "Sending..." : "Send Message"}
 
-                  <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white text-[#11224D] transition-all duration-300 group-hover:translate-x-1">
+                  <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white text-ink transition-all duration-300 group-hover:translate-x-1">
                     {submission.state === "loading" ? (
                       <LoaderCircle className="h-4 w-4 animate-spin" />
                     ) : (

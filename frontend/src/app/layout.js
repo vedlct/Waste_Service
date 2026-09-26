@@ -1,17 +1,20 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Barlow_Condensed, Inter } from "next/font/google";
 import "./globals.css";
 import SiteChrome from "@/components/layout/SiteChrome";
 import { getLocalBusinessJsonLd, jsonLdString, siteMetadata } from "@/lib/seo";
 import { getSiteContact } from "@/lib/site";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+// Inter for body copy; Barlow Condensed for headings, matching the bold condensed type on
+// the company's vans and flyers.
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const barlow = Barlow_Condensed({
+  variable: "--font-barlow",
   subsets: ["latin"],
+  weight: ["600", "700", "800"],
 });
 
 // Site-wide defaults and verification codes; each page overrides the title, description and
@@ -26,7 +29,7 @@ export default async function RootLayout({ children }) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${inter.variable} ${barlow.variable} h-full antialiased`}
     >
       <body suppressHydrationWarning>
         <script

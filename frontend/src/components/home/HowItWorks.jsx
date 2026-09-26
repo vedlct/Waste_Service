@@ -1,222 +1,108 @@
-﻿import Image from "next/image";
-import {
-  ClipboardList,
-  FileText,
-  Package,
-  Truck,
-  ShieldCheck,
-  Clock3,
-  Users,
-  Headphones,
-  ArrowRight,
-} from "lucide-react";
+import Image from 'next/image'
+import Link from 'next/link'
+import { ArrowRight, CalendarCheck2, Check, Recycle, Truck } from 'lucide-react'
 
+const steps = [
+  {
+    number: '01',
+    title: 'Book online or call',
+    text: 'Tell us what needs to go and choose a collection date. You will see the price before you book, or our local team can talk it through with you.',
+    image: '/images/how-it-works-booking.png',
+    alt: 'A customer confirming a clearance booking with an MR. TEE team member',
+    icon: CalendarCheck2,
+  },
+  {
+    number: '02',
+    title: 'We arrive and load',
+    text: 'Our uniformed team arrives in the agreed window, does all the lifting and carrying, and loads everything safely into the van.',
+    image: '/images/how-it-works-loading.png',
+    alt: 'The MR. TEE Removals team loading a chest of drawers into their branded van',
+    icon: Truck,
+  },
+  {
+    number: '03',
+    title: 'Cleared and recycled',
+    text: 'We sweep up before we leave and take the waste to licensed facilities, where reusable items and recyclable materials are separated responsibly.',
+    image: '/images/mr-tee-recycling-step.png',
+    alt: 'The MR. TEE Removals team sorting cardboard and reusable furniture at a recycling facility',
+    icon: Recycle,
+  },
+]
+
+const promises = ['See the price before you book', 'Fully insured, uniformed team', 'Licensed, responsible disposal']
+
+// Heading on the left, kept in view on large screens, with the steps as a numbered timeline
+// on the right.
 export default function HowItWorks() {
-  const steps = [
-    {
-      number: "01",
-      title: "Survey",
-      description:
-        "Our moving consultant will come visit you and survey your property.",
-      icon: ClipboardList,
-    },
-    {
-      number: "02",
-      title: "Quotation & Acceptance",
-      description:
-        "You will usually receive our quotation within 24 hours, which can be accepted online or by replying to our email.",
-      icon: FileText,
-    },
-    {
-      number: "03",
-      title: "Boxes & Packing Kit",
-      description:
-        "Once you accept the quotation, we'll deliver free boxes and packing materials to help you pack with ease.",
-      icon: Package,
-    },
-    {
-      number: "04",
-      title: "Moving Day",
-      description:
-        "Our professional team arrives on time, protects your items, and loads everything safely for a smooth move.",
-      icon: Truck,
-    },
-  ];
-
-  const benefits = [
-    {
-      title: "Fully Insured",
-      text: "Safe hands",
-      icon: ShieldCheck,
-    },
-    {
-      title: "On-Time",
-      text: "We value time",
-      icon: Clock3,
-    },
-    {
-      title: "Expert Team",
-      text: "Trained staff",
-      icon: Users,
-    },
-    {
-      title: "24/7 Support",
-      text: "Always here",
-      icon: Headphones,
-    },
-  ];
-
   return (
-    <section className="relative overflow-hidden bg-slate-50 px-4 py-20 sm:px-6 lg:px-10 xl:px-16 bg-linear-to-b from-[#E9F4FC] via-white to-[#E9F4FC]">
-
-      <div className="absolute -left-32 top-20 h-72 w-72 rounded-full bg-blue-100/50 blur-3xl" />
-      <div className="absolute -right-32 bottom-10 h-96 w-96 rounded-full bg-blue-100/50 blur-3xl" />
-
-      <div className="relative mx-auto max-w-7xl">
-
-        <div className="mb-14 text-center">
-          <span className="inline-block rounded-full border border-blue-100 bg-blue-50 px-5 py-2 text-xs font-bold uppercase tracking-[0.2em] text-blue-600 transition-all duration-300 hover:border-blue-600 hover:bg-blue-600 hover:text-white hover:shadow-lg hover:shadow-blue-200">
-            Our Simple Process
-          </span>
-
-          <h2 className="mt-5 text-3xl font-black tracking-tight text-slate-900 transition-all duration-500 hover:text-blue-600 sm:text-4xl lg:text-4xl">
-            How It Works
+    <section id='how-it-works' className='bg-white py-20 sm:py-28'>
+      <div className='mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16 lg:px-8'>
+        <header className='lg:sticky lg:top-32 lg:self-start'>
+          <p className='text-xs font-extrabold uppercase tracking-[0.22em] text-brand-600'>How it works</p>
+          <h2 className='mt-4 font-display text-4xl font-extrabold uppercase leading-[0.92] text-ink sm:text-5xl lg:text-6xl'>
+            <span className='block'>Cleared in</span>
+            <span className='mt-1 block text-brand-600'>three simple steps</span>
           </h2>
-
-          <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-slate-500 sm:text-lg">
-            We make your move simple, safe and stress-free with our
-            straightforward 4-step process.
+          <p className='mt-6 max-w-md text-base leading-7 text-slate-600 sm:text-lg'>
+            From your first message to the final sweep-up, our local team keeps the whole clearance simple.
           </p>
-        </div>
 
-        <div className="grid items-center gap-14 lg:grid-cols-2 lg:gap-20">
+          <ul className='mt-8 space-y-3 border-t border-line pt-8'>
+            {promises.map((promise) => (
+              <li key={promise} className='flex items-center gap-3 font-semibold text-ink'>
+                <span className='grid size-6 shrink-0 place-items-center rounded-full bg-brand-50 text-brand-600'>
+                  <Check className='size-3.5' strokeWidth={3} aria-hidden='true' />
+                </span>
+                {promise}
+              </li>
+            ))}
+          </ul>
 
-          <div className="group relative">
+          <Link href='/prices' className='group mt-9 inline-flex items-center gap-2 rounded-lg bg-brand-600 px-6 py-3.5 font-bold text-white shadow-lg shadow-brand-600/20 transition-colors hover:bg-brand-700'>
+            Start your booking
+            <ArrowRight className='size-5 transition-transform group-hover:translate-x-1' aria-hidden='true' />
+          </Link>
+        </header>
 
-            <div className="absolute -left-8 -top-8 hidden h-24 w-24 rounded-full border-2 border-blue-200 transition-all duration-700 group-hover:scale-125 group-hover:border-blue-500 lg:block" />
+        <ol className='relative space-y-8'>
+          <span aria-hidden='true' className='absolute bottom-8 left-6 top-8 w-0.5 bg-brand-100 sm:left-7' />
 
-            <div className="absolute -bottom-5 -right-5 hidden h-28 w-28 rounded-full bg-blue-100 transition-all duration-700 group-hover:scale-125 group-hover:bg-blue-200 lg:block" />
+          {steps.map((step) => {
+            const Icon = step.icon
 
-            <div className="relative mx-auto aspect-square w-[280px] overflow-hidden rounded-full border-[10px] border-white shadow-2xl shadow-blue-100 transition-all duration-700 group-hover:scale-[1.03] group-hover:border-blue-50 group-hover:shadow-blue-300 sm:w-[400px] lg:w-[470px]">
+            return (
+              <li key={step.title} className='relative flex gap-4 sm:gap-6'>
+                <span className='relative z-10 grid size-12 shrink-0 place-items-center rounded-full bg-brand-600 font-display text-xl font-extrabold text-white ring-8 ring-white sm:size-14 sm:text-2xl'>
+                  {step.number}
+                </span>
 
-              <Image
-                src="/images/rubbishVan.jpg"
-                alt="Moving team carrying boxes"
-                fill
-                priority
-                className="object-cover transition-transform duration-1000 group-hover:scale-110"
-              />
-
-              <div className="absolute inset-0 bg-blue-600/0 transition-all duration-700 group-hover:bg-blue-600/10" />
-
-              <div className="absolute bottom-8 left-8 rounded-2xl bg-white/90 px-5 py-3 opacity-0 shadow-xl backdrop-blur-md transition-all duration-500 group-hover:bottom-12 group-hover:opacity-100">
-                <p className="text-xs font-semibold uppercase tracking-wider text-blue-600">
-                  Moving Made Easy
-                </p>
-                <p className="mt-1 font-bold text-slate-900">
-                  Professional Service
-                </p>
-              </div>
-            </div>
-
-            <div className="absolute bottom-7 right-[calc(50%-145px)] h-12 w-12 rounded-full border-8 border-white bg-blue-600 shadow-lg transition-all duration-500 hover:scale-125 hover:rotate-180 sm:right-[calc(50%-205px)] lg:right-[calc(50%-240px)]" />
-
-            <div className="mt-10 rounded-3xl border border-slate-100 bg-white p-5 shadow-xl shadow-slate-200/50 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-blue-100">
-
-              <div className="grid grid-cols-2 gap-5 md:grid-cols-4">
-
-                {benefits.map((item) => {
-                  const Icon = item.icon;
-
-                  return (
-                    <div
-                      key={item.title}
-                      className="group/item flex cursor-pointer items-center gap-3 rounded-2xl p-2 transition-all duration-300 hover:-translate-y-1 hover:bg-blue-50"
-                    >
-                      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-blue-50 transition-all duration-500 group-hover/item:rotate-12 group-hover/item:scale-110 group-hover/item:bg-blue-600">
-                        <Icon className="h-5 w-5 text-blue-600 transition-colors duration-300 group-hover/item:text-white" />
-                      </div>
-
-                      <div>
-                        <h4 className="text-xs font-bold text-slate-900 transition-colors duration-300 group-hover/item:text-blue-600 sm:text-sm">
-                          {item.title}
-                        </h4>
-
-                        <p className="mt-1 text-[11px] text-slate-400">
-                          {item.text}
-                        </p>
-                      </div>
-                    </div>
-                  );
-                })}
-
-              </div>
-            </div>
-          </div>
-
-          <div className="relative">
-
-            <div className="absolute bottom-8 left-6 top-8 hidden w-[2px] bg-gradient-to-b from-blue-600 via-blue-300 to-transparent sm:block" />
-
-            <div className="space-y-5">
-
-              {steps.map((step) => {
-                const Icon = step.icon;
-
-                return (
-                  <div
-                    key={step.number}
-                    className="group relative flex cursor-pointer gap-4 rounded-3xl border border-slate-100 bg-white p-5 shadow-sm transition-all duration-500 hover:-translate-y-2 hover:border-blue-200 hover:shadow-2xl hover:shadow-blue-100 sm:gap-5 sm:p-6"
-                  >
-
-                    <div className="relative z-10 shrink-0">
-                      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-600 text-sm font-black text-white shadow-lg shadow-blue-200 transition-all duration-500 group-hover:scale-110 group-hover:rotate-6 group-hover:bg-blue-700 group-hover:shadow-blue-300">
-                        {step.number}
-                      </div>
-                    </div>
-
-                    <div className="shrink-0">
-                      <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 to-blue-700 shadow-lg transition-all duration-500 group-hover:scale-110 group-hover:rotate-3 group-hover:from-blue-600 group-hover:to-indigo-700 group-hover:shadow-blue-300 sm:h-16 sm:w-16">
-                        <Icon className="h-7 w-7 text-white transition-transform duration-500 group-hover:scale-110" />
-                      </div>
-                    </div>
-
-                    <div className="min-w-0 flex-1">
-
-                      <div className="flex items-start justify-between gap-3">
-
-                        <h3 className="text-lg font-bold text-slate-900 transition-colors duration-300 group-hover:text-blue-600 sm:text-xl">
-                          {step.title}
-                        </h3>
-
-                        <span className="hidden text-3xl font-black text-slate-100 transition-all duration-500 group-hover:text-blue-100 sm:block">
-                          {step.number}
-                        </span>
-
-                      </div>
-
-                      <p className="mt-2 text-sm leading-6 text-slate-500 transition-colors duration-300 group-hover:text-slate-600 sm:text-base">
-                        {step.description}
-                      </p>
-
-                      <div className="mt-3 flex items-center gap-2 text-sm font-semibold text-blue-500 opacity-0 transition-all duration-500 group-hover:translate-x-1 group-hover:opacity-100">
-                        Learn more
-                        <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-                      </div>
-
-                    </div>
-
-                    <div className="absolute inset-x-0 bottom-0 h-1 origin-left scale-x-0 rounded-full bg-gradient-to-r from-blue-500 to-indigo-500 transition-transform duration-500 group-hover:scale-x-100" />
-
+                <article className='group flex-1 overflow-hidden rounded-2xl border border-line bg-white shadow-[0_18px_45px_-34px_rgba(15,37,87,0.45)] transition-shadow hover:shadow-[0_24px_55px_-30px_rgba(15,37,87,0.5)] sm:flex'>
+                  <div className='relative aspect-[3/2] overflow-hidden bg-slate-100 sm:aspect-auto sm:w-56 sm:shrink-0 lg:w-64'>
+                    <Image
+                      src={step.image}
+                      alt={step.alt}
+                      fill
+                      sizes='(min-width: 1024px) 256px, (min-width: 640px) 224px, 100vw'
+                      className='object-cover transition-transform duration-700 group-hover:scale-[1.03]'
+                    />
                   </div>
-                );
-              })}
 
-            </div>
-          </div>
-
-        </div>
+                  <div className='p-6 sm:p-7'>
+                    <p className='flex items-center gap-2 text-xs font-extrabold uppercase tracking-[0.18em] text-brand-600'>
+                      <Icon className='size-4' aria-hidden='true' />
+                      Step {step.number}
+                    </p>
+                    <h3 className='mt-3 font-display text-2xl font-extrabold uppercase leading-none text-ink sm:text-3xl'>
+                      {step.title}
+                    </h3>
+                    <p className='mt-3 leading-7 text-slate-600'>{step.text}</p>
+                  </div>
+                </article>
+              </li>
+            )
+          })}
+        </ol>
       </div>
     </section>
-  );
+  )
 }

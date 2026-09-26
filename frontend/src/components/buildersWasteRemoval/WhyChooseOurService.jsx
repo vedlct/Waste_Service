@@ -47,7 +47,7 @@ export default function WhyChooseOurService() {
               />
             </div>
 
-            <div className="absolute bottom-[31%] left-5 rounded-2xl bg-[#ffd126] p-4 text-[#102a4c] shadow-xl">
+            <div className="absolute bottom-[31%] left-5 rounded-2xl bg-brand-500 p-4 text-white shadow-xl">
               <Recycle className="size-7" />
               <p className="mt-2 text-2xl font-black">95%</p>
               <p className="text-xs font-bold">recycled</p>
@@ -55,11 +55,11 @@ export default function WhyChooseOurService() {
           </div>
 
           <div>
-            <p className="text-xs font-extrabold uppercase tracking-[.18em] text-[#b56808]">Why work with us</p>
+            <p className="text-xs font-extrabold uppercase tracking-[.18em] text-brand-700">Why work with us</p>
 
-            <h2 className="mt-5 text-3xl font-bold leading-[1.05] text-[#102a4c] sm:text-4xl lg:text-4xl">
+            <h2 className="mt-5 text-4xl font-bold leading-[0.95] text-ink sm:text-5xl lg:text-5xl uppercase">
               A safer site.
-              <span className="block text-[#d67d0b]">A dependable clearance.</span>
+              <span className="block text-brand-700">A dependable clearance.</span>
             </h2>
 
             <p className="mt-6 text-base leading-8 text-slate-600 sm:text-lg">
@@ -70,9 +70,9 @@ export default function WhyChooseOurService() {
               {reasons.map((r) => (
                 <li
                   key={r}
-                  className="group flex min-h-14 items-center gap-3 border-b border-[#102a4c]/10 px-2 py-3 text-sm font-semibold text-[#38536b] transition hover:translate-x-1 hover:border-[#f0aa26]"
+                  className="group flex min-h-14 items-center gap-3 border-b border-ink/10 px-2 py-3 text-sm font-semibold text-slate-600 transition hover:translate-x-1 hover:border-brand-500"
                 >
-                  <Check className="size-4 shrink-0 text-[#d67d0b]" strokeWidth={3} />
+                  <Check className="size-4 shrink-0 text-brand-700" strokeWidth={3} />
                   {r}
                 </li>
               ))}
@@ -80,7 +80,7 @@ export default function WhyChooseOurService() {
 
             <Link
               href="/faq"
-              className="group mt-7 inline-flex items-center gap-2 font-bold text-[#102a4c] underline decoration-[#f0aa26] decoration-2 underline-offset-4 hover:text-[#d67d0b]"
+              className="group mt-7 inline-flex items-center gap-2 font-bold text-ink underline decoration-brand-500 decoration-2 underline-offset-4 hover:text-brand-700"
             >
               Read common questions
               <ArrowRight className="size-4 transition group-hover:translate-x-1" />
@@ -88,10 +88,10 @@ export default function WhyChooseOurService() {
           </div>
         </div>
 
-        <div className="mt-20 overflow-hidden rounded-[2rem] border border-sky-200 bg-sky-50 text-[#102a4c]">
+        <div className="mt-20 overflow-hidden rounded-[2rem] border border-sky-200 bg-sky-50 text-ink">
           <div className="grid lg:grid-cols-[.65fr_1.35fr]">
             <div className="p-7 sm:p-10">
-              <ShieldCheck className="size-9 text-[#ffd126]" />
+              <ShieldCheck className="size-9 text-brand-500" />
               <h3 className="mt-5 text-3xl font-bold sm:text-4xl">Builders rubbish removal, made simple.</h3>
             </div>
 
@@ -99,11 +99,11 @@ export default function WhyChooseOurService() {
               {steps.map(([title, text], i) => (
                 <li
                   key={title}
-                  className="group border-t border-white/10 p-6 transition hover:bg-[#ffd126] hover:text-[#102a4c] sm:border-l sm:border-t-0"
+                  className="group border-t border-white/10 p-6 transition hover:bg-brand-500 hover:text-white sm:border-l sm:border-t-0"
                 >
-                  <span className="text-sm font-black text-[#ffd126] group-hover:text-[#102a4c]/50">0{i + 1}</span>
+                  <span className="text-sm font-black text-brand-500 group-hover:text-ink/50">0{i + 1}</span>
                   <h4 className="mt-4 text-lg font-bold">{title}</h4>
-                  <p className="mt-3 text-sm leading-6 text-[#102a4c]/65 group-hover:text-[#102a4c]/75">{text}</p>
+                  <p className="mt-3 text-sm leading-6 text-ink/65 group-hover:text-ink/75">{text}</p>
                 </li>
               ))}
             </ol>

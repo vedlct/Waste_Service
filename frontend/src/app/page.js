@@ -1,15 +1,14 @@
-import Benefits from "@/components/home/Benefits";
-import Order from "@/components/home/Order";
-import RubbishClearance from "@/components/home/RubbishClearance";
-import RubbishRemoval from "@/components/home/RubbishRemoval";
-import RubbishService from "@/components/home/RubbishService";
-import QuoteForm from "@/components/home/QuoteForm";
-import SecondaryNav from "@/components/layout/SecondaryNav";
 import Hero from "@/components/home/Hero";
+import TrustBand from "@/components/home/TrustBand";
+import ServicesShowcase from "@/components/home/ServicesShowcase";
+import StatsBand from "@/components/home/StatsBand";
+import Order from "@/components/home/Order";
+import WhyChoose from "@/components/home/WhyChoose";
 import HowItWorks from "@/components/home/HowItWorks";
-import AboutUs from "@/components/home/AboutUs";
-import Impact from "@/components/home/Impact";
+import WorkGallery from "@/components/home/WorkGallery";
+import LocalAreas from "@/components/home/LocalAreas";
 import Review from "@/components/home/Review";
+import { getSiteContact } from "@/lib/site";
 import { apiGet, timeAgo } from "@/lib/api";
 import { metadataFor } from "@/lib/seo"
 
@@ -20,26 +19,31 @@ export function generateMetadata() {
 }
 
 export default async function Home() {
-  const reviews = await apiGet("reviews?limit=12");
+  const [reviews, coverage, contact] = await Promise.all([
+    apiGet("reviews?limit=12"),
+    apiGet("coverage"),
+    getSiteContact(),
+  ]);
 
   return (
-    <div>
-      <main>
-        <Hero/>
-        <SecondaryNav/>
-        <Order/>
-        <RubbishRemoval/>
-        <RubbishService/>
-        <QuoteForm/>
-        <Review
-          reviews={reviews?.map((review) => ({
-            name: review.reviewer_name,
-            time: timeAgo(review.published_at),
-            rating: review.rating,
-            text: review.body,
-          }))}
-        />
-      </main>
-    </div>
+    <main>
+      <Hero phone={contact.phone} coverage={coverage} />
+      <TrustBand />
+      <ServicesShowcase />
+      <StatsBand coverage={coverage} />
+      <Order />
+      <WhyChoose />
+      <HowItWorks />
+      <WorkGallery />
+      <Review
+        reviews={reviews?.map((review) => ({
+          name: review.reviewer_name,
+          time: timeAgo(review.published_at),
+          rating: review.rating,
+          text: review.body,
+        }))}
+      />
+      <LocalAreas coverage={coverage} />
+    </main>
   );
 }

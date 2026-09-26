@@ -24,7 +24,7 @@ const categories = [
 ];
 
 const images = [1, 2, 3, 4].map((number) => ({
-  src: `/images/garden${number}.jpg`,
+  src: `/images/gardenset${number}.jpg`,
   alt: 'Professional waste clearance and collection service',
 }));
 

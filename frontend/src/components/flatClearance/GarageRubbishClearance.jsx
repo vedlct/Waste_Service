@@ -14,24 +14,24 @@ export default function GarageRubbishClearance() {
             sizes="(max-width:1024px) 100vw,50vw"
             className="object-cover transition duration-700 group-hover:scale-105"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#071d3b]/75 via-transparent to-transparent" />
-          <div className="absolute bottom-6 left-6 right-6 rounded-2xl border border-sky-200 bg-white/90 p-5 text-[#102a4c] backdrop-blur-md sm:bottom-8 sm:left-8 sm:right-auto sm:max-w-sm">
-            <p className="text-xs font-extrabold uppercase tracking-[0.16em] text-[#ffd126]">Local collection team</p>
+          <div className="absolute inset-0 bg-gradient-to-t from-brand-950/75 via-transparent to-transparent" />
+          <div className="absolute bottom-6 left-6 right-6 rounded-2xl border border-sky-200 bg-white/90 p-5 text-ink backdrop-blur-md sm:bottom-8 sm:left-8 sm:right-auto sm:max-w-sm">
+            <p className="text-xs font-extrabold uppercase tracking-[0.16em] text-brand-500">Local collection team</p>
             <p className="mt-2 text-lg font-bold">Branded vehicles. Experienced crews. Heavy lifting included.</p>
           </div>
         </div>
 
-        <div className="flex flex-col justify-center rounded-b-[2rem] border border-sky-200 bg-sky-50 p-7 text-[#102a4c] sm:p-10 lg:rounded-r-[2rem] lg:rounded-bl-none lg:p-12">
-          <div className="flex items-center gap-3 text-xs font-extrabold uppercase tracking-[0.18em] text-[#ffd126] sm:text-sm">
-            <span className="h-0.5 w-9 bg-[#ffd126]" />
+        <div className="flex flex-col justify-center rounded-b-[2rem] border border-sky-200 bg-sky-50 p-7 text-ink sm:p-10 lg:rounded-r-[2rem] lg:rounded-bl-none lg:p-12">
+          <div className="flex items-center gap-3 text-xs font-extrabold uppercase tracking-[0.18em] text-brand-500 sm:text-sm">
+            <span className="h-0.5 w-9 bg-brand-500" />
             Garage &amp; shed clearance
           </div>
 
-          <h2 className="mt-5 text-3xl font-bold leading-tight sm:text-4xl lg:text-4xl">
+          <h2 className="mt-5 text-4xl font-bold leading-[0.95] sm:text-5xl lg:text-5xl uppercase">
             Turn an overcrowded Garage back into useful space.
           </h2>
 
-          <p className="mt-6 text-base leading-8 text-[#102a4c]/72 sm:text-lg">
+          <p className="mt-6 text-base leading-8 text-ink/72 sm:text-lg">
             Whether junk is blocking the entrance or the whole Garage needs clearing, our team arrives with the right equipment to load and remove it safely.
           </p>
 
@@ -41,8 +41,8 @@ export default function GarageRubbishClearance() {
               'Garage and shed collections across Portsmouth',
               'Same-day availability may be possible',
             ].map((item) => (
-              <li key={item} className="flex items-center gap-3 text-sm font-semibold text-[#102a4c]/90 sm:text-base">
-                <span className="grid size-7 place-items-center rounded-full bg-[#ffd126] text-[#102a4c]">
+              <li key={item} className="flex items-center gap-3 text-sm font-semibold text-ink/90 sm:text-base">
+                <span className="grid size-7 place-items-center rounded-full bg-brand-500 text-white">
                   <Check className="size-4" strokeWidth={3} />
                 </span>
                 {item}
@@ -53,18 +53,18 @@ export default function GarageRubbishClearance() {
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
             <Link
               href="/#prices"
-              className="group inline-flex min-h-12 flex-1 items-center justify-center gap-2 rounded-full bg-[#ffd126] px-5 py-3 text-sm font-extrabold text-[#102a4c] transition duration-300 hover:-translate-y-0.5 hover:bg-white"
+              className="group inline-flex min-h-12 flex-1 items-center justify-center gap-2 rounded-full bg-brand-500 px-5 py-3 text-sm font-extrabold text-white transition duration-300 hover:-translate-y-0.5 hover:bg-white"
             >
               View prices
               <ArrowRight className="size-4 transition group-hover:translate-x-1" />
             </Link>
 
             <a
-              href="tel:02082266477"
-              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-white/30 px-5 py-3 text-sm font-bold transition duration-300 hover:border-white hover:bg-white hover:text-[#102a4c]"
+              href="tel:07862138033"
+              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-white/30 px-5 py-3 text-sm font-bold transition duration-300 hover:border-white hover:bg-white hover:text-ink"
             >
               <Phone className="size-4" />
-              020 8226 6477
+              078 6213 8033
             </a>
           </div>
         </div>

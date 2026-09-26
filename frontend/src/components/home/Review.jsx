@@ -1,7 +1,7 @@
 "use client";
  
 import { useState } from "react";
-import { Star, Plus, X } from "lucide-react";
+import { Plus, Quote, Star, X } from "lucide-react";
 import { apiPost } from "@/lib/api";
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -52,11 +52,11 @@ const initialReviews = [
   },
 ];
  
-function Stars({ count }) {
+function Stars({ count, size = 16 }) {
   return (
-    <div className="flex gap-0.5" aria-label={`${count} out of 5 stars`}>
+    <div className="flex gap-0.5" role="img" aria-label={`${count} out of 5 stars`}>
       {Array.from({ length: 5 }).map((_, i) => (
-        <Star key={i} size={14} className={i < count ? "fill-[#2563eb] text-[#2563eb]" : "fill-none text-[#d1d5db]"} />
+        <Star key={i} size={size} aria-hidden="true" className={i < count ? "fill-amber-400 text-amber-400" : "fill-none text-[#d1d5db]"} />
       ))}
     </div>
   );
@@ -89,31 +89,31 @@ function AddReviewForm({ onClose }) {
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-50 p-4 overflow-y-auto">
-      <Card className="w-full max-w-sm relative bg-[#ffffff] text-[#1f2937] max-h-[calc(100dvh-2rem)] overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-brand-900/60 p-4 backdrop-blur-sm">
+      <Card className="w-full max-w-sm relative bg-[#ffffff] text-ink max-h-[calc(100dvh-2rem)] overflow-y-auto">
         <button onClick={onClose} className="absolute top-3 right-3 text-[#9ca3af]" aria-label="Close review form"><X size={18} /></button>
         <CardContent className="pt-6 flex flex-col gap-3">
-          <h3 className="font-semibold text-[#1f2937]">Write a review</h3>
+          <h3 className="font-semibold text-ink">Write a review</h3>
           {status.state === "sent" ? (
             <>
               <p className="text-sm text-[#4b5563]" role="status">{status.message}</p>
-              <button onClick={onClose} className="rounded-md py-2 text-sm font-medium bg-[#2563eb] text-[#ffffff]">Close</button>
+              <button onClick={onClose} className="rounded-md py-2 text-sm font-medium bg-brand-600 text-[#ffffff]">Close</button>
             </>
           ) : (
             <>
-              <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Your name" aria-label="Your name" className="border rounded-md px-3 py-2 text-sm bg-[#ffffff] text-[#1f2937] border-[#d1d5db] min-w-0" />
+              <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Your name" aria-label="Your name" className="border rounded-md px-3 py-2 text-sm bg-[#ffffff] text-ink border-[#d1d5db] min-w-0" />
               {/* Honeypot: hidden from people, filled by bots. */}
               <input value={honeypot} onChange={(e) => setHoneypot(e.target.value)} name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" className="hidden" />
               <div className="flex gap-1">
                 {Array.from({ length: 5 }).map((_, i) => (
                   <button key={i} onClick={() => setRating(i + 1)} aria-label={`${i + 1} stars`}>
-                    <Star size={20} className={i < rating ? "fill-[#2563eb] text-[#2563eb]" : "fill-none text-[#d1d5db]"} />
+                    <Star size={20} className={i < rating ? "fill-amber-400 text-amber-400" : "fill-none text-[#d1d5db]"} />
                   </button>
                 ))}
               </div>
-              <textarea value={text} onChange={(e) => setText(e.target.value)} placeholder="Your review" aria-label="Your review" rows={3} className="border rounded-md px-3 py-2 text-sm resize-none bg-[#ffffff] text-[#1f2937] border-[#d1d5db] min-w-0" />
+              <textarea value={text} onChange={(e) => setText(e.target.value)} placeholder="Your review" aria-label="Your review" rows={3} className="border rounded-md px-3 py-2 text-sm resize-none bg-[#ffffff] text-ink border-[#d1d5db] min-w-0" />
               {status.state === "error" && <p className="text-sm text-red-600" role="alert">{status.message}</p>}
-              <button onClick={handleSubmit} disabled={status.state === "sending"} className="rounded-md py-2 text-sm font-medium bg-[#2563eb] text-[#ffffff] disabled:opacity-60">
+              <button onClick={handleSubmit} disabled={status.state === "sending"} className="rounded-md py-2 text-sm font-medium bg-brand-600 text-[#ffffff] disabled:opacity-60">
                 {status.state === "sending" ? "Sending..." : "Submit"}
               </button>
             </>
@@ -127,37 +127,65 @@ function AddReviewForm({ onClose }) {
 export default function Review({ reviews: remoteReviews }) {
   const reviews = remoteReviews?.length ? remoteReviews : initialReviews;
   const [showForm, setShowForm] = useState(false);
+  const average = reviews.reduce((sum, review) => sum + (review.rating || 0), 0) / reviews.length;
 
   return (
-    <section className="w-full bg-linear-to-r from-white via-[#B3E4F8]/40 to-white py-8 text-[#171717]">
-      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="max-[400px]:flex-wrap flex items-center justify-between mb-4 gap-3">
-        <h2 className="text-lg text-[#11224D] font-semibold bg-white px-3 py-1 rounded-full border border-[#2563EB]/40 shadow">Customer reviews</h2>
-        <button onClick={() => setShowForm(true)} className="flex items-center gap-1 text-sm px-4 py-2 rounded-full bg-[#2563eb] hover:bg-white text-[#ffffff] font-semibold hover:text-[#2563eb] hover:border border-[#2563eb] shadow-md shrink-0">
-          <Plus size={14} />Write a review
-        </button>
-      </div>
-      <Carousel opts={{ align: "start" }} className="w-full px-8">
-        <CarouselContent className="-ml-1">
-          {reviews.map((review, index) => (
-            <CarouselItem key={index} className="pl-1 basis-full sm:basis-1/2 lg:basis-1/3">
-              <div className="p-1 h-full">
-                <Card className="w-full h-60 bg-[#ffffff] text-[#4b5563]">
-                  <CardContent className="p-4 flex flex-col gap-2 flex-1 min-h-0">
-                    <p className="font-bold text-base text-[#1d4ed8] overflow-hidden text-ellipsis whitespace-nowrap shrink-0">{review.name}</p>
-                    <p className="text-xs -mt-1 text-[#9ca3af] shrink-0">{review.time}</p>
+    <section className="bg-mist py-20 text-ink sm:py-24">
+      <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+          <div>
+            <p className="eyebrow">Reviews</p>
+            <h2 className="mt-3 text-4xl font-bold uppercase leading-[0.95] sm:text-5xl">
+              What our customers
+              <span className="block text-brand-600">say about us</span>
+            </h2>
+            <div className="mt-5 flex items-center gap-3">
+              <Stars count={Math.round(average)} size={20} />
+              <p className="text-sm font-semibold text-slate-600">
+                {average.toFixed(1)} out of 5 from {reviews.length} {reviews.length === 1 ? "review" : "reviews"}
+              </p>
+            </div>
+          </div>
+          <button
+            onClick={() => setShowForm(true)}
+            className="inline-flex shrink-0 items-center gap-2 self-start rounded-lg border border-line bg-white px-5 py-3 text-sm font-bold text-ink transition-colors hover:border-brand-300 hover:bg-brand-50 md:self-auto"
+          >
+            <Plus size={16} aria-hidden="true" />
+            Write a review
+          </button>
+        </div>
+
+        <Carousel opts={{ align: "start" }} className="mt-10 w-full">
+          <CarouselContent className="-ml-4">
+            {reviews.map((review, index) => (
+              <CarouselItem key={index} className="basis-full pl-4 sm:basis-1/2 lg:basis-1/3">
+                <figure className="flex h-full flex-col rounded-2xl border border-line bg-white p-6 shadow-sm">
+                  <div className="flex items-center justify-between">
                     <Stars count={review.rating} />
-                    <p className="text-sm line-clamp-4 text-[#4b5563] wrap-anywhere">{review.text}</p>
-                  </CardContent>
-                </Card>
-              </div>
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-        <CarouselPrevious className="left-0 bg-[#ffffff] text-[#171717] border-[#d1d5db]" />
-        <CarouselNext className="right-0 bg-[#ffffff] text-[#171717] border-[#d1d5db]" />
-      </Carousel>
-      {showForm && <AddReviewForm onClose={() => setShowForm(false)} />}
+                    <Quote className="size-8 fill-brand-100 text-brand-100" aria-hidden="true" />
+                  </div>
+                  <blockquote className="mt-4 flex-1 text-[15px] leading-7 text-slate-700 wrap-anywhere line-clamp-6">
+                    {review.text}
+                  </blockquote>
+                  <figcaption className="mt-6 flex items-center gap-3 border-t border-line pt-4">
+                    <span className="grid size-10 shrink-0 place-items-center rounded-full bg-brand-600 font-display text-lg font-bold text-white" aria-hidden="true">
+                      {review.name?.trim()?.[0]?.toUpperCase() ?? "?"}
+                    </span>
+                    <span className="min-w-0">
+                      <span className="block truncate font-bold text-ink">{review.name}</span>
+                      <span className="block text-xs text-slate-500">{review.time}</span>
+                    </span>
+                  </figcaption>
+                </figure>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <div className="mt-6 flex justify-end gap-2">
+            <CarouselPrevious className="static translate-y-0 size-11 border-line bg-white text-ink hover:bg-brand-50" />
+            <CarouselNext className="static translate-y-0 size-11 border-line bg-white text-ink hover:bg-brand-50" />
+          </div>
+        </Carousel>
+        {showForm && <AddReviewForm onClose={() => setShowForm(false)} />}
       </div>
     </section>
   );

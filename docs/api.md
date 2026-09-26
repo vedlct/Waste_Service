@@ -246,7 +246,7 @@ appear.
 { "data": { "general": { "site_name": "MR. TEE Removals" }, "contact": { "phone": "020 8226 6477", "email": "info@wasteservices.com" }, "booking": { "saturday_collection_surcharge_pence": 5000 }, "seo": { "google_site_verification": null, "twitter_handle": null }, "business": { "locality": "Portsmouth", "region": "Hampshire", "opening_hours_spec": "Mo-Sa 07:00-19:00" }, "social": { "facebook_url": null } } }
 ```
 
-The frontend reads `contact` for the header, footer and contact page. It reads `seo`
+The frontend reads `contact` (`phone`, `phone_secondary`, `email`, `location`, `opening_hours`) for the header, footer and contact page. A blank `phone_secondary` shows one number. It reads `seo`
 (`default_share_image_url`, `google_site_verification`, `bing_site_verification`,
 `twitter_handle`) for share cards and verification tags. It reads `business` (`street_address`,
 `locality`, `region`, `postal_code`, `country_code`, `opening_hours_spec`, `price_range`) for the

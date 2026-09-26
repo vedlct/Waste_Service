@@ -4,8 +4,9 @@ import { apiGet } from './api.js'
 // Shown when the backend is unreachable. Kept in step with the seeded site settings.
 export const FALLBACK_CONTACT = {
   siteName: 'MR. TEE Removals',
-  phone: '020 8226 6477',
-  email: 'info@wasteservices.com',
+  phone: '078 6213 8033',
+  phoneSecondary: '023 9378 8241',
+  email: 'info@mrteeremovals.co.uk',
   location: 'Portsmouth, United Kingdom',
   openingHours: 'Mon–Sat, 7:00am–7:00pm',
   social: {},
@@ -25,6 +26,9 @@ export async function getSiteContact() {
   return {
     siteName: settings.general?.site_name || FALLBACK_CONTACT.siteName,
     phone: contact.phone || FALLBACK_CONTACT.phone,
+    // An admin can blank the second number to show just one; it only falls back when the
+    // setting is missing altogether.
+    phoneSecondary: 'phone_secondary' in contact ? contact.phone_secondary || null : FALLBACK_CONTACT.phoneSecondary,
     email: contact.email || FALLBACK_CONTACT.email,
     location: contact.location || FALLBACK_CONTACT.location,
     openingHours: contact.opening_hours || FALLBACK_CONTACT.openingHours,

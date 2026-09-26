@@ -32,7 +32,7 @@ export default function AreasWeCoverSection({ areas: remoteAreas }) {
   )}&output=embed`;
 
   return (
-    <div className="bg-linear-to-b from-[#E9F4FC] to-white">
+    <div className="bg-linear-to-b from-brand-50 to-white">
 
       <div className="container mx-auto flex max-w-7xl flex-col items-center justify-center gap-4 px-4 py-8 text-center sm:px-6 sm:py-10 md:gap-5 lg:px-8 lg:py-14">
 
@@ -40,7 +40,7 @@ export default function AreasWeCoverSection({ areas: remoteAreas }) {
           Popular Areas
         </span>
 
-        <h2 className="text-3xl font-extrabold leading-tight tracking-tight text-slate-900 sm:text-4xl md:text-4xl">
+        <h2 className="text-4xl font-bold leading-[0.95] text-slate-900 sm:text-5xl md:text-5xl uppercase">
           Areas We Cover
         </h2>
 
@@ -60,7 +60,7 @@ export default function AreasWeCoverSection({ areas: remoteAreas }) {
               <div className="mb-4 flex items-center gap-3">
 
                 <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-blue-600 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6">
-                  <Building2 className="h-4 w-4 text-[#102a4c]" />
+                  <Building2 className="h-4 w-4 text-ink" />
                 </span>
 
                 <h3 className="text-[15px] font-bold text-slate-900 transition-colors duration-200 group-hover:text-blue-600 sm:text-base">
@@ -123,7 +123,7 @@ export default function AreasWeCoverSection({ areas: remoteAreas }) {
             <div className="flex items-center gap-3">
 
               <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-600">
-                <MapPin className="h-5 w-5 text-[#102a4c]" />
+                <MapPin className="h-5 w-5 text-ink" />
               </div>
 
               <div>
