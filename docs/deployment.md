@@ -8,6 +8,43 @@ How to run the MR. TEE site in production. Two apps are deployed:
 They can live on different domains, for example `https://www.example.co.uk` for the site and
 `https://admin.example.co.uk` for the backend. CORS is configured for that.
 
+## Current server (staging)
+
+Deployed on 2026-10-10 to the shared VPS `162.35.189.68` (Ubuntu 26.04, 1 CPU, 1.6 GB RAM), which
+also hosts other sites (`abms-erp`, `abms-demo`, `kolor`). Leave their Nginx configs, databases
+and Node processes alone.
+
+| Part | Address | On the server |
+| --- | --- | --- |
+| Website | https://mrtee.162-35-189-68.sslip.io | `/var/www/mrtee/frontend`, static files served by Nginx |
+| Admin and API | https://mrtee-api.162-35-189-68.sslip.io | `/var/www/mrtee/backend`, PHP 8.5-FPM, MySQL database `mrtee` |
+
+- `sslip.io` addresses need no DNS; certificates come from Let's Encrypt via `certbot --nginx`.
+- Nginx config: `/etc/nginx/sites-available/mrtee`. It maps Next 16's prefetch requests
+  (`/x/__next.x.__PAGE__.txt`) to the exported files (`/x/__next.x/__PAGE__.txt`).
+- The server is short of memory, so the website is a static export (no Node process) and is
+  built on a developer machine, not on the server. Admin content changes reach the website only
+  after a rebuild and upload.
+- Cron (`/etc/cron.d/mrtee`) runs the scheduler and the queue worker every minute.
+- Mail is on the `log` driver until SMTP details are set in the backend `.env`.
+- Secrets (admin, database, frontend API key) are in `/root/mrtee-credentials.txt`, readable by
+  root only.
+
+### Updating the website
+
+1. Build on a developer machine with the live API key from the backend `.env`:
+   `STATIC_EXPORT=true NEXT_PUBLIC_API_URL=https://mrtee-api.162-35-189-68.sslip.io
+   NEXT_PUBLIC_SITE_URL=https://mrtee.162-35-189-68.sslip.io FRONTEND_API_KEY=... npx next build`
+2. Copy `frontend/out` and shrink photos wider than 2000 px in the copy (static hosting cannot
+   resize images; the originals are up to 10,000 px).
+3. Upload, unpack into `/var/www/mrtee/frontend.new`, then swap it with `frontend`.
+
+### Updating the backend
+
+Install with `composer install --no-dev --optimize-autoloader` on a developer machine, upload,
+then run `php artisan migrate --force` and `php artisan optimize` on the server. Never run
+`db:seed` again: the database now holds admin data.
+
 ## Server requirements
 
 Backend:
