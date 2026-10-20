@@ -7,7 +7,7 @@ const benefits = [
   '95% of collected waste recycled',
   'Recognisable Wait & Load vehicles',
   'Reliable local Man & Van teams',
-  'clearance appointments six days a week',
+  'Clearance appointments six days a week',
   'Friendly, experienced collection crews',
   'Fully insured and licensed waste carrier',
   'Portsmouth and surrounding area coverage',
@@ -54,7 +54,7 @@ export default function WhyChooseUs() {
             </h2>
 
             <p className="mt-6 max-w-2xl text-base leading-8 text-slate-600 sm:text-lg">
-              Clearing a Home can feel like a large job. We make it manageable with dependable crews, flexible availability and responsible handling from collection to disposal.
+              Clearing a home can feel like a large job. We make it manageable with dependable crews, flexible availability and responsible handling from collection to disposal.
             </p>
 
             <ul className="mt-8 grid gap-x-6 gap-y-3 sm:grid-cols-2" aria-label="Reasons to choose our Portsmouth waste services">
