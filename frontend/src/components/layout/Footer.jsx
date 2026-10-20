@@ -34,7 +34,7 @@ export default function Footer({ contact = FALLBACK_CONTACT }) {
       <div className='mx-auto grid max-w-7xl grid-cols-2 gap-x-6 gap-y-10 px-4 py-14 sm:px-6 lg:grid-cols-[1.3fr_1fr_1fr_1.2fr] lg:px-8'>
         <div className='col-span-2 lg:col-span-1'>
           <Link href='/' aria-label='MR. TEE Removals home' className='inline-block'>
-            <Image src='/images/brand/logo-white.png' alt='MR. TEE Removals' width={933} height={195} className='h-10 w-auto' />
+            <Image src='/images/NewLogo2.png' alt='MR. TEE Removals' width={933} height={195} className='h-13 w-auto' />
           </Link>
           <p className='mt-5 max-w-sm text-sm leading-6 text-white/65'>
             Fast, affordable rubbish clearance for homes, gardens and businesses across Portsmouth and the surrounding area.

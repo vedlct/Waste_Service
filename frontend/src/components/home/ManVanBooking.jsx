@@ -59,10 +59,16 @@ const FALLBACK_ITEMS_BY_CATEGORY = {
     { id: 'divan-base', name: 'Divan Base', img: '/images/bed4.jfif', description: 'Includes storage divan bases.', price: 45 },
   ],
   furniture: [
-    { id: 'wardrobe', name: 'Wardrobe', img: '/images/furniture1.jpg',  description: 'Single, double or triple door.', price: 55 },
+    { id: 'wardrobe', name: 'Wardrobe', img: '/images/SingleDoor.jpg',  description: 'Single door.', price: 35 },
+    { id: 'wardrobe', name: 'Wardrobe', img: '/images/Double Door.jpg',  description: 'Double door.', price: 45 },
+    { id: 'wardrobe', name: 'Wardrobe', img: '/images/Three Door.jpg',  description: 'Triple door.', price: 55 },
+    { id: 'wardrobe', name: 'Wardrobe', img: '/images/Four Door.jpg',  description: 'Four door.', price: 60 },
     { id: 'chest-drawers', name: 'Chest of Drawers', img: '/images/furniture2.jpg',  description: 'Any size, wood, veneer or flatpack.', price: 30 },
     { id: 'dining-table', name: 'Dining Table', img: '/images/furniture3.jpg',  description: 'Seats 4-8, with or without chairs.', price: 45 },
-    { id: 'bookcase', name: 'Bookcase / Shelving Unit', img: '/images/furniture4.jpg',  description: 'Freestanding units of any size.', price: 25 },
+    { id: 'sideboard-small-large', name: 'Sideboard', img: '/images/Sideboard.jpg',  description: 'Sideboard small - large.', price: 35 },
+    { id: 'dining-chairs', name: 'Dining Chairs', img: '/images/DiningChair.jpg',  description: 'Dining Chairs.', price: 10 },
+    { id: 'display-cabinet', name: 'Display Cabinet', img: '/images/DisplayCabinet.jpg',  description: 'Display Cabinet.', price: 45 },
+    { id: 'bookcase', name: 'Bookcase / Shelving Unit', img: '/images/furniture4.jpg',  description: 'Bookcase small-large', price: 35 },
   ],
   'kitchen-appliances': [
     { id: 'washing-machine', name: 'Washing Machine', img: '/images/kitchen1.jpg',   description: 'Freestanding or integrated.', price: 35 },

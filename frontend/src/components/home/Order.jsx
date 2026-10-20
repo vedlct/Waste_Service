@@ -5,13 +5,13 @@ import SectionHeader from '@/components/ui/SectionHeader'
 
 const services = [
   { id: 'man-van', image: '/images/load3.jpg', title: 'Man & Van', eyebrow: 'Flexible loads' },
-  { id: 'sofas', image: '/images/furnitureRubbish2.jpg', title: 'Sofas', eyebrow: 'Bulky furniture' },
-  { id: 'mattress-bed', image: '/images/option3.jpg', title: 'Mattress & Bed', eyebrow: 'Bedroom items' },
+  { id: 'sofas', image: '/images/Sofas.jpg', title: 'Sofas', eyebrow: 'Bulky furniture' },
+  { id: 'mattress-bed', image: '/images/mattress.jpg', title: 'Mattress & Bed', eyebrow: 'Bedroom items' },
   { id: 'furniture', image: '/images/junkRubbish2.jpg', title: 'Furniture', eyebrow: 'Home clearance' },
-  { id: 'kitchen-appliances', image: '/images/option5.jpg', title: 'Kitchen Appliances', eyebrow: 'Large appliances' },
-  { id: 'fridge-freezer', image: '/images/option6.jpg', title: 'Fridge & Freezer', eyebrow: 'Responsible disposal' },
+  { id: 'kitchen-appliances', image: '/images/Kitchen.jpg', title: 'Kitchen Appliances', eyebrow: 'Large appliances' },
+  { id: 'fridge-freezer', image: '/images/Fridge.jpg', title: 'Fridge & Freezer', eyebrow: 'Responsible disposal' },
   { id: 'electrical-it', image: '/images/junkRubbish3.jpg', title: 'Electrical & IT', eyebrow: 'Electrical waste' },
-  { id: 'garden-items', image: '/images/lawn2.jpg', title: 'Garden Items', eyebrow: 'Outdoor clearance' },
+  { id: 'garden-items', image: '/images/Garden.jpg', title: 'Garden Items', eyebrow: 'Outdoor clearance' },
   { id: 'hazardous-waste', image: '/images/haz4.jpg', title: 'Hazardous Waste', eyebrow: 'Specialist handling' },
   { id: 'office-items', image: '/images/officeRubbish.jpg', title: 'Office Items', eyebrow: 'Workplace clearance' },
   { id: 'commercial-items', image: '/images/rubbish3.jpg', title: 'Commercial Items', eyebrow: 'Business waste' },

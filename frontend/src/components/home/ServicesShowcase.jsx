@@ -4,14 +4,14 @@ import { ArrowRight, Building2, Car, Hammer, House, Leaf, Sofa, TreePine, Truck 
 import SectionHeader from '@/components/ui/SectionHeader'
 
 const services = [
-  { title: 'House Clearance', text: 'Single rooms to whole properties', image: '/images/service-house-clearance-stock.jpg', href: '/houseClearance', icon: House },
-  { title: 'Furniture Removal', text: 'Sofas, beds, wardrobes and more', image: '/images/service-furniture-removal-stock.jpg', href: '/furnitureClearance', icon: Sofa },
-  { title: 'Garden Clearance', text: 'Green waste, sheds and soil', image: '/images/service-garden-clearance-stock.jpg', href: '/gardenClearance', icon: Leaf },
+  { title: 'House Clearance', text: 'Single rooms to whole properties', image: '/images/HClearance.jpg', href: '/houseClearance', icon: House },
+  { title: 'Furniture Removal', text: 'Sofas, beds, wardrobes and more', image: '/images/FR.jpg', href: '/furnitureClearance', icon: Sofa },
+  { title: 'Garden Clearance', text: 'Green waste, sheds and soil', image: '/images/GClearance.jpg', href: '/gardenClearance', icon: Leaf },
   { title: 'Man & Van', text: 'We load, you point', image: '/images/service-man-van-branded.png', href: '/waitLoad', icon: Truck },
-  { title: 'Garage Clearance', text: 'Clutter out, space back', image: '/images/service-garage-clearance-stock.jpg', href: '/garageClearance', icon: Car },
-  { title: 'Builders Waste', text: 'Rubble, timber and fittings', image: '/images/service-builders-waste-stock.jpg', href: '/buildersWasteRemoval', icon: Hammer },
-  { title: 'Office & Commercial', text: 'Minimal disruption to your day', image: '/images/service-office-clearance-stock.jpg', href: '/officeWasteClearance', icon: Building2 },
-  { title: 'Fly-Tipping', text: 'Dumped waste cleared fast', image: '/images/service-fly-tipping-stock.jpg', href: '/flyTippingClearance', icon: TreePine },
+  { title: 'Garage Clearance', text: 'Clutter out, space back', image: '/images/GarageC.jpg', href: '/garageClearance', icon: Car },
+  { title: 'Builders Waste', text: 'Rubble, timber and fittings', image: '/images/BW.jpg', href: '/buildersWasteRemoval', icon: Hammer },
+  { title: 'Office & Commercial', text: 'Minimal disruption to your day', image: '/images/Office.jpg', href: '/officeWasteClearance', icon: Building2 },
+  { title: 'Fly-Tipping', text: 'Dumped waste cleared fast', image: '/images/FTClearance.jpg', href: '/flyTippingClearance', icon: TreePine },
 ]
 
 export default function ServicesShowcase() {

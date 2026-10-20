@@ -41,12 +41,12 @@ export default function Header({ contact = FALLBACK_CONTACT }) {
         <div className='relative mx-auto flex h-16 max-w-7xl items-center gap-4 px-4 sm:px-6 lg:h-[76px] lg:px-8'>
           <Link href='/' className='shrink-0' aria-label='MR. TEE Removals home'>
             <Image
-              src='/images/brand/logo.png'
+              src='/images/NewLogo.png'
               alt='MR. TEE Removals'
               width={933}
               height={195}
               priority
-              className='h-8 w-auto sm:h-9 lg:h-10'
+              className='h-13 w-auto sm:h-14 lg:h-15'
             />
           </Link>
 
